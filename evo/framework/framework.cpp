@@ -1,0 +1,392 @@
+#include "../inc.hpp"
+#include <Uxtheme.h>
+#include <dwmapi.h>
+#include "../thirdparty/bytes.hpp"
+#include "../thirdparty/custom.hpp"
+
+LRESULT wnd_proc( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp ) {
+    if ( ImGui_ImplWin32_WndProcHandler( hwnd, msg, wp, lp ) ) {
+        return 0;
+    }
+    switch ( msg ) {
+        case WM_SYSCOMMAND:
+        {
+            if ( ( wp & 0xfff0 ) == SC_KEYMENU )
+                return 0;
+            break;
+        }
+
+        case WM_DESTROY:
+        {
+            PostQuitMessage( 0 );
+            return 0;
+        }
+    }
+    return DefWindowProc( hwnd, msg, wp, lp );
+}
+
+
+namespace evo::framework {
+	bool render( ) {
+        // get screen resolution
+        m_i_width = GetSystemMetrics( SM_CXSCREEN );
+        m_i_height = GetSystemMetrics( SM_CYSCREEN );
+
+        if ( !m_b_initialized )
+            return false;
+
+        static bool bRunning = true;
+        if ( bRunning ) {
+            MSG message;
+            while ( PeekMessage( &message, nullptr, 0U, 0U, PM_REMOVE ) ) {
+                TranslateMessage( &message );
+                DispatchMessage( &message );
+            }
+            if ( message.message == WM_QUIT )
+                bRunning = false;
+
+            static bool bToggled = false;
+            if ( GetAsyncKeyState( VK_INSERT ) & 1 && !bToggled ) {
+                m_b_open = !m_b_open;
+                SetForegroundWindow( instance );
+                bToggled = true;
+            } else if ( !GetAsyncKeyState( VK_INSERT ) & 1 ) {
+                LONG_PTR windowStyle = GetWindowLongPtr( instance, GWL_EXSTYLE );
+                SetWindowLongPtr( instance, GWL_EXSTYLE, windowStyle | WS_EX_TRANSPARENT );
+                bToggled = false;
+            }
+
+            if ( GetAsyncKeyState( VK_END ) & 1 ) {
+                return 0;
+            }
+
+            ImGui_ImplDX11_NewFrame( );
+            ImGui_ImplWin32_NewFrame( );
+
+            ImGui::NewFrame( );
+
+            if ( m_b_open ) {
+                LONG_PTR windowStyle = GetWindowLongPtr( instance, GWL_EXSTYLE );
+                windowStyle &= ~WS_EX_TRANSPARENT;
+                SetWindowLongPtr( instance, GWL_EXSTYLE, windowStyle );
+
+                _menu->render( );
+            }
+
+            ImDrawList* pBackgroundDrawList = ImGui::GetBackgroundDrawList( );
+            // Draw::RenderDrawData( pBackgroundDrawList ); rendering
+
+            ImGui::Render( );
+
+            constexpr float flColor[ 4 ] = { 0.f, 0.f, 0.f, 0.f };
+            p_context->OMSetRenderTargets( 1U, &p_render_target_view, NULL );
+            p_context->ClearRenderTargetView( p_render_target_view, flColor );
+
+            ImGui_ImplDX11_RenderDrawData( ImGui::GetDrawData( ) );
+
+            p_swap_chain->Present( 1U, 0U );
+        }
+
+        if ( !bRunning ) {
+            destroy( );
+            return false;
+        }
+
+        return true;
+    }
+
+    bool create( ) {
+        if ( m_b_initialized )
+            return true;
+
+        m_i_width = GetSystemMetrics( SM_CXSCREEN );
+        m_i_height = GetSystemMetrics( SM_CYSCREEN );
+
+        window_class.cbSize = sizeof( WNDCLASSEX );
+        window_class.style = 0;
+        window_class.lpfnWndProc = wnd_proc;
+        window_class.hInstance = h_moudle;
+        window_class.lpszClassName = ( L"evo-external" );
+
+        RegisterClassExW( &window_class );
+
+        instance = CreateWindowExW(
+            WS_EX_TOPMOST | WS_EX_TRANSPARENT | WS_EX_LAYERED,
+            window_class.lpszClassName, ( L"" ), WS_POPUP | WS_VISIBLE,
+            0, 0, m_i_width, m_i_height, nullptr, nullptr, h_moudle, nullptr );
+
+        if ( !SetLayeredWindowAttributes( instance, RGB( 0, 0, 0 ), BYTE( 255 ), LWA_ALPHA ) )
+            throw std::runtime_error( ( "failed to set layered window attributes" ) );
+
+        {
+            RECT clientArea = { };
+            if ( !GetClientRect( instance, &clientArea ) )
+                throw std::runtime_error( ( "failed to get client rect" ) );
+
+            RECT windowArea = { };
+            if ( !GetWindowRect( instance, &windowArea ) )
+                throw std::runtime_error( ( "failed to get window rect" ) );
+
+            POINT diff = { };
+            if ( !ClientToScreen( instance, &diff ) )
+                throw std::runtime_error( ( "failed to get client to screen" ) );
+
+            const MARGINS margins{
+                windowArea.left + ( diff.x - windowArea.left ),
+                windowArea.top + ( diff.y - windowArea.top ),
+                windowArea.right,
+                windowArea.bottom
+            };
+
+            if ( FAILED( DwmExtendFrameIntoClientArea( instance, &margins ) ) )
+                throw std::runtime_error( ( "failed to extend frame into client area" ) );
+        }
+
+        // get refreshrate
+        HDC hDC = GetDC( instance );
+        m_u_refresh_rate = GetDeviceCaps( hDC, VREFRESH );
+        ReleaseDC( instance, hDC );
+
+        DXGI_SWAP_CHAIN_DESC swapChainDesc = { };
+        swapChainDesc.BufferDesc.RefreshRate.Numerator = m_u_refresh_rate;
+        swapChainDesc.BufferDesc.RefreshRate.Denominator = 1U;
+        swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+        swapChainDesc.SampleDesc.Count = 1U;
+        swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+        swapChainDesc.BufferCount = 2U;
+        swapChainDesc.OutputWindow = instance;
+        swapChainDesc.Windowed = TRUE;
+        swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+        swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+
+        constexpr D3D_FEATURE_LEVEL levels[ 2 ]
+        {
+            D3D_FEATURE_LEVEL_11_0,
+            D3D_FEATURE_LEVEL_10_0
+        };
+
+        D3D_FEATURE_LEVEL level = { };
+
+        if ( D3D11CreateDeviceAndSwapChain(
+            nullptr,
+            D3D_DRIVER_TYPE_HARDWARE,
+            nullptr,
+            0U,
+            levels,
+            2U,
+            D3D11_SDK_VERSION,
+            &swapChainDesc,
+            &p_swap_chain,
+            &p_device,
+            &level,
+            &p_context ) != S_OK )
+            return false;
+
+        ID3D11Texture2D* pBackBuffer = nullptr;
+        p_swap_chain->GetBuffer( 0U, __uuidof( ID3D11Texture2D ), ( LPVOID* )&pBackBuffer );
+        if ( pBackBuffer ) {
+            p_device->CreateRenderTargetView( pBackBuffer, nullptr, &p_render_target_view );
+            pBackBuffer->Release( );
+        } else throw std::runtime_error( ( "failed to get back buffer" ) );
+
+        SetWindowLong( instance, GWL_EXSTYLE, WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_TOOLWINDOW );
+        ShowWindow( instance, SW_SHOW );
+        UpdateWindow( instance );
+
+        ImGui::CreateContext( );
+        ImGui::StyleColorsDark( );
+
+        ImGui_ImplWin32_Init( instance );
+        ImGui_ImplDX11_Init( p_device, p_context );
+
+        _menu->initialize( );
+
+        printf( "[evo] created ui!" );
+
+        m_b_initialized = true;
+    }
+
+    void destroy( ) {
+        ImGui_ImplDX11_Shutdown( );
+        ImGui_ImplWin32_Shutdown( );
+
+        ImGui::DestroyContext( );
+
+        if ( p_swap_chain )
+            p_swap_chain->Release( );
+
+        if ( p_context )
+            p_context->Release( );
+
+        if ( p_device )
+            p_device->Release( );
+
+        if ( p_render_target_view )
+            p_render_target_view->Release( );
+
+        if ( !DestroyWindow( instance ) )
+            throw std::runtime_error( ( "failed to destroy window" ) );
+
+        if ( !UnregisterClassW( window_class.lpszClassName, window_class.hInstance ) )
+            throw std::runtime_error( ( "failed to destroy window" ) );
+    }
+}
+
+void evo::menu_t::render( ) { 
+    using namespace ImGui;
+
+    static bool bools[ 50 ]{};
+    static int ints[ 50 ]{};
+    vector < const char* > items = { "Head", "Chest", "Body", "Legs", "Feet" };
+
+    static float color[ 4 ] = { 1.f, 1.f, 1.f, 1.f };
+
+    PushStyleVar( ImGuiStyleVar_WindowPadding, ImVec2( 0, 0 ) );
+    PushStyleVar( ImGuiStyleVar_WindowMinSize, ImVec2( 510, 380 ) );
+
+    ImGui::Begin( "Hello, world!", NULL, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoCollapse ); {
+        auto window = GetCurrentWindow( );
+        auto draw = window->DrawList;
+        auto pos = window->Pos;
+        auto size = window->Size;
+        auto style = GetStyle( );
+
+        custom.m_anim = ImLerp( custom.m_anim, 1.f, 0.03f );
+
+        draw->AddLine( pos + ImVec2( 65, 40 ), pos + ImVec2( size.x - 15, 40 ), ImColor( 1.f, 1.f, 1.f, 0.05f ) );
+
+        switch ( custom.m_tab ) {
+            case 0:
+            {
+                SetCursorPos( ImVec2( 70, 13 ) );
+                BeginGroup( );
+                {
+                    for ( int i = 0; i < custom.rage_subtabs.size( ); ++i ) {
+
+                        if ( custom.sub_tab( custom.rage_subtabs.at( i ), custom.m_rage_subtab == i ) && custom.m_rage_subtab != i )
+                            custom.m_rage_subtab = i, custom.m_anim = 0.f;
+
+                        if ( i != custom.rage_subtabs.size( ) - 1 )
+                            SameLine( );
+                    }
+                }
+
+                EndGroup( );
+
+                SetCursorPos( ImVec2( 65, 50 ) );
+                BeginChild( "##rage_childs", ImVec2( GetWindowWidth( ) - 80, GetWindowHeight( ) - 80 ) );
+                {
+
+                    switch ( custom.m_rage_subtab ) {
+
+                        case 0:
+
+                            custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+
+
+
+                            } custom.end_child( );
+
+                            SameLine( );
+
+                            custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+
+
+                            } custom.end_child( );
+
+                            break;
+
+                    }
+
+                } EndChild( );
+
+            } break;
+            case 1:
+            {
+                SetCursorPos( ImVec2( 70, 13 ) );
+                BeginGroup( );
+
+                for ( int i = 0; i < custom.visuals_subtabs.size( ); ++i ) {
+
+                    if ( custom.sub_tab( custom.visuals_subtabs.at( i ), custom.m_visuals_subtab == i ) && custom.m_visuals_subtab != i )
+                        custom.m_visuals_subtab = i, custom.m_anim = 0.f;
+
+                    if ( i != custom.visuals_subtabs.size( ) - 1 )
+                        SameLine( );
+                }
+
+                EndGroup( );
+
+                SetCursorPos( ImVec2( 65, 50 ) );
+                BeginChild( "##visuals_childs", ImVec2( GetWindowWidth( ) - 80, GetWindowHeight( ) - 80 ) );
+                {
+
+                    switch ( custom.m_visuals_subtab ) {
+
+                        case 0:
+
+                            custom.begin_child( "ESP", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+
+                            } custom.end_child( );
+
+                            SameLine( );
+
+                            custom.begin_child( "Colored models", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+
+                            } custom.end_child( );
+
+                            break;
+
+                    }
+
+                } EndChild( );
+            } break;          
+        }
+
+        SetCursorPosY( 0 );
+        custom.tab_area( "##tab_area", ImVec2( 50, size.y - 20 ), [ ]( ) {
+
+            for ( int i = 0; i < custom.tabs.size( ); ++i )
+                if ( custom.tab( custom.tabs_icons.at( i ), custom.tabs.at( i ), custom.m_tab == i ) && custom.m_tab != i )
+                    custom.m_tab = i, custom.m_anim = 0.f;
+
+                         } );
+
+        // footer
+        draw->AddRectFilled( pos + ImVec2( 0, size.y - 20 ), pos + size, ImColor( 15, 14, 21 ), style.WindowRounding, ImDrawFlags_RoundCornersBottom );
+        draw->AddText( pos + ImVec2( 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "pandora for Counter-Strike: Global Offensive" );
+        draw->AddText( pos + ImVec2( size.x - CalcTextSize( "cs2 | internal cheat" ).x - 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "cs2 | internal cheat" );
+
+    } ImGui::End( );
+
+    PopStyleVar( 2 );
+}
+
+void evo::menu_t::initialize( ) { 
+    ImFontConfig font_config;
+    font_config.PixelSnapH = false;
+    font_config.FontDataOwnedByAtlas = false;
+    font_config.OversampleH = 5;
+    font_config.OversampleV = 5;
+    font_config.RasterizerMultiply = 1.2f;
+
+    static const ImWchar ranges[ ] = {
+
+        0x0020, 0x00FF, // Basic Latin + Latin Supplement
+        0x0400, 0x052F, // Cyrillic + Cyrillic Supplement
+        0x2DE0, 0x2DFF, // Cyrillic Extended-A
+        0xA640, 0xA69F, // Cyrillic Extended-B
+        0xE000, 0xE226, // icons
+        0,
+    };
+
+    font_config.GlyphRanges = ranges;
+
+    ImGuiIO& io = ImGui::GetIO( ); ( void )io;
+    io.Fonts->AddFontFromFileTTF( "C:\\Windows\\Fonts\\tahoma.ttf", 14, &font_config, ranges );
+    io.Fonts->AddFontFromMemoryTTF( icons_binary, sizeof icons_binary, 15, &font_config, ranges );
+}
