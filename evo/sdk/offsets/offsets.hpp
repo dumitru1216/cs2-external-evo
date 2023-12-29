@@ -19,7 +19,7 @@ namespace evo {
 			inline DWORD health = 0x32C;
 			inline DWORD vec_old_origin = 0x1224;
 			inline DWORD dormant = 0xE7;
-			inline DWORD dormant = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
+			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
 	}
 

@@ -3,7 +3,8 @@
 namespace evo {
 	class esp_t {
 	public:
-		void render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, 
+		void bounding_box( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
+		void render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect,
 							  int local_index, int index );
 
 		evo::macros::vec4_t get_player_bounding_box( const c_entity& entity );

@@ -9,6 +9,9 @@ namespace evo {
 		/* variables */
 		bool bounding_box = false;
 		float box_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float box_color_inv[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		bool change_box_spot = false;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

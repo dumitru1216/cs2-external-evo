@@ -102,7 +102,7 @@ namespace evo {
 		}
 
 		__forceinline bool _spotted( ) {
-			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::vec_old_origin, this->spotted_by_mask );
+			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
 		}
 
 		__forceinline bool _dormant( ) {

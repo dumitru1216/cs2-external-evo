@@ -289,6 +289,16 @@ void evo::menu_t::render( ) {
                                 ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 ImGui::ColorEdit4( "###boxcolk", evo::_settings->box_color, ALPHA );
+                                if ( evo::_settings->change_box_spot ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###boxcolkspot", evo::_settings->box_color_inv, ALPHA );
+                                }
+
+                                if ( evo::_settings->bounding_box ) {
+                                    ImGui::Checkbox( "Second box color", &evo::_settings->change_box_spot );
+                                }
+
+                                
 
                             } custom.end_child( );
 
