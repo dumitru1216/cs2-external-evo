@@ -9,33 +9,31 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
-		int health{ 0 };
-		int alive{ 0 };
-		int team_id{ 0 };
+		int health{ 0 }, alive{ 0 }, team_id{ 0 };
 		DWORD pawn{ 0 };
 		std::string player_name{};
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "ccs_player_controler::health", this->address,
-										  offets::c_base_entity::health, this->health );
+										  offsets::c_base_entity::health, this->health );
 		}
 
 		__forceinline bool _alive( ) {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
-											offets::c_base_player_controler::pawn_alive, this->alive );
+											offsets::c_base_player_controler::pawn_alive, this->alive );
 		}
 
 		__forceinline bool _team_id( ) {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::team_id", this->address,
-										  offets::c_base_entity::team_id, this->team_id );
+										  offsets::c_base_entity::team_id, this->team_id );
 		}
 
 		__forceinline bool _player_name( ) {
 			char buffer[ MAX_PATH ]{};
 
-			if ( !_proc_manager.read_memory( this->address + offets::c_base_player_controler::player_name, buffer, MAX_PATH ) )
+			if ( !_proc_manager.read_memory( this->address + offsets::c_base_player_controler::player_name, buffer, MAX_PATH ) )
 				return false;
 
 			this->player_name = buffer;
@@ -50,7 +48,7 @@ namespace evo {
 			DWORD64 entity_pawn_address = 0;
 
 			if ( !mem::scan_memory<DWORD>( "ccs_player_controler::player_pawn", this->address, 
-												offets::c_base_player_controler::player_pawn, this->pawn ) ) {
+												offsets::c_base_player_controler::player_pawn, this->pawn ) ) {
 				return 0;
 			}
 
@@ -82,8 +80,13 @@ namespace evo {
 	class ccs_player_pawn {
 	public:
 		DWORD64 address{ 0 };
-	public:
 
+		/* get data in there */
+		int health{};
+	public:
+		__forceinline int _health( ) {
+			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
+		}
 	};
 
 	class c_entity {

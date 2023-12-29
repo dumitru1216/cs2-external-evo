@@ -1,7 +1,7 @@
 #pragma once
 
 namespace evo {
-	namespace offets {
+	namespace offsets {
 		namespace c_base_entity {
 			inline DWORD health = 0x32C;
 			inline DWORD team_id = 0x3BF;
@@ -11,6 +11,10 @@ namespace evo {
 			inline DWORD player_pawn = 0x7EC;
 			inline DWORD pawn_alive = 0x7F4;
 			inline DWORD player_name = 0x640;
+		}
+
+		namespace pawn {
+			inline DWORD health = 0x32C;
 		}
 	}
 
