@@ -65,6 +65,10 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "sdk/classes/entity.hpp"
 
 #include "sdk/render/render.hpp"
+
+#include "framework/config/cfg.hpp"
+#include "hacks/features/esp/esp.hpp"
+
 #include "hacks/ctx/hacks_ctx.hpp"
 #include "framework/framework.hpp"
 

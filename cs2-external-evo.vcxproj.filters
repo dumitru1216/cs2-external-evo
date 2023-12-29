@@ -99,6 +99,12 @@
     <ClInclude Include="evo\thirdparty\imgui_freetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\hacks\features\esp\esp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="evo\framework\config\cfg.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -150,6 +156,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\thirdparty\imgui_freetype.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\hacks\features\esp\esp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\framework\config\cfg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
