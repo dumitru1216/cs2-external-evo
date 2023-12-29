@@ -81,6 +81,9 @@
     <ClInclude Include="evo\sdk\memory\mem.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -120,6 +123,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\core\ctx\ctx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

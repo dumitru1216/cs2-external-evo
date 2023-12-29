@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="evo\core\ctx\ctx.hpp" />
     <ClInclude Include="evo\framework\framework.hpp" />
+    <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp" />
     <ClInclude Include="evo\inc.hpp" />
     <ClInclude Include="evo\sdk\classes\entity.hpp" />
     <ClInclude Include="evo\sdk\math\color_t.hpp" />
@@ -160,6 +161,7 @@
     <ClCompile Include="evo\core\core.cpp" />
     <ClCompile Include="evo\core\ctx\ctx.cpp" />
     <ClCompile Include="evo\framework\framework.cpp" />
+    <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp" />
     <ClCompile Include="evo\sdk\process_manager\process_manager.cpp" />
     <ClCompile Include="evo\thirdparty\custom.cpp" />
     <ClCompile Include="evo\thirdparty\imgui.cpp" />
