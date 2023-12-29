@@ -200,6 +200,7 @@ namespace evo::framework {
         ImGui_ImplDX11_Init( p_device, p_context );
 
         _menu->initialize( );
+        _render->initialize_font_system( );
 
         printf( "[evo] created ui!\n" );
 
