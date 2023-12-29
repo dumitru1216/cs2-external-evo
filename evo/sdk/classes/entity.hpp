@@ -83,7 +83,7 @@ namespace evo {
 
 	class ccs_player_pawn {
 	public:
-		DWORD64 address{ 0 };
+		DWORD64 address{ 0 }, spotted_by_mask{};
 
 		/* get data in there */
 		int health{}, dormant{};
@@ -99,6 +99,10 @@ namespace evo {
 
 		__forceinline bool _pos( ) {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::pos", this->address, offsets::pawn::vec_old_origin, this->pos );
+		}
+
+		__forceinline bool _spotted( ) {
+			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::vec_old_origin, this->spotted_by_mask );
 		}
 
 		__forceinline bool _dormant( ) {
@@ -207,6 +211,15 @@ namespace evo {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._pos\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._spotted( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
 #endif 
 
 				return false;
