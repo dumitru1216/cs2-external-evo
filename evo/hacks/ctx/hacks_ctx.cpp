@@ -47,8 +47,6 @@ void evo::hacks_t::run( ) {
 		return;
 	}
 
-	print_with_data_scoped( "local health " + std::to_string( local_player.player_pawn.he ) );
-
 	/* loop between entity */
 	{
 		

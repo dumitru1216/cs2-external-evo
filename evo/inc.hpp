@@ -34,8 +34,11 @@
 /* libs for directx */
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "D3D11.lib")
+#pragma comment(lib, "freetype.lib")
+#pragma comment(lib, "freetype_debug.lib")
 
 #include "thirdparty/imgui.h"
+#include "thirdparty/imgui_freetype.h"
 #include "thirdparty/imgui_impl_win32.h"
 #include "thirdparty/imgui_impl_dx9.h"
 #include "thirdparty/imgui_impl_dx11.h"
@@ -61,6 +64,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "core/ctx/ctx.hpp"
 #include "sdk/classes/entity.hpp"
 
+#include "sdk/render/render.hpp"
 #include "hacks/ctx/hacks_ctx.hpp"
 #include "framework/framework.hpp"
 

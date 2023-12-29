@@ -84,7 +84,7 @@ namespace evo {
 		/* get data in there */
 		int health{};
 	public:
-		__forceinline int _health( ) {
+		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
 		}
 	};
@@ -116,7 +116,7 @@ namespace evo {
 			if ( !this->controller._health( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._alive\n" );
+				printf( "[evo] error controller._health\n" );
 #endif 
 				return false;
 			}
@@ -124,7 +124,7 @@ namespace evo {
 			if ( !this->controller._team_id( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._alive\n" );
+				printf( "[evo] error controller._team_id\n" );
 #endif 
 				return false;
 			}
@@ -133,7 +133,7 @@ namespace evo {
 			if ( !this->controller._player_name( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._alive\n" );
+				printf( "[evo] error controller._player_name\n" );
 #endif 
 				return false;
 			}
@@ -159,6 +159,15 @@ namespace evo {
 
 			/* get pawn address */
 			this->player_pawn.address = player_pawn_address;
+
+			if ( !this->player_pawn._health( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+
+				return false;
+			}
 
 			return true;
 		}

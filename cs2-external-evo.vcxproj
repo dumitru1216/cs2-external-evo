@@ -72,8 +72,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\dutu\Desktop\cs2-external-evo\evo\thirdparty\freetype\include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\dutu\Desktop\cs2-external-evo\evo\thirdparty\freetype\objs;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -137,6 +137,7 @@
     <ClInclude Include="evo\framework\framework.hpp" />
     <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp" />
     <ClInclude Include="evo\inc.hpp" />
+    <ClInclude Include="evo\sdk\animation_system\animation_system.hpp" />
     <ClInclude Include="evo\sdk\classes\entity.hpp" />
     <ClInclude Include="evo\sdk\classes\view.hpp" />
     <ClInclude Include="evo\sdk\math\color_t.hpp" />
@@ -146,10 +147,13 @@
     <ClInclude Include="evo\sdk\memory\mem.hpp" />
     <ClInclude Include="evo\sdk\offsets\offsets.hpp" />
     <ClInclude Include="evo\sdk\process_manager\process_manager.hpp" />
+    <ClInclude Include="evo\sdk\render\render.hpp" />
+    <ClInclude Include="evo\sdk\render\render_sdk.hpp" />
     <ClInclude Include="evo\thirdparty\bytes.hpp" />
     <ClInclude Include="evo\thirdparty\custom.hpp" />
     <ClInclude Include="evo\thirdparty\imconfig.h" />
     <ClInclude Include="evo\thirdparty\imgui.h" />
+    <ClInclude Include="evo\thirdparty\imgui_freetype.h" />
     <ClInclude Include="evo\thirdparty\imgui_impl_dx11.h" />
     <ClInclude Include="evo\thirdparty\imgui_impl_dx9.h" />
     <ClInclude Include="evo\thirdparty\imgui_impl_win32.h" />
@@ -163,11 +167,14 @@
     <ClCompile Include="evo\core\ctx\ctx.cpp" />
     <ClCompile Include="evo\framework\framework.cpp" />
     <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp" />
+    <ClCompile Include="evo\sdk\animation_system\animation_system.cpp" />
     <ClCompile Include="evo\sdk\process_manager\process_manager.cpp" />
+    <ClCompile Include="evo\sdk\render\render.cpp" />
     <ClCompile Include="evo\thirdparty\custom.cpp" />
     <ClCompile Include="evo\thirdparty\imgui.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_demo.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_draw.cpp" />
+    <ClCompile Include="evo\thirdparty\imgui_freetype.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_impl_dx11.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_impl_dx9.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_impl_win32.cpp" />

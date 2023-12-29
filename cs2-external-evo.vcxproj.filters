@@ -87,6 +87,18 @@
     <ClInclude Include="evo\sdk\classes\view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\sdk\render\render.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="evo\sdk\render\render_sdk.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="evo\sdk\animation_system\animation_system.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="evo\thirdparty\imgui_freetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -129,6 +141,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\sdk\render\render.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\sdk\animation_system\animation_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\thirdparty\imgui_freetype.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
