@@ -287,7 +287,8 @@ void evo::menu_t::render( ) {
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
                                 ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
-
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###boxcolk", evo::_settings->box_color, ALPHA );
 
                             } custom.end_child( );
 
@@ -361,7 +362,7 @@ void evo::menu_t::render( ) {
 
         // footer
         draw->AddRectFilled( pos + ImVec2( 0, size.y - 20 ), pos + size, ImColor( 15, 14, 21 ), style.WindowRounding, ImDrawFlags_RoundCornersBottom );
-        draw->AddText( pos + ImVec2( 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "pandora for Counter-Strike: Global Offensive" );
+        draw->AddText( pos + ImVec2( 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "deathrow for Counter-Strike: Global Offensive" );
         draw->AddText( pos + ImVec2( size.x - CalcTextSize( "cs2 | internal cheat" ).x - 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "cs2 | internal cheat" );
 
     } ImGui::End( );

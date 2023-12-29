@@ -87,6 +87,10 @@ void evo::render_t::add_rect( int x, int y, int w, int h, evo::col_t col, int ro
 	ext_draw_list->AddRect( evo::macros::vec_t( x, y ), evo::macros::vec_t( x + w, y + h ), col.convert( ), round, 0, tickness );
 }
 
+evo::col_t evo::render_t::to_main_color( float color[ 4 ] ) {
+	return evo::col_t( color[ 0 ] * 255.f, color[ 1 ] * 255.f, color[ 2 ] * 255.f, color[ 3 ] * 255.f );
+}
+
 void evo::render_t::add_filled_circle( evo::vec2_t center, float radius, evo::col_t c ) {
 	ext_draw_list->AddCircleFilled( evo::macros::vec_t( center.x, center.y ), radius, c.convert( ) );
 }

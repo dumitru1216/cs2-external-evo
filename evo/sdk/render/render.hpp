@@ -24,6 +24,7 @@ namespace evo {
 		void add_text( int x, int y, col_t c, int font, const char* text, int /* or font_flags_t */ flag = font_flags_t::none );
 		void add_rect_filled( int x, int y, int w, int h, evo::col_t col, int round );
 		void add_rect( int x, int y, int w, int h, evo::col_t col, int round, int tickness );
+		evo::col_t to_main_color( float color[ 4 ] );
 		void add_filled_circle( evo::vec2_t center, float radius, evo::col_t c );
 		void add_gradient_circle_filled( evo::vec2_t c, int radius, evo::col_t inner_color, evo::col_t outer_color );
 		void add_gradient_vertical( int x, int y, int w, int h, evo::col_t c1, evo::col_t c2 );

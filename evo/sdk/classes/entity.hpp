@@ -86,7 +86,7 @@ namespace evo {
 		DWORD64 address{ 0 };
 
 		/* get data in there */
-		int health{};
+		int health{}, dormant{};
 
 		bone_t bone_data{};
 
@@ -99,6 +99,19 @@ namespace evo {
 
 		__forceinline bool _pos( ) {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::pos", this->address, offsets::pawn::vec_old_origin, this->pos );
+		}
+
+		__forceinline bool _dormant( ) {
+			DWORD64 game_scene_node = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_entity::game_scene_node, game_scene_node ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::_dormant", game_scene_node, offsets::pawn::dormant, this->dormant );
 		}
 	};
 
@@ -182,6 +195,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._pos( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._pos\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._dormant( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._pos\n" );
