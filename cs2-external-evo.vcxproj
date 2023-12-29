@@ -140,12 +140,12 @@
     <ClInclude Include="evo\hacks\features\esp\esp.hpp" />
     <ClInclude Include="evo\inc.hpp" />
     <ClInclude Include="evo\sdk\animation_system\animation_system.hpp" />
+    <ClInclude Include="evo\sdk\classes\bone_system.hpp" />
     <ClInclude Include="evo\sdk\classes\entity.hpp" />
     <ClInclude Include="evo\sdk\classes\view.hpp" />
     <ClInclude Include="evo\sdk\math\color_t.hpp" />
     <ClInclude Include="evo\sdk\math\rect_t.hpp" />
     <ClInclude Include="evo\sdk\math\str_t.hpp" />
-    <ClInclude Include="evo\sdk\math\vec2_t.hpp" />
     <ClInclude Include="evo\sdk\memory\mem.hpp" />
     <ClInclude Include="evo\sdk\offsets\offsets.hpp" />
     <ClInclude Include="evo\sdk\process_manager\process_manager.hpp" />

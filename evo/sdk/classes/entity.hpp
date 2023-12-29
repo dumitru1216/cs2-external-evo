@@ -33,8 +33,12 @@ namespace evo {
 		__forceinline bool _player_name( ) {
 			char buffer[ MAX_PATH ]{};
 
-			if ( !_proc_manager.read_memory( this->address + offsets::c_base_player_controler::player_name, buffer, MAX_PATH ) )
+			if ( !_proc_manager.read_memory( this->address + offsets::c_base_player_controler::player_name, buffer, MAX_PATH ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_controler::_player_name -> error -> no memory" );
+#endif // read_data_dbg
 				return false;
+			}
 
 			this->player_name = buffer;
 			if ( this->player_name.empty( ) )
@@ -83,6 +87,8 @@ namespace evo {
 
 		/* get data in there */
 		int health{};
+
+		bone_t bone_data;
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
@@ -169,7 +175,27 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->player_pawn.bone_data.update_bone_data( player_pawn_address ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error bone_data.update_bone_data\n" );
+#endif 
+				return false;
+			}
+
 			return true;
+		}
+
+		bone_t get_bone( ) const {
+			if ( this->player_pawn.address == 0 ) {
+#if 1
+				/* debug */
+				printf( "[evo] player address is 0\n" );
+#endif 
+				return bone_t{};
+			}
+
+			return this->player_pawn.bone_data;
 		}
 	};
 }
