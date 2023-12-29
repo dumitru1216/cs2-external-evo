@@ -10,6 +10,7 @@ namespace evo {
 	public:
 		bool initialize( );
 
+		view_t view;
 	private:
 		struct {
 			DWORD64 server_dll;

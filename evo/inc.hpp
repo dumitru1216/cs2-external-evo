@@ -56,8 +56,9 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "sdk/process_manager/process_manager.hpp"
 #include "sdk/memory/mem.hpp"
 #include "sdk/offsets/offsets.hpp"
-#include "core/ctx/ctx.hpp"
+#include "sdk/classes/view.hpp"
 
+#include "core/ctx/ctx.hpp"
 #include "sdk/classes/entity.hpp"
 
 #include "hacks/ctx/hacks_ctx.hpp"

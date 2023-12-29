@@ -138,6 +138,7 @@
     <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp" />
     <ClInclude Include="evo\inc.hpp" />
     <ClInclude Include="evo\sdk\classes\entity.hpp" />
+    <ClInclude Include="evo\sdk\classes\view.hpp" />
     <ClInclude Include="evo\sdk\math\color_t.hpp" />
     <ClInclude Include="evo\sdk\math\rect_t.hpp" />
     <ClInclude Include="evo\sdk\math\str_t.hpp" />
