@@ -201,7 +201,7 @@ namespace evo::framework {
 
         _menu->initialize( );
 
-        printf( "[evo] created ui!" );
+        printf( "[evo] created ui!\n" );
 
         m_b_initialized = true;
     }

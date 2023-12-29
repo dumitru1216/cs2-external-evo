@@ -9,25 +9,40 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
+		int health{ 0 };
+		int alive{ 0 };
+		int team_id{ 0 };
 		DWORD pawn{ 0 };
-
-		int health{ 0 }, alive{ 0 }, team_id{ 0 };
 		std::string player_name{};
 	public:
-		__forceinline int _health( ) {
-			health = mem::scan_memory<int>( "ccs_player_controler::health", this->address, 
-												 offets::c_base_entity::health, this->health );
-
-			return health; /* should work */
+		__forceinline bool _health( ) {
+			return mem::scan_memory<int>( "ccs_player_controler::health", this->address,
+										  offets::c_base_entity::health, this->health );
 		}
 
 		__forceinline bool _alive( ) {
 			/* we need this too whatever */
-			alive = mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
+			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
 											offets::c_base_player_controler::pawn_alive, this->alive );
+		}
 
-			/* we can do this shit rlly easy */
-			return ( this->_health( ) > 0 );
+		__forceinline bool _team_id( ) {
+			/* we need this too whatever */
+			return mem::scan_memory<int>( "ccs_player_controler::team_id", this->address,
+										  offets::c_base_entity::team_id, this->team_id );
+		}
+
+		__forceinline bool _player_name( ) {
+			char buffer[ MAX_PATH ]{};
+
+			if ( !_proc_manager.read_memory( this->address + offets::c_base_player_controler::player_name, buffer, MAX_PATH ) )
+				return false;
+
+			this->player_name = buffer;
+			if ( this->player_name.empty( ) )
+				this->player_name = "no-name";
+
+			return true;
 		}
 
 		__forceinline DWORD64 get_pawn_address( ) {
@@ -80,7 +95,7 @@ namespace evo {
 			if ( player_controler == 0 ) {
 #if 1
 				/* debug */
-				printf( "[evo] player controller is 0" );
+				printf( "[evo] player controller is 0\n" );
 #endif 
 				return false;
 			}
@@ -90,16 +105,42 @@ namespace evo {
 			if ( !this->controller._alive( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._alive" );
+				printf( "[evo] error controller._alive\n" );
 #endif 
 				return false;
 			}
+
+			if ( !this->controller._health( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._alive\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._team_id( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._alive\n" );
+#endif 
+				return false;
+			}
+
+
+			if ( !this->controller._player_name( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._alive\n" );
+#endif 
+				return false;
+			}
+
 
 			/* get pawn address */
 			this->player_pawn.address = this->controller.get_pawn_address( );
 #if 0
 			/* debug */
-			printf( "[evo] c_entity::update_controller ran succesfully" );
+			printf( "[evo] c_entity::update_controller ran succesfully\n" );
 #endif
 			return true;
 		}
@@ -108,7 +149,7 @@ namespace evo {
 			if ( player_pawn_address == 0 ) {
 #if 1
 				/* debug */
-				printf( "[evo] player controller is 0" );
+				printf( "[evo] player controller is 0\n" );
 #endif 
 				return false;
 			}

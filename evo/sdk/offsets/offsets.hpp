@@ -3,12 +3,14 @@
 namespace evo {
 	namespace offets {
 		namespace c_base_entity {
-			constexpr std::ptrdiff_t health = 0x32C;
+			inline DWORD health = 0x32C;
+			inline DWORD team_id = 0x3BF;
 		}
 
 		namespace c_base_player_controler {
-			constexpr std::ptrdiff_t player_pawn = 0x7EC;
-			constexpr std::ptrdiff_t pawn_alive = 0x7F4;
+			inline DWORD player_pawn = 0x7EC;
+			inline DWORD pawn_alive = 0x7F4;
+			inline DWORD player_name = 0x640;
 		}
 	}
 

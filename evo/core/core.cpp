@@ -20,18 +20,22 @@ int main( ) {
 		evo::framework::create( );
 
 	if ( !evo::_interfaces->initialize( ) ) {
-		printf( "[evo] failtd to init offsets" );
+		printf( "[evo] failtd to init offsets\n" );
 		goto END;
 	}
 
+	printf( "[evo] initialized interfaces!\n" );
+
 	if ( !evo::_address->initialize( ) ) {
-		printf( "[evo] failtd to init addresses" );
+		printf( "[evo] failtd to init addresses\n" );
 		goto END;
 	}
 
 	while ( !evo::framework::unloading ) {
 		if ( !evo::framework::render( ) )
 			return 0;
+
+		evo::_hacks->run( );
 
 		std::this_thread::sleep_for( std::chrono::milliseconds( 1 ) );
 	}

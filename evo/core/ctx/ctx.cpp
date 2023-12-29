@@ -24,7 +24,7 @@ bool evo::interface_t::initialize( ) {
 	dword server_dll = reinterpret_cast< DWORD64 >( _proc_manager.get_process_module_handle( "server.dll" ) );
 
 	if ( client_dll == 0 || server_dll == 0 ) {
-		printf( "[evo] invalid 1" );
+		printf( "[evo] invalid 1\n" );
 		return false;
 	}
 
@@ -33,7 +33,7 @@ bool evo::interface_t::initialize( ) {
 	/* entity list */
 	temp = search_for_offset( evo::signatures::entity_list, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::entity_list" );
+		printf( "[evo] invalid evo::signatures::entity_list\n" );
 		return false;
 	}
 
@@ -43,7 +43,7 @@ bool evo::interface_t::initialize( ) {
 	/* local player */
 	temp = search_for_offset( evo::signatures::local_player_controller, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::local_player_controller" );
+		printf( "[evo] invalid evo::signatures::local_player_controller\n" );
 		return false;
 	}
 
@@ -53,7 +53,7 @@ bool evo::interface_t::initialize( ) {
 	/* view matrix  */
 	temp = search_for_offset( evo::signatures::view_matrix, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::view_matrix" );
+		printf( "[evo] invalid evo::signatures::view_matrix\n" );
 		return false;
 	}
 
@@ -63,7 +63,7 @@ bool evo::interface_t::initialize( ) {
 	/* global vars  */
 	temp = search_for_offset( evo::signatures::global_vars, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::global_vars" );
+		printf( "[evo] invalid evo::signatures::global_vars\n" );
 		return false;
 	}
 
@@ -73,7 +73,7 @@ bool evo::interface_t::initialize( ) {
 	/* view angle  */
 	temp = search_for_offset( evo::signatures::view_angles, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::view_angles" );
+		printf( "[evo] invalid evo::signatures::view_angles\n" );
 		return false;
 	}
 
@@ -83,7 +83,7 @@ bool evo::interface_t::initialize( ) {
 	/* localpawn  */
 	temp = search_for_offset( evo::signatures::local_player_pawn, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::local_player_pawn" );
+		printf( "[evo] invalid evo::signatures::local_player_pawn\n" );
 		return false;
 	}
 
@@ -93,7 +93,7 @@ bool evo::interface_t::initialize( ) {
 	/* force jump  */
 	temp = search_for_offset( evo::signatures::force_jump, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::force_jump" );
+		printf( "[evo] invalid evo::signatures::force_jump\n" );
 		return false;
 	}
 
@@ -103,23 +103,32 @@ bool evo::interface_t::initialize( ) {
 	/* planted c4  */
 	temp = search_for_offset( evo::signatures::planted_c4, client_dll );
 	if ( temp == 0 ) {
-		printf( "[evo] invalid evo::signatures::planted_c4" );
+		printf( "[evo] invalid evo::signatures::planted_c4\n" );
 		return false;
 	}
 
 	/* dump offset */
 	evo::dragged_offsets::planted_c4 = temp - client_dll;
 
-	printf( "[evo] initialized interfaces!" );
+	return true;
 }
 
 bool evo::address_t::initialize( ) {
 	this->game.client_dll = reinterpret_cast< DWORD64 >( _proc_manager.get_process_module_handle( "client.dll" ) );
 	this->game.server_dll = reinterpret_cast< DWORD64 >( _proc_manager.get_process_module_handle( "server.dll" ) );
 
-	printf( "[evo] initialized dll addresses!" );
+	this->game.entity_list = get_client_dll_address( ) + evo::dragged_offsets::entity_list;
+	this->game.matrix = get_client_dll_address( ) + evo::dragged_offsets::matrix;
+	this->game.view_angle = get_client_dll_address( ) + evo::dragged_offsets::view_angle;
+	this->game.local_controller = get_client_dll_address( ) + evo::dragged_offsets::local_player_controller;
+	this->game.local_pawn = get_client_dll_address( ) + evo::dragged_offsets::local_player_pawn;
+	this->game.server_pawn = get_client_dll_address( ) + evo::dragged_offsets::local_player_pawn;
+	this->game.force_jump = get_client_dll_address( ) + evo::dragged_offsets::force_jump;
+	this->game.global_vars = get_client_dll_address( ) + evo::dragged_offsets::global_vars;
 
-	return this->game.entity_list != 0;
+	printf( "[evo] initialized dll addresses!\n" );
+
+	return this->game.client_dll != 0;
 }
 
 DWORD64 evo::address_t::get_client_dll_address( ) {
