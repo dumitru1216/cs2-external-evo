@@ -88,10 +88,17 @@ namespace evo {
 		/* get data in there */
 		int health{};
 
-		bone_t bone_data;
+		bone_t bone_data{};
+
+		vec2_t screen_pos{};
+		vec3_t pos{};
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
+		}
+
+		__forceinline bool _pos( ) {
+			return mem::scan_memory<vec3_t>( "c_player_pawn::pos", this->address, offsets::pawn::vec_old_origin, this->pos );
 		}
 	};
 
@@ -102,7 +109,7 @@ namespace evo {
 	public:
 		__forceinline bool update_controller( const DWORD64& player_controler ) {
 			if ( player_controler == 0 ) {
-#if 1
+#if 0
 				/* debug */
 				printf( "[evo] player controller is 0\n" );
 #endif 
@@ -144,7 +151,6 @@ namespace evo {
 				return false;
 			}
 
-
 			/* get pawn address */
 			this->player_pawn.address = this->controller.get_pawn_address( );
 #if 0
@@ -175,6 +181,15 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->player_pawn._pos( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._pos\n" );
+#endif 
+
+				return false;
+			}
+
 			if ( !this->player_pawn.bone_data.update_bone_data( player_pawn_address ) ) {
 #if 1
 				/* debug */
@@ -186,7 +201,7 @@ namespace evo {
 			return true;
 		}
 
-		bone_t get_bone( ) const {
+		__forceinline bone_t get_bone( ) const {
 			if ( this->player_pawn.address == 0 ) {
 #if 1
 				/* debug */
@@ -196,6 +211,10 @@ namespace evo {
 			}
 
 			return this->player_pawn.bone_data;
+		}
+
+		__forceinline bool in_screen( ) {
+			return evo::_address->view.world_to_screen( this->player_pawn.pos, this->player_pawn.screen_pos );
 		}
 	};
 }

@@ -48,7 +48,42 @@ void evo::hacks_t::run( ) {
 	}
 
 	/* loop between entity */
-	{
-		
+	for ( int i = 0; i < 64; i++ ) {
+		c_entity entity;
+		DWORD64 entity_address = 0;
+
+		if ( !_proc_manager.read_memory<DWORD64>( evo::_address->get_entity_list_entry( ) + ( i + 1 ) * 0x78, entity_address ) ) {
+#ifdef read_data_dbg1
+			print_with_data_scoped( "hacks_t::run -> error -> loop::get_entity_list_entry" );
+#endif // read_data_dbg
+			continue;
+		}
+
+		if ( entity_address == local_player.controller.address ) {
+			local_player_index = i;
+			continue;
+		}
+
+		if ( !entity.update_controller( entity_address ) ) {
+#ifdef read_data_dbg1
+			print_with_data_scoped( "hacks_t::run -> error -> update_controller::entity_address" );
+#endif // read_data_dbg
+			continue;
+		}
+
+		if ( !entity.update_pawn( entity.player_pawn.address ) ) {
+#ifdef read_data_dbg
+			print_with_data_scoped( "hacks_t::run -> error -> update_pawn::entity.player_pawn.address" );
+#endif // read_data_dbg
+			continue;
+		}
+
+		if ( !entity.in_screen( ) ) {
+			continue;
+		}
+
+		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
+		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
+
 }

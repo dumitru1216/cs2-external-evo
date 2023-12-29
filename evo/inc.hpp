@@ -54,17 +54,19 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "sdk/math/color_t.hpp"
 #include "sdk/math/rect_t.hpp"
 #include "sdk/math/str_t.hpp"
+#include "sdk/render/render_sdk.hpp"
 
 #include "sdk/process_manager/process_manager.hpp"
 #include "sdk/memory/mem.hpp"
 #include "sdk/offsets/offsets.hpp"
 #include "sdk/classes/view.hpp"
+#include "core/ctx/ctx.hpp"
+
 #include "sdk/classes/bone_system.hpp"
 
-#include "core/ctx/ctx.hpp"
 #include "sdk/classes/entity.hpp"
-
 #include "sdk/render/render.hpp"
+
 
 #include "framework/config/cfg.hpp"
 #include "hacks/features/esp/esp.hpp"

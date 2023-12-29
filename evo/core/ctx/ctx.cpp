@@ -174,11 +174,21 @@ DWORD64 evo::address_t::get_global_vars_address( ) {
 bool evo::address_t::update_entity_list_entry( ) {
 	DWORD64 entity_list_entry = 0;
 
-	if ( !_proc_manager.read_memory<DWORD64>( this->get_entity_list_address( ), entity_list_entry ) )
+	if ( !_proc_manager.read_memory<DWORD64>( this->get_entity_list_address( ), entity_list_entry ) ) {
+#ifdef read_data_dbg
+		print_with_data_scoped( "address_t::update_entity_list_entry -> error -> 1" );
+#endif // read_data_dbg
 		return false;
+	}
 
-	if ( !_proc_manager.read_memory<DWORD64>( entity_list_entry + 0x10, entity_list_entry ) )
+	if ( !_proc_manager.read_memory<DWORD64>( entity_list_entry + 0x10, entity_list_entry ) ) {
+#ifdef read_data_dbg
+		print_with_data_scoped( "address_t::update_entity_list_entry -> error -> 2" );
+#endif // read_data_dbg
 		return false;
+	}
+
+	this->game.entity_list_entry = entity_list_entry;
 
 	return this->game.entity_list_entry != 0;
 }

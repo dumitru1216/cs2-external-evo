@@ -1,5 +1,4 @@
 #pragma once
-#include "render_sdk.hpp"
 
 namespace evo {
 	enum fonts_t {

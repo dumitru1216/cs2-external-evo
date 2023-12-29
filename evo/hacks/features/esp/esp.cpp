@@ -10,12 +10,21 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 
 		evo::_render->add_rect(
 			rect.x, rect.y, /* bb.min */
-			rect.w, rect.z, /* bb.max */
+			rect.z, rect.w, /* bb.max */
 			evo::col_t( ), 0, 1.f
 		);
 	}
 }
 
-evo::vec4 evo::esp_t::get_player_bounding_box( const c_entity& entity ) {
-	
+evo::macros::vec4_t evo::esp_t::get_player_bounding_box( const c_entity& entity ) {
+	bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
+
+	vec2_t size, pos;
+	size.y = ( entity.player_pawn.screen_pos.y - head.screen_pos.y ) * 1.09;
+	size.x = size.y * 0.6;
+
+	// retarded 
+	pos = vec2_t( entity.player_pawn.screen_pos.x - size.x / 2, head.screen_pos.y - size.y * 0.08 );
+
+	return ImVec4{ pos.x, pos.y, size.x, size.y };
 }

@@ -73,6 +73,8 @@ namespace evo::framework {
                 _menu->render( );
             }
 
+            evo::_hacks->run( );
+
             ImDrawList* pBackgroundDrawList = ImGui::GetBackgroundDrawList( );
             // Draw::RenderDrawData( pBackgroundDrawList ); rendering
 
@@ -284,7 +286,7 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-
+                                ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
 
 
                             } custom.end_child( );

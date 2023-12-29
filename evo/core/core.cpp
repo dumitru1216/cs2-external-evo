@@ -35,8 +35,6 @@ int main( ) {
 		if ( !evo::framework::render( ) )
 			return 0;
 
-		evo::_hacks->run( );
-
 		std::this_thread::sleep_for( std::chrono::milliseconds( 1 ) );
 	}
 
