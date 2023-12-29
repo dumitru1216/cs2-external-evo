@@ -1,5 +1,4 @@
 #pragma once
-#define read_data_dbg
 
 namespace evo {
 	namespace mem {

@@ -34,19 +34,27 @@ namespace evo {
 			}
 
 			if ( !_proc_manager.read_memory<DWORD64>( _address->get_entity_list_address( ), entity_pawn_list_entry ) ) {
-				//print_with_data( "sa" );
+#ifdef read_data_dbg 
+				print_with_data_scoped( "error get_pawn_address::get_entity_list_address" );
+#endif
 				return 0;
 			}
 
 			if ( !_proc_manager.read_memory<DWORD64>( entity_pawn_list_entry + 0x10 + 8 * ( ( this->pawn & 0x7FFF ) >> 9 ), entity_pawn_list_entry ) ) {
-
+#ifdef read_data_dbg 
+				print_with_data_scoped( "error get_pawn_address::entity_pawn_list_entry + 0x10" );
+#endif
 				return 0;
 			}
 
 			if ( !_proc_manager.read_memory<DWORD64>( entity_pawn_list_entry + 0x78 * ( this->pawn & 0x1FF ), entity_pawn_address ) ) {
-
+#ifdef read_data_dbg 
+				print_with_data_scoped( "error get_pawn_address::entity_pawn_list_entry + 0x78" );
+#endif
 				return 0;
 			}
+
+			return entity_pawn_address;
 		}
 	};
 

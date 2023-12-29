@@ -41,7 +41,9 @@
 #include "thirdparty/imgui_impl_dx11.h"
 
 #define ext_draw_list ImGui::GetBackgroundDrawList( )
+#define read_data_dbg
 #define print_with_data(s) std::cout << "[evo-debug] " + s << std::endl;
+#define print_with_data_scoped(s) std::cout << "[evo-debug] " + std::string(s) << std::endl;
 
 /* inc */
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
