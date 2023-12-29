@@ -81,6 +81,16 @@ namespace evo {
 
 			this->controller.address = player_controler;
 
+			if ( !this->controller._alive( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._alive" );
+#endif 
+				return false;
+			}
+
+			/* get pawn address */
+			this->player_pawn.address = this->controller.get_pawn_address( );
 #if 0
 			/* debug */
 			printf( "[evo] c_entity::update_controller ran succesfully" );
