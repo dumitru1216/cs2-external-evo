@@ -17,9 +17,15 @@ namespace evo {
 		__forceinline int _health( ) {
 			health = mem::scan_memory<int>( "ccs_player_controler::health", this->address, 
 												 offets::c_base_entity::health, this->health );
+
+			return health; /* should work */
 		}
 
 		__forceinline bool _alive( ) {
+			/* we need this too whatever */
+			alive = mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
+											offets::c_base_player_controler::pawn_alive, this->alive );
+
 			/* we can do this shit rlly easy */
 			return ( this->_health( ) > 0 );
 		}
@@ -99,7 +105,18 @@ namespace evo {
 		}
 
 		__forceinline bool update_pawn( const DWORD64& player_pawn_address ) {
+			if ( player_pawn_address == 0 ) {
+#if 1
+				/* debug */
+				printf( "[evo] player controller is 0" );
+#endif 
+				return false;
+			}
 
+			/* get pawn address */
+			this->player_pawn.address = player_pawn_address;
+
+			return true;
 		}
 	};
 }

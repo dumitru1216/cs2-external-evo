@@ -8,6 +8,7 @@ namespace evo {
 
 		namespace c_base_player_controler {
 			constexpr std::ptrdiff_t player_pawn = 0x7EC;
+			constexpr std::ptrdiff_t pawn_alive = 0x7F4;
 		}
 	}
 
