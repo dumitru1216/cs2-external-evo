@@ -141,6 +141,7 @@
     <ClInclude Include="evo\sdk\math\rect_t.hpp" />
     <ClInclude Include="evo\sdk\math\str_t.hpp" />
     <ClInclude Include="evo\sdk\math\vec2_t.hpp" />
+    <ClInclude Include="evo\sdk\memory\mem.hpp" />
     <ClInclude Include="evo\sdk\offsets\offsets.hpp" />
     <ClInclude Include="evo\sdk\process_manager\process_manager.hpp" />
     <ClInclude Include="evo\thirdparty\bytes.hpp" />

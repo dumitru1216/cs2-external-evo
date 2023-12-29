@@ -41,6 +41,7 @@
 #include "thirdparty/imgui_impl_dx11.h"
 
 #define ext_draw_list ImGui::GetBackgroundDrawList( )
+#define print_with_data(s) std::cout << "[evo-debug] " + s << std::endl;
 
 /* inc */
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
@@ -49,11 +50,13 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "sdk/math/rect_t.hpp"
 #include "sdk/math/str_t.hpp"
 #include "sdk/math/vec2_t.hpp"
-#include "sdk/classes/entity.hpp"
 
 #include "sdk/process_manager/process_manager.hpp"
+#include "sdk/memory/mem.hpp"
 #include "sdk/offsets/offsets.hpp"
 #include "core/ctx/ctx.hpp"
+
+#include "sdk/classes/entity.hpp"
 
 #include "framework/framework.hpp"
 

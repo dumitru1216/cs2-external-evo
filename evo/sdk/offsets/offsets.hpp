@@ -2,7 +2,13 @@
 
 namespace evo {
 	namespace offets {
+		namespace c_base_entity {
+			constexpr std::ptrdiff_t health = 0x32C;
+		}
 
+		namespace c_base_player_controler {
+			constexpr std::ptrdiff_t player_pawn = 0x7EC;
+		}
 	}
 
 	namespace dragged_offsets {

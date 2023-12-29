@@ -119,7 +119,7 @@ bool evo::address_t::initialize( ) {
 
 	printf( "[evo] initialized dll addresses!" );
 
-	this->game.entity_list;
+	return this->game.entity_list != 0;
 }
 
 DWORD64 evo::address_t::get_client_dll_address( ) {

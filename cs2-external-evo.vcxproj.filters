@@ -78,6 +78,9 @@
     <ClInclude Include="evo\sdk\classes\entity.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\sdk\memory\mem.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
