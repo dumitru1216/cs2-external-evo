@@ -24,6 +24,11 @@ int main( ) {
 		goto END;
 	}
 
+	if ( !evo::_address->initialize( ) ) {
+		printf( "[evo] failtd to init addresses" );
+		goto END;
+	}
+
 	while ( !evo::framework::unloading ) {
 		if ( !evo::framework::render( ) )
 			return 0;

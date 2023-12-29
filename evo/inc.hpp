@@ -45,6 +45,12 @@
 /* inc */
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
+#include "sdk/math/color_t.hpp"
+#include "sdk/math/rect_t.hpp"
+#include "sdk/math/str_t.hpp"
+#include "sdk/math/vec2_t.hpp"
+#include "sdk/classes/entity.hpp"
+
 #include "sdk/process_manager/process_manager.hpp"
 #include "sdk/offsets/offsets.hpp"
 #include "core/ctx/ctx.hpp"

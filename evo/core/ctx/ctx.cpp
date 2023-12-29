@@ -113,13 +113,13 @@ bool evo::interface_t::initialize( ) {
 	printf( "[evo] initialized interfaces!" );
 }
 
-bool evo::address_t::initiaize( ) {
+bool evo::address_t::initialize( ) {
 	this->game.client_dll = reinterpret_cast< DWORD64 >( _proc_manager.get_process_module_handle( "client.dll" ) );
 	this->game.server_dll = reinterpret_cast< DWORD64 >( _proc_manager.get_process_module_handle( "server.dll" ) );
 
 	printf( "[evo] initialized dll addresses!" );
 
-	this->game.entity_list
+	this->game.entity_list;
 }
 
 DWORD64 evo::address_t::get_client_dll_address( ) {
@@ -175,6 +175,11 @@ bool evo::address_t::update_entity_list_entry( ) {
 }
 
 bool evo::address_t::set_view_angle( float yaw, float pitch ) {
+	vec2_t Angle{ pitch, yaw };
+
+	if ( !_proc_manager.write_memory<vec2_t>( this->game.view_angle, Angle ) )
+		return false;
+
 	return false;
 }
 

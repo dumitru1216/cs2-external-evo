@@ -8,7 +8,7 @@ namespace evo {
 
 	class address_t {
 	public:
-		bool initiaize( );
+		bool initialize( );
 
 	private:
 		struct {
