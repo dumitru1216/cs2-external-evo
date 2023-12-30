@@ -136,46 +136,46 @@ namespace evo {
 		__forceinline bool _defuser( ) {
 			// item services
 			// 0x10B0
-			DWORD64 new_address = 0;
+			DWORD64 _defuser_adr = 0;
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, new_address ) ) {
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, _defuser_adr ) ) {
 #ifdef read_data_dbg
 				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::has_defuser", new_address, offsets::item_services::has_defuser, this->defuser );
+			return mem::scan_memory<int>( "c_player_pawn::has_defuser", _defuser_adr, offsets::item_services::has_defuser, this->defuser );
 		}
 
 		__forceinline bool _hemlet( ) {
 			// item services
 			// 0x10B0
-			DWORD64 new_address = 0;
+			DWORD64 _hemlet_adr = 0;
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, new_address ) ) {
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, _hemlet_adr ) ) {
 #ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+				print_with_data_scoped( "ccs_player_pawn::item_services_pawn::_hemlet_adr -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::pos", new_address, offsets::item_services::has_hemlet, this->hemlet );
+			return mem::scan_memory<int>( "c_player_pawn::_hemlet", _hemlet_adr, offsets::item_services::has_hemlet, this->hemlet );
 		}
 
 		__forceinline bool _heavyar( ) {
 			// item services
 			// 0x10B0
-			DWORD64 new_address = 0;
+			DWORD64 _heavyar_adr = 0;
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, new_address ) ) {
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, _heavyar_adr ) ) {
 #ifdef read_data_dbg
 				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::spotted", new_address, offsets::item_services::has_heavy_armor, this->heavy_ar );
+			return mem::scan_memory<int>( "c_player_pawn::has_heavy_armor", _heavyar_adr, offsets::item_services::has_heavy_armor, this->heavy_ar );
 		}
 
 		__forceinline bool _clip( ) {
@@ -480,20 +480,12 @@ namespace evo {
 			if ( !this->player_pawn._hemlet( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._spotted\n" );
+				printf( "[evo] error controller._hemlet\n" );
 #endif 
 
 				return false;
 			}
 
-			if ( !this->player_pawn._heavyar( ) ) {
-#if 1
-				/* debug */
-				printf( "[evo] error controller._spotted\n" );
-#endif 
-
-				return false;
-			}
 
 			if ( !this->player_pawn.bone_data.update_bone_data( player_pawn_address ) ) {
 #if 1

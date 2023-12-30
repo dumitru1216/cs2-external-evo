@@ -226,6 +226,14 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
 	}
 
+	if ( ( entity.player_pawn.heavy_ar == 1 ) ) {
+		info.push_back( { "HK", evo::col_t( ) } );
+	}
+
+	if ( ( entity.player_pawn.defuser ) ) {
+		info.push_back( { "KIT", evo::col_t( 128, 229, 255 ) } );
+	}
+
 	if ( this->spotted( entity, local_player, local_index, index ) ) {
 		info.push_back( { "visible", evo::col_t( 84, 255, 84 ) } );
 	}
@@ -248,7 +256,8 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
 
-	print_with_data_scoped( "def: " + std::to_string( local_player.player_pawn.defuser ) )
+	print_with_data_scoped( "hk: " + std::to_string( local_player.player_pawn.heavy_ar ) + ", h: " + std::to_string( local_player.player_pawn.hemlet ) +
+							", def: " + std::to_string( local_player.player_pawn.defuser ) )
 
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
