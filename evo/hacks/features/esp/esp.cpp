@@ -239,6 +239,46 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 	}
 }
 
+void evo::esp_t::render_dropped_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { /* shit doesnt work */
+	DWORD64 game_scene_node = 0;
+
+	if ( !_proc_manager.read_memory<DWORD64>( entity.player_pawn.address + offsets::c_base_entity::game_scene_node, game_scene_node ) ) {
+#ifdef read_data_dbg
+		print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory" );
+#endif // read_data_dbg
+		return;
+	}
+
+	for ( int i = 65; i < 1024; i++ ) {
+		uintptr_t entity_uint;// = _proc_manager.read_memory<uintptr_t>( entity.player_pawn.address + 0x10 );
+		if ( !_proc_manager.read_memory<uintptr_t>( entity.player_pawn.address + 0x10, entity_uint ) ) {
+
+			printf( "xx1" );
+			continue;
+		}
+
+
+		uintptr_t designerNameAddy;
+		if ( !_proc_manager.read_memory<uintptr_t>( entity_uint + 0x20, designerNameAddy ) ) {
+			printf( "xx12" );
+			continue;
+		}
+
+		char designerNameBuffer[ MAX_PATH ]{};
+		_proc_manager.read_memory( designerNameAddy, designerNameBuffer, MAX_PATH );
+
+		std::string name = std::string( designerNameBuffer );
+
+		if ( strstr( name.c_str( ), "weapon_" ) ) name.erase( 0, 7 );
+		else if ( strstr( name.c_str( ), "_projectile" ) ) name.erase( name.length( ) - 11, 11 );
+		else if ( strstr( name.c_str( ), "baseanimgraph" ) ) name = "defuse kit";
+		else continue;
+
+		name = entity.player_pawn.weapon_name;
+		evo::_render->add_text( entity.player_pawn.vec_origin.x, entity.player_pawn.vec_origin.y, evo::col_t( ), 1, name.c_str( ) );
+	}
+}
+
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
 	/* 
 		dormant shit: 
