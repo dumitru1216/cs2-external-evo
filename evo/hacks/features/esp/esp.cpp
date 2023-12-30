@@ -228,6 +228,8 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 
 	/* beta */
 	info.push_back( { std::to_string( entity.player_pawn.ping ) + "ms", evo::col_t( ) } ); // i guess it works
+	info.push_back( { std::to_string( entity.controller.money ) + "$", evo::col_t( ) } ); // i guess it works
+
 
 	// beta 
 	// if ( ( entity.player_pawn.defuser ) ) {

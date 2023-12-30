@@ -33,7 +33,7 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
-		int health{ 0 }, alive{ 0 }, team_id{ 0 };
+		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 };
 		DWORD pawn{ 0 };
 		std::string player_name{};
 	public:
@@ -46,6 +46,21 @@ namespace evo {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
 											offsets::c_base_player_controler::pawn_alive, this->alive );
+		}
+
+		__forceinline bool _money( ) {
+			// item services
+			// 0x10B0
+			DWORD64 addr = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::controller::money_services, addr ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::money_seriv", addr, offsets::c_money_services::i_account, this->money );
 		}
 
 		__forceinline bool _team_id( ) {
@@ -111,7 +126,7 @@ namespace evo {
 
 		/* get data in there */
 		int health{}, dormant{}, clip{}, max_clip{},
-			defuser{}, hemlet{}, heavy_ar{}, ping;
+			defuser{}, hemlet{}, heavy_ar{}, ping{}, money{};
 
 		cs_weapon_type weapon_type{};
 		std::string weapon_name{};
@@ -347,6 +362,14 @@ namespace evo {
 			}
 
 			if ( !this->controller._health( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._money( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._health\n" );

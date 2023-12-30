@@ -47,6 +47,14 @@ namespace evo {
 			inline DWORD zs_name = 0xC18;
 		}
 
+		namespace controller {
+			inline DWORD money_services = 0x700;
+		}
+
+		namespace c_money_services {
+			inline DWORD i_account = 0x40;
+		}
+
 		namespace untested {
 			/* matchmaking stuff - CCSPlayerController
 			
