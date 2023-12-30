@@ -477,6 +477,24 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->player_pawn._hemlet( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._heavyar( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
 			if ( !this->player_pawn.bone_data.update_bone_data( player_pawn_address ) ) {
 #if 1
 				/* debug */
