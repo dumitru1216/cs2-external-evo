@@ -200,7 +200,7 @@ void evo::esp_t::skeleton_esp( const c_entity& local_player, const c_entity& ent
 					continue;
 				}
 				if ( previous.is_visible && current.is_visible ) {
-					evo::_render->add_line( previous.screen_pos, current.screen_pos, evo::col_t( ), 1.0f );
+					evo::_render->add_line( previous.screen_pos, current.screen_pos, skele_clr, 1.0f );
 				}
 				previous = current;
 			}
@@ -210,7 +210,7 @@ void evo::esp_t::skeleton_esp( const c_entity& local_player, const c_entity& ent
 	/* head dot */
 	if ( evo::_settings->bones_h ) {
 		bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
-		evo::_render->add_circle( head.screen_pos, 6, evo::col_t( ) );
+		evo::_render->add_circle( head.screen_pos, 6, skele_clr );
 	}
 }
 
@@ -226,7 +226,8 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
 	}
 
-	info.push_back( { std::to_string( entity.player_pawn.ping ) + "ms", evo::col_t( 255, 71, 71 ) } );
+	/* beta */
+	info.push_back( { std::to_string( entity.player_pawn.ping ) + "ms", evo::col_t( ) } ); // i guess it works
 
 	// beta 
 	// if ( ( entity.player_pawn.defuser ) ) {

@@ -48,10 +48,6 @@ namespace evo {
 		}
 
 		namespace untested {
-			//  constexpr std::ptrdiff_t m_iConnected = 0x63C; - CBasePlayerController 
-			// constexpr std::ptrdiff_t m_iDesiredFOV = 0x6D4; - CBasePlayerController
-			// constexpr std::ptrdiff_t m_iPing = 0x720; - CCSPlayerController 
-
 			/* matchmaking stuff - CCSPlayerController
 			
 				constexpr std::ptrdiff_t m_iCompetitiveRanking = 0x770; // int32_t
@@ -70,7 +66,6 @@ namespace evo {
 				 constexpr std::ptrdiff_t m_nPreviousAccount = 0x50; // int32_t
 			*/
 
-			// see CCSPlayer_PingServices 
 
 			// see CCSPlayer_MovementServices
 		}
