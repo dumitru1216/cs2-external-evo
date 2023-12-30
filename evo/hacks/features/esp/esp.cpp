@@ -225,20 +225,10 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 	if ( ( entity.player_pawn.health < 30 ) ) {
 		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
 	}
-
+	
 	/* beta */
 	info.push_back( { std::to_string( entity.controller.money ) + "$", evo::col_t( 66, 245, 84 ) } ); // i guess it works
 	info.push_back( { std::to_string( entity.controller.ping ) + "ms", evo::col_t( ) } ); // i guess it works
-
-
-	// beta 
-	// if ( ( entity.player_pawn.defuser ) ) {
-	// 	info.push_back( { "kit", evo::col_t( 128, 229, 255 ) } );
-	// }
-	// 
-	// if ( this->spotted( entity, local_player, local_index, index ) ) {
-	// 	info.push_back( { "visible", evo::col_t( 255, 71, 71 ) } );
-	// }
 
 	for ( int i = 0; i < info.size( ); i++ ) {
 		/* transform it */

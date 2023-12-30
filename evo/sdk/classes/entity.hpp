@@ -54,6 +54,18 @@ namespace evo {
 										  offsets::c_base_player_controler::ping, this->ping );
 		}
 
+		__forceinline bool _defuser( ) {
+			/* we need this too whatever */
+			return mem::scan_memory<int>( "ccs_player_controler::def", this->address,
+										  offsets::c_base_player_controler::has_defuser, this->defuser );
+		}
+
+		__forceinline bool _hemlet( ) {
+			/* we need this too whatever */
+			return mem::scan_memory<int>( "ccs_player_controler::hemlet", this->address,
+										  offsets::c_base_player_controler::has_hemlet, this->hemlet );
+		}
+
 		__forceinline bool _money( ) {
 			// item services
 			// 0x10B0
@@ -371,6 +383,22 @@ namespace evo {
 			}
 
 			if ( !this->controller._money( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._defuser( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._hemlet( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._health\n" );
