@@ -9,6 +9,7 @@ namespace evo {
 		void render_name( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
 		void health_bar( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
 		void ammo_bar( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
+		void render_weapon( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
 
 		void render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect,
 							  int local_index, int index );

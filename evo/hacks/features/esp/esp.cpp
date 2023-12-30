@@ -155,6 +155,23 @@ void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity,
 	}
 }
 
+void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
+	std::string weaepon_name = entity.player_pawn.weapon_name;
+
+	/* we re gonna initialize this later */
+	int offset;
+	
+	/* transform it */
+	std::transform( weaepon_name.begin( ), weaepon_name.end( ), weaepon_name.begin( ), ::toupper );
+
+	/* text sizes */
+	int text_width = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).x;
+	int text_height = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).y;
+
+
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 4, evo::col_t( ), evo::fonts_t::_default_2, weaepon_name.c_str( ), evo::font_flags_t::outline );
+}
+
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
 	/* 
 		dormant shit: 
@@ -182,6 +199,8 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 	if ( evo::_settings->ammobar ) {
 		this->ammo_bar( local_player, entity, rect, local_index, index );
 	}
+
+	this->render_weapon( local_player, entity, rect, local_index, index );
 }
 
 evo::macros::vec4_t evo::esp_t::get_player_bounding_box( const c_entity& entity ) {
