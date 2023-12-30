@@ -28,6 +28,7 @@ namespace evo {
 			inline DWORD weapon_services = 0x10A8;
 			inline DWORD active_weapon = 0x60;
 			inline DWORD clip_1 = 0x1570;
+			inline DWORD max_clip = 0x1FC;
 		}
 
 		namespace c_game_scene_mode {

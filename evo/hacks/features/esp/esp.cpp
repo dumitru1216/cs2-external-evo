@@ -123,6 +123,10 @@ void evo::esp_t::health_bar( const c_entity& local_player, const c_entity& entit
 
 void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
 	int bullets = entity.player_pawn.clip;
+
+	evo::col_t health_color = evo::col_t( 20, 20, 200 );
+
+
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
@@ -133,6 +137,8 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		spotted shit:
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
+
+	print_with_data_scoped( "b: " + std::to_string( local_player.player_pawn.clip ) + ", m: " + std::to_string( local_player.player_pawn.max_clip ) )
 
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 

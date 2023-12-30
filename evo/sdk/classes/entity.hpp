@@ -86,7 +86,7 @@ namespace evo {
 		DWORD64 address{ 0 }, spotted_by_mask{};
 
 		/* get data in there */
-		int health{}, dormant{}, clip{};
+		int health{}, dormant{}, clip{}, max_clip{};
 
 		bone_t bone_data{};
 
@@ -111,12 +111,33 @@ namespace evo {
 
 			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
 #ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::_dormant2 -> error -> no memory" );
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::maxclip1", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
+			return mem::scan_memory<int>( "c_player_pawn::clip", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
+		}
+
+		__forceinline bool _max_clip( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			if ( !_proc_manager.read_memory<DWORD64>( clipping_weapon + offsets::c_base_weapon::wpn_data_ptr, weapon_data ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::max_clip_1", weapon_data, offsets::c_base_weapon::max_clip, this->max_clip );
 		}
 
 		__forceinline bool _vec_origin( ) {
@@ -262,6 +283,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._clip( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._max_clip( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );
