@@ -366,7 +366,7 @@ void evo::menu_t::render( ) {
 
                                 ImGui::Checkbox( "Flags", &evo::_settings->flags );
                                 ImGui::Checkbox( "Show competitive wins", &evo::_settings->show_competivie_wins );
-                                ImGui::Checkbox( "Show dealt damage that round", &evo::_settings->show_competivie_wins );
+                                ImGui::Checkbox( "Show dealt damage that round", &evo::_settings->show_dmg_dealt );
 
                             } custom.end_child( );
 

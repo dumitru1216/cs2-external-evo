@@ -71,6 +71,10 @@ namespace evo {
 			inline DWORD total_damage = 0x110;
 		}
 
+		namespace modulation {
+			inline DWORD sky3d = 0x1168;
+		}
+
 		namespace untested {
 			/* CCSPlayerController_InGameMoneyServices 
 				 constexpr std::ptrdiff_t m_iAccount = 0x40; // int32_t
