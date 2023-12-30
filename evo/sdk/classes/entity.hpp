@@ -33,7 +33,7 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
-		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 };
+		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 };
 		DWORD pawn{ 0 };
 		std::string player_name{};
 	public:
@@ -182,11 +182,6 @@ namespace evo {
 			}
 
 			return mem::scan_memory<int>( "c_player_pawn::has_defuser", _defuser_adr, offsets::item_services::has_defuser, this->defuser );
-		}
-
-		__forceinline bool _hemlet( ) {
-
-			return mem::scan_memory<int>( "c_player_pawn::_hemlet", this->address, offsets::pawn::has_hemlet, this->hemlet );
 		}
 
 		__forceinline bool _heavyar( ) {
@@ -519,14 +514,6 @@ namespace evo {
 				return false;
 			}
 
-			if ( !this->player_pawn._hemlet( ) ) {
-#if 1
-				/* debug */
-				printf( "[evo] error controller._hemlet\n" );
-#endif 
-
-				return false;
-			}
 
 			if ( !this->player_pawn._ping( ) ) {
 #if 1

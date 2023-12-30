@@ -14,14 +14,15 @@ namespace evo {
 			inline DWORD pawn_alive = 0x7F4;
 			inline DWORD player_name = 0x640;
 			inline DWORD ping = 0x720;
+
+			inline DWORD has_hemlet = 0x801;
+			inline DWORD has_defuser = 0x800;
 		}
 
 		namespace pawn {
 			inline DWORD health = 0x32C;
 			inline DWORD vec_old_origin = 0x1224;
 			inline DWORD dormant = 0xE7;
-			inline DWORD has_hemlet = 0x801;
-			inline DWORD has_defuser = 0x800;
 			inline DWORD ping_services = 0x1268;
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
