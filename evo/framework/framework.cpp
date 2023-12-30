@@ -297,76 +297,7 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-                                ImGui::Checkbox( "Spotted esp (!)", &evo::_settings->change_by_visibility );
-                                ImGui::Checkbox( "Dormancy esp", &evo::_settings->dormancy );
-                                ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                ImGui::ColorEdit4( "###boxcolk", evo::_settings->box_color, ALPHA );
-                                if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                    ImGui::ColorEdit4( "###boxcolkspot", evo::_settings->box_color_inv, ALPHA );
-                                }
-
-     
-
-                                ImGui::Checkbox( "Name", &evo::_settings->name_esp );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                ImGui::ColorEdit4( "###namecls", evo::_settings->name_color, ALPHA );
-                                if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                    ImGui::ColorEdit4( "###namceks", evo::_settings->name_color_inv, ALPHA );
-                                }
-
-                                if ( evo::_settings->name_esp ) {
-                                    ImGui::Checkbox( "Name animation", &evo::_settings->name_animation );
-                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                    ImGui::ColorEdit4( "###nameanimcl", evo::_settings->name_color_a, ALPHA );
-
-                                    ImGui::Combo( "Name animation type", &evo::_settings->name_at, animation_types.data(), animation_types.size( ) );
-                                }
-
-                                ImGui::Checkbox( "Health bar", &evo::_settings->health_bar );
-
-
-                                if ( evo::_settings->health_bar ) {
-                                    ImGui::Checkbox( "Custom color", &evo::_settings->customhealthbar );
-                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                    ImGui::ColorEdit4( "###healthbari", evo::_settings->healthbar, ALPHA );
-
-                                    if ( evo::_settings->change_by_visibility ) {
-                                        ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                        ImGui::ColorEdit4( "###heabarb", evo::_settings->healthbari, ALPHA );
-                                    }
-                                }
-
-                                ImGui::Checkbox( "Ammo bar", &evo::_settings->ammobar );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                ImGui::ColorEdit4( "###ammobar", evo::_settings->ammobar_color, ALPHA );
-                                if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                    ImGui::ColorEdit4( "###bajsdggqd", evo::_settings->ammobar_color_inv, ALPHA );
-                                }
-                                
-                                ImGui::Checkbox( "Weapon name", &evo::_settings->eap );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                ImGui::ColorEdit4( "###weponsadhg", evo::_settings->eap_color, ALPHA );
-                                if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                    ImGui::ColorEdit4( "###weapon12hsa", evo::_settings->eap_color_inv, ALPHA );
-                                }
-
-                                ImGui::Checkbox( "Head bone", &evo::_settings->bones_h );
-                                ImGui::Checkbox( "Skeleton", &evo::_settings->bones );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                ImGui::ColorEdit4( "###bonesh12", evo::_settings->bone_color, ALPHA );
-                                if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                    ImGui::ColorEdit4( "###onesi12", evo::_settings->bone_color_inv, ALPHA );
-                                }
-
-                                ImGui::Checkbox( "Flags", &evo::_settings->flags );
-                                ImGui::Checkbox( "Show competitive wins", &evo::_settings->show_competivie_wins );
-                                ImGui::Checkbox( "Show dealt damage that round", &evo::_settings->show_dmg_dealt );
+                               
 
                             } custom.end_child( );
 
@@ -411,7 +342,76 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "ESP", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
+                                ImGui::Checkbox( "Spotted esp (!)", &evo::_settings->change_by_visibility );
+                                ImGui::Checkbox( "Dormancy esp", &evo::_settings->dormancy );
+                                ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###boxcolk", evo::_settings->box_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###boxcolkspot", evo::_settings->box_color_inv, ALPHA );
+                                }
 
+
+
+                                ImGui::Checkbox( "Name", &evo::_settings->name_esp );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###namecls", evo::_settings->name_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###namceks", evo::_settings->name_color_inv, ALPHA );
+                                }
+
+                                if ( evo::_settings->name_esp ) {
+                                    ImGui::Checkbox( "Name animation", &evo::_settings->name_animation );
+                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                    ImGui::ColorEdit4( "###nameanimcl", evo::_settings->name_color_a, ALPHA );
+
+                                    ImGui::Combo( "Name animation type", &evo::_settings->name_at, animation_types.data( ), animation_types.size( ) );
+                                }
+
+                                ImGui::Checkbox( "Health bar", &evo::_settings->health_bar );
+
+
+                                if ( evo::_settings->health_bar ) {
+                                    ImGui::Checkbox( "Custom color", &evo::_settings->customhealthbar );
+                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                    ImGui::ColorEdit4( "###healthbari", evo::_settings->healthbar, ALPHA );
+
+                                    if ( evo::_settings->change_by_visibility ) {
+                                        ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                        ImGui::ColorEdit4( "###heabarb", evo::_settings->healthbari, ALPHA );
+                                    }
+                                }
+
+                                ImGui::Checkbox( "Ammo bar", &evo::_settings->ammobar );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###ammobar", evo::_settings->ammobar_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###bajsdggqd", evo::_settings->ammobar_color_inv, ALPHA );
+                                }
+
+                                ImGui::Checkbox( "Weapon name", &evo::_settings->eap );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###weponsadhg", evo::_settings->eap_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###weapon12hsa", evo::_settings->eap_color_inv, ALPHA );
+                                }
+
+                                ImGui::Checkbox( "Head bone", &evo::_settings->bones_h );
+                                ImGui::Checkbox( "Skeleton", &evo::_settings->bones );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###bonesh12", evo::_settings->bone_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###onesi12", evo::_settings->bone_color_inv, ALPHA );
+                                }
+
+                                ImGui::Checkbox( "Flags", &evo::_settings->flags );
+                                ImGui::Checkbox( "Show competitive wins", &evo::_settings->show_competivie_wins );
+                                ImGui::Checkbox( "Show dealt damage that round", &evo::_settings->show_dmg_dealt );
                             } custom.end_child( );
 
                             ImGui::SameLine( );
@@ -426,7 +426,31 @@ void evo::menu_t::render( ) {
                     }
 
                 } EndChild( );
-            } break;          
+            } break;       
+            case 2:
+            {
+
+            } break;
+
+            case 3:
+            {
+                custom.begin_child( "Configs", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                {
+
+
+                } custom.end_child( );
+
+                ImGui::SameLine( );
+
+                custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                {
+
+
+                } custom.end_child( );
+
+                break;
+
+            } break;
         }
 
         //ImGui::PopFont( );
