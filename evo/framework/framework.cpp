@@ -347,6 +347,22 @@ void evo::menu_t::render( ) {
                                     ImGui::ColorEdit4( "###bajsdggqd", evo::_settings->ammobar_color_inv, ALPHA );
                                 }
                                 
+                                ImGui::Checkbox( "Weapon name", &evo::_settings->eap );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###weponsadhg", evo::_settings->eap_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###weapon12hsa", evo::_settings->eap_color_inv, ALPHA );
+                                }
+
+                                ImGui::Checkbox( "Head bone", &evo::_settings->bones_h );
+                                ImGui::Checkbox( "Skeleton", &evo::_settings->bones );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###bonesh12", evo::_settings->bone_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###onesi12", evo::_settings->bone_color_inv, ALPHA );
+                                }
 
                             } custom.end_child( );
 

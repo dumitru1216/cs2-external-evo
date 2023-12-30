@@ -164,12 +164,54 @@ void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& en
 	/* transform it */
 	std::transform( weaepon_name.begin( ), weaepon_name.end( ), weaepon_name.begin( ), ::toupper );
 
+	evo::col_t weapon_clr{ };
+	if ( evo::_settings->change_by_visibility ) {
+		weapon_clr = this->spotted( entity, local_player, local_index, index ) ? _render->to_main_color( _settings->eap_color ).modify_alpha( this->esp_alpha[ index ] ) : _render->to_main_color( _settings->eap_color_inv ).modify_alpha( this->esp_alpha[ index ] );
+	} else {
+		weapon_clr = _render->to_main_color( _settings->eap_color ).modify_alpha( this->esp_alpha[ index ] );
+	}
+
 	/* text sizes */
 	int text_width = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).x;
 	int text_height = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).y;
 
-	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 1 + offset, evo::col_t( ),
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 1 + offset, weapon_clr,
 							evo::fonts_t::_default_2, weaepon_name.c_str( ), evo::font_flags_t::outline );
+}
+
+void evo::esp_t::skeleton_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) {
+	evo::bone_pos previous, current;
+
+	evo::col_t skele_clr{ };
+	if ( evo::_settings->change_by_visibility ) {
+		skele_clr = this->spotted( entity, local_player, local_index, index ) ? _render->to_main_color( _settings->bone_color ).modify_alpha( this->esp_alpha[ index ] ) : _render->to_main_color( _settings->bone_color_inv ).modify_alpha( this->esp_alpha[ index ] );
+	} else {
+		skele_clr = _render->to_main_color( _settings->bone_color ).modify_alpha( this->esp_alpha[ index ] );
+	}
+
+	if ( evo::_settings->bones ) {
+		/* iterate through bones */
+		for ( auto i : bone_list::hitbox_list ) {
+			previous.pos = vec3_t( 0, 0, 0 );
+			for ( auto index : i ) {
+				current = entity.get_bone( ).bone_pos_list[ index ];
+				if ( previous.pos == vec3_t( 0, 0, 0 ) ) {
+					previous = current;
+					continue;
+				}
+				if ( previous.is_visible && current.is_visible ) {
+					evo::_render->add_line( previous.screen_pos, current.screen_pos, evo::col_t( ), 1.0f );
+				}
+				previous = current;
+			}
+		}
+	}
+
+	/* head dot */
+	if ( evo::_settings->bones_h ) {
+		bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
+		evo::_render->add_circle( head.screen_pos, 6, evo::col_t( ) );
+	}
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
@@ -203,6 +245,11 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 	if ( evo::_settings->eap ) {
 		this->render_weapon( local_player, entity, rect, local_index, index );
 	}
+
+	/* we will leave this like that just because we might want head dot
+		or skeleton
+	*/
+	this->skeleton_esp( local_player, entity, rect, local_index, index );
 }
 
 evo::macros::vec4_t evo::esp_t::get_player_bounding_box( const c_entity& entity ) {

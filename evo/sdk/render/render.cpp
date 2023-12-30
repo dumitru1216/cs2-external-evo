@@ -38,6 +38,10 @@ void evo::render_t::initialize_font_system( ) {
 	ImGuiFreeType::BuildFontAtlas( io.Fonts, ImGuiFreeTypeBuilderFlags_Monochrome | ImGuiFreeTypeBuilderFlags_MonoHinting );
 }
 
+void evo::render_t::add_line( evo::vec2_t from, evo::vec2_t to, col_t c, float thickness ) {
+	ImGui::GetBackgroundDrawList( )->AddLine( ImVec2( from.x, from.y ), ImVec2( to.x, to.y ), c.convert( ), thickness );
+}
+
 void evo::render_t::add_text( int x, int y, col_t c, int font, const char* text, int flag ) {
 	ImGuiIO& io = ImGui::GetIO( );
 	ImGui::PushFont( io.Fonts->Fonts[ font ] );
@@ -87,6 +91,10 @@ evo::col_t evo::render_t::to_main_color( float color[ 4 ] ) {
 
 void evo::render_t::add_filled_circle( evo::vec2_t center, float radius, evo::col_t c ) {
 	ext_draw_list->AddCircleFilled( evo::macros::vec_t( center.x, center.y ), radius, c.convert( ) );
+}
+
+void evo::render_t::add_circle( evo::vec2_t center, float radius, evo::col_t c ) {
+	ext_draw_list->AddCircle( evo::macros::vec_t( center.x, center.y ), radius, c.convert( ) );
 }
 
 evo::macros::u32_t lerp_color( evo::macros::u32_t col1, evo::macros::u32_t col2, float t ) {

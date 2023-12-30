@@ -13,6 +13,7 @@ namespace evo {
 		arm_upper_R = 13,
 		arm_lower_R = 14,
 		hand_R = 15,
+		hand_R2 = 16,
 		leg_upper_L = 22,
 		leg_lower_L = 23,
 		ankle_L = 24,
