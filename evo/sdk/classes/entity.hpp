@@ -110,7 +110,9 @@ namespace evo {
 		DWORD64 address{ 0 }, spotted_by_mask{};
 
 		/* get data in there */
-		int health{}, dormant{}, clip{}, max_clip{};
+		int health{}, dormant{}, clip{}, max_clip{},
+			defuser{}, hemlet{}, heavy_ar{};
+
 		cs_weapon_type weapon_type{};
 		std::string weapon_name{};
 
@@ -128,6 +130,29 @@ namespace evo {
 		}
 
 		__forceinline bool _spotted( ) {
+			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+		}
+
+		__forceinline bool _defuser( ) {
+			// item services
+			// 0x10B0
+			DWORD64 new_address = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, new_address ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::has_defuser", new_address, offsets::item_services::has_defuser, this->defuser );
+		}
+
+		__forceinline bool _hemlet( ) {
+			return mem::scan_memory<vec3_t>( "c_player_pawn::pos", this->address, offsets::pawn::vec_old_origin, this->pos );
+		}
+
+		__forceinline bool _heavyar( ) {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
 		}
 
@@ -413,6 +438,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._weapon_name( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._defuser( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );

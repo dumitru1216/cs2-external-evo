@@ -214,6 +214,31 @@ void evo::esp_t::skeleton_esp( const c_entity& local_player, const c_entity& ent
 	}
 }
 
+void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) {
+	struct info_t {
+		std::string inf;
+		evo::col_t col;
+	};
+	
+	std::vector<info_t> info{};
+
+	if ( ( entity.player_pawn.health < 30 ) ) {
+		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
+	}
+
+	if ( this->spotted( entity, local_player, local_index, index ) ) {
+		info.push_back( { "visible", evo::col_t( 84, 255, 84 ) } );
+	}
+
+	for ( int i = 0; i < info.size( ); i++ ) {
+		/* transform it */
+		std::transform( info[i].inf.begin( ), info[ i ].inf.end( ), info[ i ].inf.begin( ), ::toupper );
+
+		evo::_render->add_text( rect.x + rect.z + 6, rect.y + 1 + 
+								( ( evo::_render->text_size( info[ i ].inf.c_str( ), evo::fonts_t::_default_2 ).y + 3 ) ) * i, info[ i ].col.modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, info[ i ].inf.c_str( ), evo::font_flags_t::outline );
+	}
+}
+
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
 	/* 
 		dormant shit: 
@@ -222,6 +247,8 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		spotted shit:
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
+
+	print_with_data_scoped( "def: " + std::to_string( local_player.player_pawn.defuser ) )
 
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
@@ -250,6 +277,7 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		or skeleton
 	*/
 	this->skeleton_esp( local_player, entity, rect, local_index, index );
+	this->render_side_info( local_player, entity, rect, local_index, index );
 }
 
 evo::macros::vec4_t evo::esp_t::get_player_bounding_box( const c_entity& entity ) {

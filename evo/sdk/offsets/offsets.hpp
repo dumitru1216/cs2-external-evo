@@ -22,6 +22,13 @@ namespace evo {
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
 
+		namespace item_services {
+			inline DWORD item_services_pawn = 0x10B0;
+			inline DWORD has_defuser = 0x40;
+			inline DWORD has_hemlet = 0x41;
+			inline DWORD has_heavy_armor = 0x42;
+		}
+
 		namespace c_base_weapon {
 			inline DWORD clipping_weapon = 0x12B0;
 			inline DWORD wpn_data_ptr = 0x360;
@@ -31,6 +38,19 @@ namespace evo {
 			inline DWORD max_clip = 0x1FC;
 			inline DWORD weapon_type = 0x240;
 			inline DWORD zs_name = 0xC18;
+		}
+
+		namespace glow {
+			inline DWORD glow_propety = 0xB98; /* xref: player + glow_property */
+
+			/* glow property 
+				player + glow_property -> glow_address
+				glow_address->glow_color/glowing
+			*/
+			inline DWORD glow_color = 0x8; /* xref: vector - clr[0-3] */
+			inline DWORD glow_type = 0x30; /* xref: vector - clr[0-3] */
+			inline DWORD glow_color_override = 0x40; /* xref: Color - clr[0-3] */
+			inline DWORD glowing = 0x51; /* xref: bool */
 		}
 
 		namespace c_game_scene_mode {
