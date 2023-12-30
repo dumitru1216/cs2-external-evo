@@ -21,6 +21,10 @@ namespace evo {
 			inline DWORD dormant = 0xE7;
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
+
+		namespace c_game_scene_mode {
+			inline DWORD vec_origin = 0x80;
+		}
 	}
 
 	namespace dragged_offsets {

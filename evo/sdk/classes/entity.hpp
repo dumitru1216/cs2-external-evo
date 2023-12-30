@@ -91,7 +91,7 @@ namespace evo {
 		bone_t bone_data{};
 
 		vec2_t screen_pos{};
-		vec3_t pos{};
+		vec3_t pos{}, vec_origin{};
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
@@ -103,6 +103,19 @@ namespace evo {
 
 		__forceinline bool _spotted( ) {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+		}
+
+		__forceinline bool _vec_origin( ) {
+			DWORD64 game_scene_node = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_entity::game_scene_node, game_scene_node ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<vec3_t>( "c_player_pawn::vec_origin", game_scene_node, offsets::c_game_scene_mode::vec_origin, this->vec_origin );
 		}
 
 		__forceinline bool _dormant( ) {
@@ -217,6 +230,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._spotted( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._vec_origin( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );

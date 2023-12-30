@@ -439,41 +439,245 @@ namespace evo { /* main namespace */
 
 	class vec3_t {
 	public:
+		// data member variables
 		float x, y, z;
+
 	public:
-		vec3_t( ) :x( 0.f ), y( 0.f ), z( 0.f ) { }
-		vec3_t( float x_, float y_, float z_ ) :x( x_ ), y( y_ ), z( z_ ) { }
-		vec3_t operator+( vec3_t Vec3_ ) {
-			return { x + Vec3_.x,y + Vec3_.y,z + Vec3_.z };
+		// ctors.
+		__forceinline vec3_t( ) : x{}, y{}, z{} { }
+		__forceinline vec3_t( float x, float y, float z ) : x{ x }, y{ y }, z{ z } { }
+
+		// at-accesors.
+		__forceinline float& at( const size_t index ) {
+			return ( ( float* )this )[ index ];
 		}
-		vec3_t operator-( vec3_t Vec3_ ) {
-			return { x - Vec3_.x,y - Vec3_.y,z - Vec3_.z };
+		__forceinline float& at( const size_t index ) const {
+			return ( ( float* )this )[ index ];
 		}
-		vec3_t operator*( vec3_t Vec3_ ) {
-			return { x * Vec3_.x,y * Vec3_.y,z * Vec3_.z };
+
+		// index operators.
+		__forceinline float& operator( )( const size_t index ) {
+			return at( index );
 		}
-		vec3_t operator/( vec3_t Vec3_ ) {
-			return { x / Vec3_.x,y / Vec3_.y,z / Vec3_.z };
+		__forceinline const float& operator( )( const size_t index ) const {
+			return at( index );
 		}
-		vec3_t operator*( float n ) {
-			return { x * n,y * n,z * n };
+		__forceinline float& operator[ ]( const size_t index ) {
+			return at( index );
 		}
-		vec3_t operator/( float n ) {
-			return { x / n,y / n,z / n };
+		__forceinline const float& operator[ ]( const size_t index ) const {
+			return at( index );
 		}
-		bool operator==( vec3_t Vec3_ ) {
-			return x == Vec3_.x && y == Vec3_.y && z == Vec3_.z;
+
+		// equality operators.
+		__forceinline bool operator==( const vec3_t& v ) const {
+			return v.x == x && v.y == y && v.z == z;
 		}
-		bool operator!=( vec3_t Vec3_ ) {
-			return x != Vec3_.x || y != Vec3_.y || z != Vec3_.z;
+		__forceinline bool operator!=( const vec3_t& v ) const {
+			return v.x != x || v.y != y || v.z != z;
 		}
-		float length( ) {
-			return sqrtf( powf( x, 2 ) + powf( y, 2 ) + powf( z, 2 ) );
+
+		// copy assignment.
+		__forceinline vec3_t& operator=( const vec3_t& v ) {
+			x = v.x;
+			y = v.y;
+			z = v.z;
+			return *this;
 		}
-		float dist_to( const vec3_t& Pos ) {
-			return sqrtf( powf( Pos.x - x, 2 ) + powf( Pos.y - y, 2 ) + powf( Pos.z - z, 2 ) );
+
+		// negation-operator.
+		__forceinline vec3_t operator-( ) const {
+			return vec3_t{ -x, -y, -z };
+		}
+
+		// arithmetic operators.
+		__forceinline vec3_t operator+( const vec3_t& v ) const {
+			return {
+				x + v.x,
+				y + v.y,
+				z + v.z
+			};
+		}
+
+		__forceinline vec3_t operator-( const vec3_t& v ) const {
+			return {
+				x - v.x,
+				y - v.y,
+				z - v.z
+			};
+		}
+
+		__forceinline vec3_t operator*( const vec3_t& v ) const {
+			return {
+				x * v.x,
+				y * v.y,
+				z * v.z
+			};
+		}
+
+		__forceinline vec3_t operator/( const vec3_t& v ) const {
+			return {
+				x / v.x,
+				y / v.y,
+				z / v.z
+			};
+		}
+
+		// compound assignment operators.
+		__forceinline vec3_t& operator+=( const vec3_t& v ) {
+			x += v.x;
+			y += v.y;
+			z += v.z;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator-=( const vec3_t& v ) {
+			x -= v.x;
+			y -= v.y;
+			z -= v.z;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator*=( const vec3_t& v ) {
+			x *= v.x;
+			y *= v.y;
+			z *= v.z;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator/=( const vec3_t& v ) {
+			x /= v.x;
+			y /= v.y;
+			z /= v.z;
+			return *this;
+		}
+
+		// arithmetic operators w/ float.
+		__forceinline vec3_t operator+( float f ) const {
+			return {
+				x + f,
+				y + f,
+				z + f
+			};
+		}
+
+		__forceinline vec3_t operator-( float f ) const {
+			return {
+				x - f,
+				y - f,
+				z - f
+			};
+		}
+
+		__forceinline vec3_t operator*( float f ) const {
+			return {
+				x * f,
+				y * f,
+				z * f
+			};
+		}
+
+		__forceinline vec3_t operator/( float f ) const {
+			return {
+				x / f,
+				y / f,
+				z / f
+			};
+		}
+
+		// compound assignment operators w/ float.
+		__forceinline vec3_t& operator+=( float f ) {
+			x += f;
+			y += f;
+			z += f;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator-=( float f ) {
+			x -= f;
+			y -= f;
+			z -= f;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator*=( float f ) {
+			x *= f;
+			y *= f;
+			z *= f;
+			return *this;
+		}
+
+		__forceinline vec3_t& operator/=( float f ) {
+			x /= f;
+			y /= f;
+			z /= f;
+			return *this;
+		}
+
+		// methods.
+		__forceinline void clear( ) {
+			x = y = z = 0.f;
+		}
+
+		__forceinline float length_sqr( ) const {
+			return ( ( x * x ) + ( y * y ) + ( z * z ) );
+		}
+
+		__forceinline float length_2d_sqr( ) const {
+			return ( ( x * x ) + ( y * y ) );
+		}
+
+		__forceinline float length( ) const {
+			return std::sqrt( length_sqr( ) );
+		}
+
+		__forceinline float length_2d( ) const {
+			return std::sqrt( length_2d_sqr( ) );
+		}
+
+		__forceinline float dot( const vec3_t& v ) const {
+			return ( x * v.x + y * v.y + z * v.z );
+		}
+
+		__forceinline float dot( float* v ) const {
+			return ( x * v[ 0 ] + y * v[ 1 ] + z * v[ 2 ] );
+		}
+
+		__forceinline vec3_t cross( const vec3_t& v ) const {
+			return {
+				( y * v.z ) - ( z * v.y ),
+				( z * v.x ) - ( x * v.z ),
+				( x * v.y ) - ( y * v.x )
+			};
+		}
+
+		__forceinline float dist_to( const vec3_t& vOther ) const {
+			vec3_t delta;
+
+			delta.x = x - vOther.x;
+			delta.y = y - vOther.y;
+			delta.z = z - vOther.z;
+
+			return delta.length_2d( );
+		}
+
+		__forceinline float normalize( ) {
+			float len = length( );
+
+			( *this ) /= ( length( ) + std::numeric_limits< float >::epsilon( ) );
+
+			return len;
+		}
+
+		__forceinline vec3_t normalized( ) const {
+			auto vec = *this;
+
+			vec.normalize( );
+
+			return vec;
 		}
 	};
+
 
 
 	using vec2 = vec2_t;

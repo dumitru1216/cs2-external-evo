@@ -3,6 +3,8 @@
 #include "../inc.hpp"
 
 int main( ) {
+	SetConsoleTitle( L"cs2-dev" );
+
 	auto process_status = _proc_manager.attach( "cs2.exe" );
 
 	switch ( process_status ) {
