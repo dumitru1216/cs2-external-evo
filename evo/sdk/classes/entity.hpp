@@ -6,6 +6,30 @@ namespace evo {
 		DWORD64 data = 0;
 	};
 
+	enum cs_weapon_type : std::uint32_t {
+		weapon_type_knife = 0,
+		weapon_type_pistol = 1,
+		weapon_type_submachinegun = 2,
+		weapon_type_rifle = 3,
+		weapon_type_shotgun = 4,
+		weapon_type_sniper_rifle = 5,
+		weapon_type_machinegun = 6,
+		weapon_type_c4 = 7,
+		weapon_type_taser = 8,
+		weapon_type_grenade = 9,
+		weapon_type_equipment = 10,
+		weapon_type_stackable_item = 11,
+		weapon_type_fists = 12,
+		weapon_type_breach_charge = 13,
+		weapon_type_bump_mine = 14,
+		weapon_type_tablet = 15,
+		weapon_type_melee = 16,
+		weapon_type_shield = 17,
+		weapon_type_zone_repulsor = 18,
+		weapon_type_unknown = 19,
+	};
+
+
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
@@ -87,6 +111,8 @@ namespace evo {
 
 		/* get data in there */
 		int health{}, dormant{}, clip{}, max_clip{};
+		cs_weapon_type weapon_type{};
+		std::string weapon_name{};
 
 		bone_t bone_data{};
 
@@ -119,6 +145,27 @@ namespace evo {
 			return mem::scan_memory<int>( "c_player_pawn::clip", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
 		}
 
+		__forceinline bool _weapon_name( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_weapon_name -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			if ( !_proc_manager.read_memory<DWORD64>( clipping_weapon + offsets::c_base_weapon::wpn_data_ptr, weapon_data ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_weapon_name -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<std::string>( "c_player_pawn::sz_name", weapon_data, offsets::c_base_weapon::zs_name, this->weapon_name );
+		}
+
 		__forceinline bool _max_clip( ) {
 			DWORD64 clipping_weapon = 0;
 			DWORD64 weapon_data = 0;
@@ -138,6 +185,27 @@ namespace evo {
 			}
 
 			return mem::scan_memory<int>( "c_player_pawn::max_clip_1", weapon_data, offsets::c_base_weapon::max_clip, this->max_clip );
+		}
+
+		__forceinline bool _weapon_type( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			if ( !_proc_manager.read_memory<DWORD64>( clipping_weapon + offsets::c_base_weapon::wpn_data_ptr, weapon_data ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<cs_weapon_type>( "c_player_pawn::weapon_type", weapon_data, offsets::c_base_weapon::weapon_type, this->weapon_type );
 		}
 
 		__forceinline bool _vec_origin( ) {
@@ -292,6 +360,24 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._max_clip( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._weapon_type( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._weapon_name( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );

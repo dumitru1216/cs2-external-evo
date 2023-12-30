@@ -24,6 +24,11 @@ namespace evo {
 		float healthbar[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float healthbari[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+		bool ammobar = false;
+		float ammobar_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float ammobar_color_inv[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+
 		bool change_by_visibility = false;
 	};
 

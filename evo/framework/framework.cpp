@@ -338,6 +338,14 @@ void evo::menu_t::render( ) {
                                         ImGui::ColorEdit4( "###heabarb", evo::_settings->healthbari, ALPHA );
                                     }
                                 }
+
+                                ImGui::Checkbox( "Ammo bar", &evo::_settings->ammobar );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###ammobar", evo::_settings->ammobar_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###bajsdggqd", evo::_settings->ammobar_color_inv, ALPHA );
+                                }
                                 
 
                             } custom.end_child( );

@@ -122,11 +122,37 @@ void evo::esp_t::health_bar( const c_entity& local_player, const c_entity& entit
 }
 
 void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
+	if ( entity.player_pawn.weapon_type == evo::cs_weapon_type::weapon_type_knife || entity.player_pawn.weapon_type == evo::cs_weapon_type::weapon_type_c4 ||
+		 entity.player_pawn.weapon_type == evo::cs_weapon_type::weapon_type_grenade ) {
+		return; /* do not run */
+	}
+
 	int bullets = entity.player_pawn.clip;
+	int max = entity.player_pawn.max_clip;
 
-	evo::col_t health_color = evo::col_t( 20, 20, 200 );
+	/* we gonna init them later */
+	int bar;
+	float scale;
 
+	evo::col_t ammo_color{ };
+	if ( evo::_settings->change_by_visibility ) {
+		ammo_color = this->spotted( entity, local_player, local_index, index ) ? _render->to_main_color( _settings->ammobar_color ).modify_alpha( this->esp_alpha[ index ] ) : _render->to_main_color( _settings->ammobar_color_inv ).modify_alpha( this->esp_alpha[ index ] );
+	} else {
+		ammo_color = _render->to_main_color( _settings->ammobar_color ).modify_alpha( this->esp_alpha[ index ] );
+	}
 
+	if ( max != -1 ) {
+		scale = ( float )bullets / max;
+		bar = ( int )std::round( ( rect.z - 2 ) * scale );
+
+		evo::_render->add_rect_filled( rect.x + 1, rect.y + rect.w + 3, rect.z - 2, 4, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
+		evo::_render->add_rect_filled( rect.x + 2, rect.y + 1 + rect.w + 3, bar - 3, 2, ammo_color, 0 );
+
+		if ( bullets < ( max - 2 ) ) {
+			evo::_render->add_text( rect.x - 1 + bar,
+									rect.y - 3 + rect.w + 3, evo::col_t( ).modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, std::to_string( bullets ).c_str( ), evo::font_flags_t::outline );
+		}
+	}
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
@@ -151,6 +177,10 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 
 	if ( evo::_settings->health_bar ) {
 		this->health_bar( local_player, entity, rect, local_index, index );
+	}
+
+	if ( evo::_settings->ammobar ) {
+		this->ammo_bar( local_player, entity, rect, local_index, index );
 	}
 }
 

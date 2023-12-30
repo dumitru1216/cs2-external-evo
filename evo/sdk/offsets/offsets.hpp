@@ -29,6 +29,8 @@ namespace evo {
 			inline DWORD active_weapon = 0x60;
 			inline DWORD clip_1 = 0x1570;
 			inline DWORD max_clip = 0x1FC;
+			inline DWORD weapon_type = 0x240;
+			inline DWORD zs_name = 0xC18;
 		}
 
 		namespace c_game_scene_mode {
