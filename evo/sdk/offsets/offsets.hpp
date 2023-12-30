@@ -75,19 +75,6 @@ namespace evo {
 			inline DWORD sky3d = 0x1168;
 		}
 
-		namespace untested {
-			/* CCSPlayerController_InGameMoneyServices 
-				 constexpr std::ptrdiff_t m_iAccount = 0x40; // int32_t
-				 constexpr std::ptrdiff_t m_iStartAccount = 0x44; // int32_t
-				 constexpr std::ptrdiff_t m_iTotalCashSpent = 0x48; // int32_t
-				 constexpr std::ptrdiff_t m_iCashSpentThisRound = 0x4C; // int32_t
-				 constexpr std::ptrdiff_t m_nPreviousAccount = 0x50; // int32_t
-			*/
-
-
-			// see CCSPlayer_MovementServices
-		}
-
 		namespace glow {
 			inline DWORD glow_propety = 0xB98; /* xref: player + glow_property */
 
