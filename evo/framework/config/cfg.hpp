@@ -37,6 +37,8 @@ namespace evo {
 		float bone_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float bone_color_inv[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+		bool flags = false;
+
 		bool change_by_visibility = false;
 	};
 

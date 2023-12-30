@@ -364,6 +364,8 @@ void evo::menu_t::render( ) {
                                     ImGui::ColorEdit4( "###onesi12", evo::_settings->bone_color_inv, ALPHA );
                                 }
 
+                                ImGui::Checkbox( "Flags", &evo::_settings->flags );
+
                             } custom.end_child( );
 
                             ImGui::SameLine( );

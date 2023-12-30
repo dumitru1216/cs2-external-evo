@@ -149,18 +149,8 @@ namespace evo {
 		}
 
 		__forceinline bool _hemlet( ) {
-			// item services
-			// 0x10B0
-			DWORD64 _hemlet_adr = 0;
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, _hemlet_adr ) ) {
-#ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::item_services_pawn::_hemlet_adr -> error -> no memory" );
-#endif // read_data_dbg
-				return false;
-			}
-
-			return mem::scan_memory<int>( "c_player_pawn::_hemlet", _hemlet_adr, offsets::item_services::has_hemlet, this->hemlet );
+			return mem::scan_memory<int>( "c_player_pawn::_hemlet", this->address, offsets::pawn::has_hemlet, this->hemlet );
 		}
 
 		__forceinline bool _heavyar( ) {

@@ -19,6 +19,8 @@ namespace evo {
 			inline DWORD health = 0x32C;
 			inline DWORD vec_old_origin = 0x1224;
 			inline DWORD dormant = 0xE7;
+			inline DWORD has_hemlet = 0x801;
+			inline DWORD has_defuser = 0x800;
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
 

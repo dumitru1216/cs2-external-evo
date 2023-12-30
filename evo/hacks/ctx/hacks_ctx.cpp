@@ -78,6 +78,10 @@ void evo::hacks_t::run( ) {
 			continue;
 		}
 
+		if ( entity.controller.team_id == local_player.controller.team_id ) {
+			continue;
+		}
+
 		if ( !entity.in_screen( ) ) {
 			continue;
 		}
