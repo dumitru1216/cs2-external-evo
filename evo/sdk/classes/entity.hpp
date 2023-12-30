@@ -164,7 +164,18 @@ namespace evo {
 		}
 
 		__forceinline bool _heavyar( ) {
-			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+			// item services
+			// 0x10B0
+			DWORD64 new_address = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::item_services::item_services_pawn, new_address ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::spotted", new_address, offsets::item_services::has_heavy_armor, this->heavy_ar );
 		}
 
 		__forceinline bool _clip( ) {
