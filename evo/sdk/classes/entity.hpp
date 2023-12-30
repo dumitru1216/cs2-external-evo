@@ -149,6 +149,26 @@ namespace evo {
 			DWORD64 clipping_weapon = 0;
 			DWORD64 weapon_data = 0;
 
+			DWORD64 weapon_name_address = 0;
+			char buffer[ 40 ]{};
+
+			weapon_name_address = _proc_manager.trace_address( this->address + offsets::c_base_weapon::clipping_weapon, { 0x10, 0x20, 0x0 } );
+			if ( weapon_name_address == 0 )
+				return false;
+
+			if ( !_proc_manager.read_memory( weapon_name_address, buffer, 40 ) )
+				return false;
+
+			this->weapon_name = std::string( buffer );
+			std::size_t index = this->weapon_name.find( "_" );
+			if ( index == std::string::npos || this->weapon_name.empty( ) ) {
+				this->weapon_name = "Weapon_None";
+			} else {
+				this->weapon_name = this->weapon_name.substr( index + 1, this->weapon_name.size( ) - index - 1 );
+			}
+
+
+#if 0
 			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
 #ifdef read_data_dbg
 				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_weapon_name -> error -> no memory" );
@@ -163,7 +183,22 @@ namespace evo {
 				return false;
 			}
 
-			return mem::scan_memory<std::string>( "c_player_pawn::sz_name", weapon_data, offsets::c_base_weapon::zs_name, this->weapon_name );
+			char buffer[ MAX_PATH ]{};
+
+			if ( !_proc_manager.read_memory( weapon_data + offsets::c_base_weapon::zs_name, buffer, MAX_PATH ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_controler::_player_name -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			this->weapon_name = buffer;
+			if ( this->weapon_name.empty( ) )
+				this->weapon_name = "no-name";
+#endif
+			return true;
+
+			//return mem::scan_memory<std::string>( "c_player_pawn::sz_name", weapon_data, offsets::c_base_weapon::zs_name, this->weapon_name );
 		}
 
 		__forceinline bool _max_clip( ) {

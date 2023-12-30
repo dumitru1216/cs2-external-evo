@@ -145,12 +145,12 @@ void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity,
 		scale = ( float )bullets / max;
 		bar = ( int )std::round( ( rect.z - 2 ) * scale );
 
-		evo::_render->add_rect_filled( rect.x + 1, rect.y + rect.w + 3, rect.z - 2, 4, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
-		evo::_render->add_rect_filled( rect.x + 2, rect.y + 1 + rect.w + 3, bar - 3, 2, ammo_color, 0 );
+		evo::_render->add_rect_filled( rect.x + 1, rect.y + rect.w + 2, rect.z - 2, 4, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
+		evo::_render->add_rect_filled( rect.x + 2, rect.y + rect.w + 3, bar - 3, 2, ammo_color, 0 );
 
 		if ( bullets < ( max - 2 ) ) {
 			evo::_render->add_text( rect.x - 1 + bar,
-									rect.y - 3 + rect.w + 3, evo::col_t( ).modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, std::to_string( bullets ).c_str( ), evo::font_flags_t::outline );
+									rect.y - 3 + rect.w + 2, evo::col_t( ).modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, std::to_string( bullets ).c_str( ), evo::font_flags_t::outline );
 		}
 	}
 }
@@ -159,8 +159,8 @@ void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& en
 	std::string weaepon_name = entity.player_pawn.weapon_name;
 
 	/* we re gonna initialize this later */
-	int offset;
-	
+	int offset = evo::_settings->ammobar ? 5 : 0;
+
 	/* transform it */
 	std::transform( weaepon_name.begin( ), weaepon_name.end( ), weaepon_name.begin( ), ::toupper );
 
@@ -168,8 +168,8 @@ void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& en
 	int text_width = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).x;
 	int text_height = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).y;
 
-
-	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 4, evo::col_t( ), evo::fonts_t::_default_2, weaepon_name.c_str( ), evo::font_flags_t::outline );
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 1 + offset, evo::col_t( ),
+							evo::fonts_t::_default_2, weaepon_name.c_str( ), evo::font_flags_t::outline );
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
@@ -200,7 +200,9 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		this->ammo_bar( local_player, entity, rect, local_index, index );
 	}
 
-	this->render_weapon( local_player, entity, rect, local_index, index );
+	if ( evo::_settings->eap ) {
+		this->render_weapon( local_player, entity, rect, local_index, index );
+	}
 }
 
 evo::macros::vec4_t evo::esp_t::get_player_bounding_box( const c_entity& entity ) {

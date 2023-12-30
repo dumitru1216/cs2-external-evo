@@ -29,6 +29,10 @@ namespace evo {
 		float ammobar_color_inv[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 
+		bool eap = false;
+		float eap_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float eap_color_inv[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 		bool change_by_visibility = false;
 	};
 
