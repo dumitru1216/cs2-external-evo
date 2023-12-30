@@ -13,6 +13,7 @@ namespace evo {
 			inline DWORD player_pawn = 0x7EC;
 			inline DWORD pawn_alive = 0x7F4;
 			inline DWORD player_name = 0x640;
+			inline DWORD ping = 0x720;
 		}
 
 		namespace pawn {

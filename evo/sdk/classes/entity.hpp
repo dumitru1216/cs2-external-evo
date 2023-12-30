@@ -33,7 +33,7 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 };
-		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 };
+		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 };
 		DWORD pawn{ 0 };
 		std::string player_name{};
 	public:
@@ -46,6 +46,12 @@ namespace evo {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
 											offsets::c_base_player_controler::pawn_alive, this->alive );
+		}
+
+		__forceinline bool _ping( ) {
+			/* we need this too whatever */
+			return mem::scan_memory<int>( "ccs_player_controler::pung", this->address,
+										  offsets::c_base_player_controler::ping, this->ping );
 		}
 
 		__forceinline bool _money( ) {
@@ -370,6 +376,14 @@ namespace evo {
 			}
 
 			if ( !this->controller._money( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._ping( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._health\n" );

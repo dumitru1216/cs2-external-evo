@@ -227,8 +227,8 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 	}
 
 	/* beta */
+	info.push_back( { std::to_string( entity.controller.money ) + "$", evo::col_t( 66, 245, 84 ) } ); // i guess it works
 	info.push_back( { std::to_string( entity.player_pawn.ping ) + "ms", evo::col_t( ) } ); // i guess it works
-	info.push_back( { std::to_string( entity.controller.money ) + "$", evo::col_t( ) } ); // i guess it works
 
 
 	// beta 
@@ -257,6 +257,8 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		spotted shit:
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
+
+	print_with_data_scoped( std::to_string( local_player.controller.ping ) )
 
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
