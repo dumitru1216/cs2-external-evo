@@ -51,23 +51,27 @@ namespace evo {
 
 		namespace controller {
 			inline DWORD money_services = 0x700;
+			inline DWORD tracking_services = 0x710;
 		}
 
 		namespace c_money_services {
 			inline DWORD i_account = 0x40;
 		}
 
-		namespace untested {
-			/* matchmaking stuff - CCSPlayerController
-			
-				constexpr std::ptrdiff_t m_iCompetitiveRanking = 0x770; // int32_t
-				constexpr std::ptrdiff_t m_iCompetitiveWins = 0x774; // int32_t
-				constexpr std::ptrdiff_t m_iCompetitiveRankType = 0x778; // int8_t
-				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Win = 0x77C; // int32_t
-				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Loss = 0x780; // int32_t
-				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Tie = 0x784; // int32_t
-			*/
+		namespace match_making {
+			inline DWORD m_i_competitive_ranking = 0x770; // int32_t
+			inline DWORD m_i_competitive_wins = 0x774; // int32_t
+			inline DWORD m_i_competitive_rank_type = 0x778; // int8_t
+			inline DWORD m_i_competitive_ranking_predicted_win = 0x77C; // int32_t
+			inline DWORD m_i_competitive_ranking_predicted_loss = 0x780; // int32_t
+			inline DWORD m_i_competitive_ranking_predicted_tie = 0x784; // int32_t
+		}
 
+		namespace tracking_services {
+			inline DWORD total_damage = 0x110;
+		}
+
+		namespace untested {
 			/* CCSPlayerController_InGameMoneyServices 
 				 constexpr std::ptrdiff_t m_iAccount = 0x40; // int32_t
 				 constexpr std::ptrdiff_t m_iStartAccount = 0x44; // int32_t

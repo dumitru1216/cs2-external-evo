@@ -297,7 +297,7 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-                                ImGui::Checkbox( "Spotted esp", &evo::_settings->change_by_visibility );
+                                ImGui::Checkbox( "Spotted esp (!)", &evo::_settings->change_by_visibility );
                                 ImGui::Checkbox( "Dormancy esp", &evo::_settings->dormancy );
                                 ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
@@ -365,6 +365,8 @@ void evo::menu_t::render( ) {
                                 }
 
                                 ImGui::Checkbox( "Flags", &evo::_settings->flags );
+                                ImGui::Checkbox( "Show competitive wins", &evo::_settings->show_competivie_wins );
+                                ImGui::Checkbox( "Show dealt damage that round", &evo::_settings->show_competivie_wins );
 
                             } custom.end_child( );
 

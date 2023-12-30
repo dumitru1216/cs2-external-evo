@@ -226,6 +226,14 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
 	}
 	
+	if ( evo::_settings->show_competivie_wins ) {
+		info.push_back( { "W: " + std::to_string( entity.controller.wins ), evo::col_t( ) } ); // i guess it works
+	}
+
+	if ( evo::_settings->show_dmg_dealt ) {
+		info.push_back( { "TD: " + std::to_string( entity.controller.total_dmg ), evo::col_t( ) } ); // i guess it works
+	}
+
 	/* beta */
 	info.push_back( { std::to_string( entity.controller.money ) + "$", evo::col_t( 66, 245, 84 ) } ); // i guess it works
 	info.push_back( { std::to_string( entity.controller.ping ) + "ms", evo::col_t( ) } ); // i guess it works
@@ -287,6 +295,7 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		spotted shit:
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
+
 
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 

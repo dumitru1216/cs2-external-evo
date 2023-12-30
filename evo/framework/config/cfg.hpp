@@ -39,6 +39,9 @@ namespace evo {
 
 		bool flags = false;
 
+		bool show_competivie_wins = false;
+		bool show_dmg_dealt = false;
+
 		bool change_by_visibility = false;
 	};
 
