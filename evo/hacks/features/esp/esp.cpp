@@ -138,8 +138,6 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
 
-	print_with_data_scoped( "b: " + std::to_string( local_player.player_pawn.clip ) + ", m: " + std::to_string( local_player.player_pawn.max_clip ) )
-
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
 
