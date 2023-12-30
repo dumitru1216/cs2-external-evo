@@ -21,6 +21,7 @@ namespace evo {
 			inline DWORD dormant = 0xE7;
 			inline DWORD has_hemlet = 0x801;
 			inline DWORD has_defuser = 0x800;
+			inline DWORD ping_services = 0x1268;
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
 
@@ -29,6 +30,10 @@ namespace evo {
 			inline DWORD has_defuser = 0x40;
 			inline DWORD has_hemlet = 0x41;
 			inline DWORD has_heavy_armor = 0x42;
+		}
+
+		namespace ping_services {
+			inline DWORD player_ping = 0x40;
 		}
 
 		namespace c_base_weapon {
@@ -40,6 +45,34 @@ namespace evo {
 			inline DWORD max_clip = 0x1FC;
 			inline DWORD weapon_type = 0x240;
 			inline DWORD zs_name = 0xC18;
+		}
+
+		namespace untested {
+			//  constexpr std::ptrdiff_t m_iConnected = 0x63C; - CBasePlayerController 
+			// constexpr std::ptrdiff_t m_iDesiredFOV = 0x6D4; - CBasePlayerController
+			// constexpr std::ptrdiff_t m_iPing = 0x720; - CCSPlayerController 
+
+			/* matchmaking stuff - CCSPlayerController
+			
+				constexpr std::ptrdiff_t m_iCompetitiveRanking = 0x770; // int32_t
+				constexpr std::ptrdiff_t m_iCompetitiveWins = 0x774; // int32_t
+				constexpr std::ptrdiff_t m_iCompetitiveRankType = 0x778; // int8_t
+				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Win = 0x77C; // int32_t
+				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Loss = 0x780; // int32_t
+				constexpr std::ptrdiff_t m_iCompetitiveRankingPredicted_Tie = 0x784; // int32_t
+			*/
+
+			/* CCSPlayerController_InGameMoneyServices 
+				 constexpr std::ptrdiff_t m_iAccount = 0x40; // int32_t
+				 constexpr std::ptrdiff_t m_iStartAccount = 0x44; // int32_t
+				 constexpr std::ptrdiff_t m_iTotalCashSpent = 0x48; // int32_t
+				 constexpr std::ptrdiff_t m_iCashSpentThisRound = 0x4C; // int32_t
+				 constexpr std::ptrdiff_t m_nPreviousAccount = 0x50; // int32_t
+			*/
+
+			// see CCSPlayer_PingServices 
+
+			// see CCSPlayer_MovementServices
 		}
 
 		namespace glow {
