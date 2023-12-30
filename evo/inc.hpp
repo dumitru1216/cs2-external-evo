@@ -2,9 +2,11 @@
 #pragma warning ( disable : 4005 )
 #pragma warning ( disable : 26495 )
 #pragma warning ( disable : 4244 )
+#pragma warning ( disable : 4267 )
 #pragma warning ( disable : 4715 )
 #pragma warning ( disable : 4018 )
 #pragma warning ( disable : 4244 )
+#pragma warning ( disable : 4305 )
 
 #include <windows.h>
 #include <windowsx.h>

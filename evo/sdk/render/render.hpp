@@ -2,7 +2,8 @@
 
 namespace evo {
 	enum fonts_t {
-		_default
+		_default,
+		_default_2
 	};
 
 	enum font_flags_t {
@@ -32,7 +33,7 @@ namespace evo {
 		void add_drop_shadow( int x, int y, int w, int h );
 		void add_image( int x, int y, int w, int h, evo::macros::texture_id user_texture_id, evo::col_t c );
 
-		void bind_animation( int id, std::string text, evo::col_t color, int font, int x, int y, text_animation_t animation_type );
+		void bind_animation( int id, std::string text, evo::col_t color, int font, int x, int y, text_animation_t animation_type, float animation_speed );
 
 		void clip_rect( float x, float y, float w, float h, std::function<void( )> function );
 

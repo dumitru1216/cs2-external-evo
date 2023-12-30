@@ -1,11 +1,15 @@
 #include "../../inc.hpp"
 #include "../animation_system/animation_system.hpp"
+#include "render_fonts.hpp"
 
 void evo::render_t::initialize_font_system( ) {
 	ImGuiIO& io = ImGui::GetIO( ); /* get imgui io */
 
 	/* create a new cfg for each type of font */
-	ImFontConfig* cfg = new ImFontConfig( );
+	ImFontConfig cfg;// = new ImFontConfig( );
+
+	cfg.PixelSnapH = true;
+	cfg.OversampleH = cfg.OversampleV = 1;
 
 	/* ranges */
 	static const ImWchar ranges[ ] =
@@ -19,26 +23,16 @@ void evo::render_t::initialize_font_system( ) {
 	   0,
 	};
 
-	/* tupe the fonts */
-	std::tuple<const char*, float, const ImWchar*> render_fonts[ ] =
-	{
-	   std::make_tuple( xorstr_( "verdana.ttf" ), 12.0f, ranges ),
+	auto add_font = [ & ]( const char* font, float size )->void {
+		io.Fonts->AddFontFromFileTTF( font, size, &cfg, ranges );
+
+		printf( "Loaded font: %s, Size: %.1f\n", font, size );
 	};
 
-	/* init fonts */
-	for ( auto font : render_fonts ) {
-		std::string path = std::string( xorstr_( "C:\\Windows\\Fonts\\" ) );
-		path += std::get<0>( font );
 
-		cfg = new ImFontConfig( );
-		cfg->PixelSnapH = true;
-		cfg->OversampleH = cfg->OversampleV = 1;
+	add_font( "C:\\Windows\\Fonts\\verdana.ttf", 12.0f );
+	io.Fonts->AddFontFromMemoryTTF( _smallest_pixel, sizeof( _smallest_pixel ), 10.f, &cfg, ranges );
 
-		auto im_font = io.Fonts->AddFontFromFileTTF( path.c_str( ), std::get<1>( font ), cfg, std::get<2>( font ) );
-		io.Fonts->Fonts.push_back( im_font );
-
-		printf( "Loaded font: %s, Size: %.1f\n", std::get<0>( font ), std::get<1>( font ) );
-	}
 
 	/* freetype build */
 	ImGuiFreeType::BuildFontAtlas( io.Fonts, ImGuiFreeTypeBuilderFlags_Monochrome | ImGuiFreeTypeBuilderFlags_MonoHinting );
@@ -46,7 +40,7 @@ void evo::render_t::initialize_font_system( ) {
 
 void evo::render_t::add_text( int x, int y, col_t c, int font, const char* text, int flag ) {
 	ImGuiIO& io = ImGui::GetIO( );
-	ImGui::PushFont( io.Fonts->Fonts[ 0 ] );
+	ImGui::PushFont( io.Fonts->Fonts[ font ] );
 
 	if ( flag == font_flags_t::dropshadow ) {
 		ext_draw_list->AddText( evo::macros::vec_t( x + 1.f, y + 1.f ), col_t( 5, 5, 5 ).modify_alpha( c.a ).convert( ), text );
@@ -133,7 +127,7 @@ void evo::render_t::add_image( int x, int y, int w, int h, evo::macros::texture_
 	ext_draw_list->AddImage( user_texture_id, evo::macros::vec_t( x, y ), evo::macros::vec_t( x + w, y + h ), ImVec2( 0, 0 ), ImVec2( 1, 1 ), c.convert( ) );
 }
 
-void evo::render_t::bind_animation( int id, std::string text, evo::col_t color, int font, int x, int y, text_animation_t animation_type ) {
+void evo::render_t::bind_animation( int id, std::string text, evo::col_t color, int font, int x, int y, text_animation_t animation_type, float animation_speed ) {
 	static int animation_[ 1000 ]; /* iterate */
 
 	int w_of_text = this->text_size( text.c_str( ), font ).x;
@@ -143,7 +137,7 @@ void evo::render_t::bind_animation( int id, std::string text, evo::col_t color, 
 		case text_animation_t::left_to_right:
 		{
 			auto animation = animation_controller.get( text + std::to_string( id ) + animation_controller.current_child );
-			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.025f ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
+			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( animation_speed ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
 
 			if ( animation.value >= 0.99f ) {
 				animation_[ id ] = w_of_text;
@@ -158,7 +152,7 @@ void evo::render_t::bind_animation( int id, std::string text, evo::col_t color, 
 		case text_animation_t::middle_pulse:
 		{
 			auto animation = animation_controller.get( text + std::to_string( id ) + animation_controller.current_child );
-			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.025f ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
+			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( animation_speed ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
 
 			if ( animation.value >= 0.99f ) {
 				animation_[ id ] = w_of_text;
@@ -174,7 +168,7 @@ void evo::render_t::bind_animation( int id, std::string text, evo::col_t color, 
 		case text_animation_t::tiny_color:
 		{
 			auto animation = animation_controller.get( text + std::to_string( id ) + animation_controller.current_child );
-			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.025f ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
+			animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( animation_speed ) * ( ( animation_[ id ] < w_of_text ) ? 1.f : -1.f ) );
 
 			if ( animation.value >= 0.99f ) {
 				animation_[ id ] = w_of_text;

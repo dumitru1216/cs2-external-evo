@@ -86,7 +86,7 @@ namespace evo {
 		DWORD64 address{ 0 }, spotted_by_mask{};
 
 		/* get data in there */
-		int health{}, dormant{};
+		int health{}, dormant{}, clip{};
 
 		bone_t bone_data{};
 
@@ -103,6 +103,20 @@ namespace evo {
 
 		__forceinline bool _spotted( ) {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+		}
+
+		__forceinline bool _clip( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::_dormant2 -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::maxclip1", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
 		}
 
 		__forceinline bool _vec_origin( ) {
@@ -239,6 +253,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._vec_origin( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._clip( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );

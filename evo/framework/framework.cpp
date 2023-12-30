@@ -201,8 +201,13 @@ namespace evo::framework {
         ImGui_ImplWin32_Init( instance );
         ImGui_ImplDX11_Init( p_device, p_context );
 
+        static bool o = false;
+        if ( !o ) {
+            _render->initialize_font_system( );
+            o = true;
+        }
+
         _menu->initialize( );
-        _render->initialize_font_system( );
 
         printf( "[evo] created ui!\n" );
 
@@ -242,6 +247,10 @@ void evo::menu_t::render( ) {
     static int ints[ 50 ]{};
     vector < const char* > items = { "Head", "Chest", "Body", "Legs", "Feet" };
 
+    vector < const char* > animation_types = { "left to right",
+                                        "middle pulse",
+                                        "tiny color" };
+
     static float color[ 4 ] = { 1.f, 1.f, 1.f, 1.f };
 
     PushStyleVar( ImGuiStyleVar_WindowPadding, ImVec2( 0, 0 ) );
@@ -258,6 +267,8 @@ void evo::menu_t::render( ) {
 
         draw->AddLine( pos + ImVec2( 65, 40 ), pos + ImVec2( size.x - 15, 40 ), ImColor( 1.f, 1.f, 1.f, 0.05f ) );
 
+        //PushFont( ImGui::GetIO( ).Fonts->Fonts[ sizeof( evo::fonts_t ) + 1 ] );
+
         switch ( custom.m_tab ) {
             case 0:
             {
@@ -270,7 +281,7 @@ void evo::menu_t::render( ) {
                             custom.m_rage_subtab = i, custom.m_anim = 0.f;
 
                         if ( i != custom.rage_subtabs.size( ) - 1 )
-                            SameLine( );
+                            ImGui::SameLine( );
                     }
                 }
 
@@ -286,23 +297,52 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
+                                ImGui::Checkbox( "Spotted esp", &evo::_settings->change_by_visibility );
+                                ImGui::Checkbox( "Dormancy esp", &evo::_settings->dormancy );
                                 ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 ImGui::ColorEdit4( "###boxcolk", evo::_settings->box_color, ALPHA );
-                                if ( evo::_settings->change_box_spot ) {
+                                if ( evo::_settings->change_by_visibility ) {
                                     ImGui::SameLine( GetWindowWidth( ) - 55 );
                                     ImGui::ColorEdit4( "###boxcolkspot", evo::_settings->box_color_inv, ALPHA );
                                 }
 
-                                if ( evo::_settings->bounding_box ) {
-                                    ImGui::Checkbox( "Second box color", &evo::_settings->change_box_spot );
+     
+
+                                ImGui::Checkbox( "Name", &evo::_settings->name_esp );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###namecls", evo::_settings->name_color, ALPHA );
+                                if ( evo::_settings->change_by_visibility ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::ColorEdit4( "###namceks", evo::_settings->name_color_inv, ALPHA );
                                 }
 
+                                if ( evo::_settings->name_esp ) {
+                                    ImGui::Checkbox( "Name animation", &evo::_settings->name_animation );
+                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                    ImGui::ColorEdit4( "###nameanimcl", evo::_settings->name_color_a, ALPHA );
+
+                                    ImGui::Combo( "Name animation type", &evo::_settings->name_at, animation_types.data(), animation_types.size( ) );
+                                }
+
+                                ImGui::Checkbox( "Health bar", &evo::_settings->health_bar );
+
+
+                                if ( evo::_settings->health_bar ) {
+                                    ImGui::Checkbox( "Custom color", &evo::_settings->customhealthbar );
+                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                    ImGui::ColorEdit4( "###healthbari", evo::_settings->healthbar, ALPHA );
+
+                                    if ( evo::_settings->change_by_visibility ) {
+                                        ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                        ImGui::ColorEdit4( "###heabarb", evo::_settings->healthbari, ALPHA );
+                                    }
+                                }
                                 
 
                             } custom.end_child( );
 
-                            SameLine( );
+                            ImGui::SameLine( );
 
                             custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
@@ -328,7 +368,7 @@ void evo::menu_t::render( ) {
                         custom.m_visuals_subtab = i, custom.m_anim = 0.f;
 
                     if ( i != custom.visuals_subtabs.size( ) - 1 )
-                        SameLine( );
+                        ImGui::SameLine( );
                 }
 
                 EndGroup( );
@@ -346,7 +386,7 @@ void evo::menu_t::render( ) {
 
                             } custom.end_child( );
 
-                            SameLine( );
+                            ImGui::SameLine( );
 
                             custom.begin_child( "Colored models", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
@@ -360,6 +400,8 @@ void evo::menu_t::render( ) {
                 } EndChild( );
             } break;          
         }
+
+        //ImGui::PopFont( );
 
         SetCursorPosY( 0 );
         custom.tab_area( "##tab_area", ImVec2( 50, size.y - 20 ), [ ]( ) {
@@ -377,7 +419,7 @@ void evo::menu_t::render( ) {
 
     } ImGui::End( );
 
-    PopStyleVar( 2 );
+    ImGui::PopStyleVar( 2 );
 }
 
 void evo::menu_t::initialize( ) { 

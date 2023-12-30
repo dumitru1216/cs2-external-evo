@@ -22,6 +22,14 @@ namespace evo {
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
 
+		namespace c_base_weapon {
+			inline DWORD clipping_weapon = 0x12B0;
+			inline DWORD wpn_data_ptr = 0x360;
+			inline DWORD weapon_services = 0x10A8;
+			inline DWORD active_weapon = 0x60;
+			inline DWORD clip_1 = 0x1570;
+		}
+
 		namespace c_game_scene_mode {
 			inline DWORD vec_origin = 0x80;
 		}

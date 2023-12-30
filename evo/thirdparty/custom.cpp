@@ -13,7 +13,7 @@ bool c_custom::expand_button( const char* label, bool selected, float rounding, 
     ImGuiID id = window->GetID( label );
 
     ImVec2 label_size = CalcTextSize( label, 0, 1 );
-    ImVec2 icon_size = GetIO( ).Fonts->Fonts[1]->CalcTextSizeA( GetIO( ).Fonts->Fonts[1]->FontSize - 2, FLT_MAX, 0, "A" );
+    ImVec2 icon_size = GetIO( ).Fonts->Fonts[3]->CalcTextSizeA( GetIO( ).Fonts->Fonts[3]->FontSize - 2, FLT_MAX, 0, "A" );
     ImVec2 pos = window->DC.CursorPos;
 
     auto draw = window->DrawList;
@@ -36,7 +36,7 @@ bool c_custom::expand_button( const char* label, bool selected, float rounding, 
     value->second = ImLerp( value->second, ( selected ? 1.f : 0.f ), 0.035f );
 
     draw->AddRectFilled( rect.Min, rect.Max, ImColor( 1.f, 1.f, 1.f, 0.025f * value->second ), rounding, flags );
-    draw->AddText( GetIO( ).Fonts->Fonts[1], GetIO( ).Fonts->Fonts[1]->FontSize - 2, ImVec2( rect.Min.x + 50 / 2 - icon_size.x / 2, rect.GetCenter( ).y - icon_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), "A" );
+    draw->AddText( GetIO( ).Fonts->Fonts[3], GetIO( ).Fonts->Fonts[3]->FontSize - 2, ImVec2( rect.Min.x + 50 / 2 - icon_size.x / 2, rect.GetCenter( ).y - icon_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), "A" );
     draw->AddText( ImVec2( rect.Min.x + 50, rect.GetCenter( ).y - label_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), label );
 
     return pressed;
@@ -48,7 +48,7 @@ bool c_custom::tab( const char* icon, const char* label, bool selected ) {
     ImGuiID id = window->GetID( label );
 
     ImVec2 label_size = CalcTextSize( label, 0, 1 );
-    ImVec2 icon_size = GetIO( ).Fonts->Fonts[1]->CalcTextSizeA( GetIO( ).Fonts->Fonts[1]->FontSize, FLT_MAX, 0, icon );
+    ImVec2 icon_size = GetIO( ).Fonts->Fonts[3]->CalcTextSizeA( GetIO( ).Fonts->Fonts[3]->FontSize, FLT_MAX, 0, icon );
     ImVec2 pos = window->DC.CursorPos;
 
     auto draw = window->DrawList;
@@ -70,7 +70,7 @@ bool c_custom::tab( const char* icon, const char* label, bool selected ) {
 
     value->second = ImLerp( value->second, ( selected || hovered ? 1.f : 0.f ), 0.035f );
 
-    draw->AddText( GetIO( ).Fonts->Fonts[1], GetIO( ).Fonts->Fonts[1]->FontSize, ImVec2( rect.Min.x + 50 / 2 - icon_size.x / 2, rect.GetCenter( ).y - icon_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), icon );
+    draw->AddText( GetIO( ).Fonts->Fonts[3], GetIO( ).Fonts->Fonts[3]->FontSize, ImVec2( rect.Min.x + 50 / 2 - icon_size.x / 2, rect.GetCenter( ).y - icon_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), icon );
     draw->AddText( ImVec2( rect.Min.x + 50, rect.GetCenter( ).y - label_size.y / 2 ), GetColorU32( ImGuiCol_Text, ( value->second > 0.3f ? value->second : 0.3f ) ), label );
 
     return pressed;
