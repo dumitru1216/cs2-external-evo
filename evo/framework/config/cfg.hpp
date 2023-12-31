@@ -43,6 +43,13 @@ namespace evo {
 		bool show_dmg_dealt = false;
 
 		bool change_by_visibility = false;
+
+
+		/* triggerbot */
+		int activationz_type = 0; // hold - toggle - always on
+		int triggerkey = 0;
+
+		int reaction_time = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

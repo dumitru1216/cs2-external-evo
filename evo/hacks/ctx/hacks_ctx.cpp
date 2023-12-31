@@ -91,5 +91,19 @@ void evo::hacks_t::run( ) {
 	}
 
 
-	_triggerbot->run_trigger( local_player );
+	/* trigger bot */
+	switch ( _settings->activationz_type ) {
+		case 0:
+		{
+
+		} break;
+		case 1: /* toggle */
+		{
+
+		} break;
+		case 2: /* always on */
+		{
+			_triggerbot->run_trigger( local_player );
+		} break;
+	}
 }
