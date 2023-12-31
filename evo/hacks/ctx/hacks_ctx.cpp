@@ -5,9 +5,7 @@ void evo::hacks_t::run( ) {
 	/* aimbot data */
 	float distance_to_sight = 0;
 	float max_aim_distance = _settings->aim_distance_max;
-	vec3_t head_pos{ 0, 0, 0 };
 	vec3_t aim_pos{ 0, 0, 0 };
-	vec2_t angles{ 0, 0 };
 
 	/* update matrix */
 	if ( !_proc_manager.read_memory( evo::_address->get_matrix_address( ), evo::_address->view.matrix, 64 ) ) {
