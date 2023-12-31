@@ -78,3 +78,7 @@ void evo::trigger_t::run_trigger( const evo::c_entity& local_entity ) {
 		last_point = cur_point;
 	}
 }
+
+void evo::trigger_t::run_thread_check( const c_entity& local_entity ) noexcept { 
+	/* here we run thread check and stuff */
+}
