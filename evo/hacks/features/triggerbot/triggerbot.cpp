@@ -62,6 +62,18 @@ void evo::trigger_t::run_trigger( const evo::c_entity& local_entity ) {
 		return;
 	}
 
+	static bool generated_chance = false;
+	static int chance = 0;
+
+	if ( !generated_chance ) {
+		chance = rand( ) % 100;
+
+#ifdef read_data_dbg
+		print_with_data_scoped( "trigger_t::run_trigger -> generated -> memory [ 3 ] -> c: " + std::to_string( chance ) );
+#endif // read_data_dbg
+		generated_chance = true;
+	}
+
 	static std::chrono::time_point last_point = std::chrono::steady_clock::now( );
 	auto cur_point = std::chrono::steady_clock::now( );
 	if ( cur_point - last_point >= std::chrono::milliseconds( _settings->reaction_time ) ) {
@@ -72,6 +84,9 @@ void evo::trigger_t::run_trigger( const evo::c_entity& local_entity ) {
 			mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
 			std::thread trigger_thread( release_mouse_event );
 			trigger_thread.detach( );
+
+			generated_chance = false;
+			chance = 0;
 		}
 
 		/* egalize these */

@@ -48,7 +48,7 @@ namespace evo {
 			inline DWORD max_clip = 0x1FC;
 			inline DWORD weapon_type = 0x240;
 			inline DWORD zs_name = 0xC18;
-			inline DWORD inaccuracy = 0xC74;
+			inline DWORD inaccuracy = 0xC7C;
 		}
 
 		namespace controller {

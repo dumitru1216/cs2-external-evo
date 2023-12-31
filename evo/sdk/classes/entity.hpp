@@ -34,6 +34,9 @@ namespace evo {
 	public:
 		DWORD64 address{ 0 };
 		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 }, wins{ 0 }, total_dmg{ 0 };
+
+		float inaccuracy{};
+
 		DWORD pawn{ 0 };
 		std::string player_name{};
 	public:
@@ -46,6 +49,20 @@ namespace evo {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
 											offsets::c_base_player_controler::pawn_alive, this->alive );
+		}
+
+		__forceinline bool _inacuracy( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<float>( "c_player_pawn::inaccuracy", clipping_weapon, offsets::c_base_weapon::inaccuracy, this->inaccuracy );
 		}
 
 		__forceinline bool _ping( ) {
