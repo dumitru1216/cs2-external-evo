@@ -11,21 +11,21 @@ void evo::esp_t::setup_alpha( const c_entity& local_player, const c_entity& enti
 	/* allowed distance */
 	static const float run_dormancy = 750.f;
 
-	if ( alive_player && !( ( distance > run_dormancy ) && !this->spotted( entity, local_player, local_index, index ) ) ) {
+	if ( alive_player ) { /* && !( ( distance > run_dormancy ) && !this->spotted( entity, local_player, local_index, index )*/
 		this->esp_alpha[ index ] += 255.f / 0.68f * frame_time;
 		this->esp_alpha[ index ] = std::clamp( this->esp_alpha[ index ], 0.f, 255.f );
 	} else if ( !alive_player ) {
 		this->esp_alpha[ index ] -= 255.f / 0.68f * frame_time;
 		this->esp_alpha[ index ] = std::clamp( this->esp_alpha[ index ], 0.f, 255.f );
 	}
-	else if ( alive_player && ( distance > run_dormancy ) && evo::_settings->dormancy ) {
-		if ( esp_alpha[ index ] < 150.f ) {
-			this->esp_alpha[ index ] -= 255.f / 16.f * frame_time;
-			this->esp_alpha[ index ] = std::clamp( this->esp_alpha[ index ], 0.f, 160.f );
-		} else {
-			this->esp_alpha[ index ] -= 255.f / 1.f * frame_time;
-		}
-	}
+	//else if ( alive_player && ( distance > run_dormancy ) && evo::_settings->dormancy ) {
+	//	if ( esp_alpha[ index ] < 150.f ) {
+	//		this->esp_alpha[ index ] -= 255.f / 16.f * frame_time;
+	//		this->esp_alpha[ index ] = std::clamp( this->esp_alpha[ index ], 0.f, 160.f );
+	//	} else {
+	//		this->esp_alpha[ index ] -= 255.f / 1.f * frame_time;
+	//	}
+	//}
 }
 
 void evo::esp_t::bounding_box( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) {
