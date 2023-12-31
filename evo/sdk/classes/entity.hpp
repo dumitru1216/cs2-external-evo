@@ -183,9 +183,17 @@ namespace evo {
 
 		/* get data in there */
 		int health{}, dormant{}, clip{}, max_clip{},
-			defuser{}, hemlet{}, heavy_ar{}, ping{}, money{};
+			defuser{}, hemlet{}, heavy_ar{}, ping{}, money{}, exposure_control{};
 
 		float inaccuracy{};
+
+		// m_pCameraServices = 0x10E0 // - get gamera services 
+		// m_hActivePostProcessingVolume = 0x1F4 - from cameraservices to C_PostProcessingVolume
+
+		// C_PostProcessingVolume
+		//  constexpr std::ptrdiff_t m_bExposureControl = 0xD05; // bool
+		// constexpr std::ptrdiff_t m_flMinExposure = 0xCEC; // float
+		// constexpr std::ptrdiff_t m_flMaxExposure = 0xCF0; // float
 
 		cs_weapon_type weapon_type{};
 		std::string weapon_name{};
@@ -205,6 +213,19 @@ namespace evo {
 
 		__forceinline bool _spotted( ) {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+		}
+
+		__forceinline bool _exposure_control( ) {
+			DWORD64 addr = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::ping_services, addr ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::has_defuser", addr, offsets::ping_services::player_ping, this->ping );
 		}
 
 		__forceinline bool _ping( ) {
