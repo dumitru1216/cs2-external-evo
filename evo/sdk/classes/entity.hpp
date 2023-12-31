@@ -133,19 +133,27 @@ namespace evo {
 			return mem::scan_memory<int>( "c_player_pawn::total_dma", addr, offsets::tracking_services::total_damage, this->total_dmg );
 		}
 
-		__forceinline bool _total_damage( ) {
+		__forceinline bool _dmg_dealt( ) {
 			// item services
 			// 0x10B0
 			DWORD64 addr = 0;
+			DWORD64 addr2 = 0;
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::controller::tracking_services, addr ) ) {
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::controller::damage_services, addr ) ) {
 #ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::tracking_services -> error -> no memory" );
+				print_with_data_scoped( "ccs_player_pawn::damage_services -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::total_dma", addr, offsets::tracking_services::total_damage, this->total_dmg );
+			if ( !_proc_manager.read_memory<DWORD64>( addr + ( DWORD )0x48, addr2 ) ) { /* cDamageRecord */
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::damage_services3 -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::damage_services2", addr2, ( DWORD )0x58, this->dmg_dealt ); /* dmg dealt */
 		}
 
 		__forceinline bool _team_id( ) {
@@ -535,6 +543,14 @@ namespace evo {
 			}
 
 			if ( !this->controller._team_id( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._team_id\n" );
+#endif 
+				return false;
+			}
+
+			if ( !this->controller._dmg_dealt( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._team_id\n" );
