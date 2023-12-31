@@ -143,11 +143,13 @@
     <ClInclude Include="evo\framework\framework.hpp" />
     <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp" />
     <ClInclude Include="evo\hacks\features\esp\esp.hpp" />
+    <ClInclude Include="evo\hacks\features\triggerbot\triggerbot.hpp" />
     <ClInclude Include="evo\inc.hpp" />
     <ClInclude Include="evo\sdk\animation_system\animation_system.hpp" />
     <ClInclude Include="evo\sdk\classes\bone_system.hpp" />
     <ClInclude Include="evo\sdk\classes\entity.hpp" />
     <ClInclude Include="evo\sdk\classes\view.hpp" />
+    <ClInclude Include="evo\sdk\input_system\input_system.hpp" />
     <ClInclude Include="evo\sdk\math\color_t.hpp" />
     <ClInclude Include="evo\sdk\math\rect_t.hpp" />
     <ClInclude Include="evo\sdk\math\str_t.hpp" />
@@ -177,7 +179,9 @@
     <ClCompile Include="evo\framework\framework.cpp" />
     <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp" />
     <ClCompile Include="evo\hacks\features\esp\esp.cpp" />
+    <ClCompile Include="evo\hacks\features\triggerbot\triggerbot.cpp" />
     <ClCompile Include="evo\sdk\animation_system\animation_system.cpp" />
+    <ClCompile Include="evo\sdk\input_system\input_system.cpp" />
     <ClCompile Include="evo\sdk\process_manager\process_manager.cpp" />
     <ClCompile Include="evo\sdk\render\render.cpp" />
     <ClCompile Include="evo\thirdparty\custom.cpp" />

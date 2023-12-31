@@ -108,6 +108,12 @@
     <ClInclude Include="evo\sdk\render\render_fonts.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\sdk\input_system\input_system.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="evo\hacks\features\triggerbot\triggerbot.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -165,6 +171,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\framework\config\cfg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\sdk\input_system\input_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\hacks\features\triggerbot\triggerbot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
