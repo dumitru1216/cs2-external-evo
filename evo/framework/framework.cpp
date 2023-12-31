@@ -246,6 +246,7 @@ void evo::menu_t::render( ) {
     static bool bools[ 50 ]{};
     static int ints[ 50 ]{};
     vector < const char* > items = { "Head", "Chest", "Body", "Legs", "Feet" };
+    vector < const char* > cfgs = { "default", "legit", "auto", "scout", "other" };
 
     vector < const char* > animation_types = { "left to right",
                                         "middle pulse",
@@ -434,21 +435,48 @@ void evo::menu_t::render( ) {
 
             case 3:
             {
-                custom.begin_child( "Configs", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                SetCursorPos( ImVec2( 65, 50 ) );
+                BeginChild( "##rage_childs22", ImVec2( GetWindowWidth( ) - 80, GetWindowHeight( ) - 80 ) );
                 {
 
+                    switch ( custom.m_rage_subtab ) {
 
-                } custom.end_child( );
+                        case 0:
 
-                ImGui::SameLine( );
+                            custom.begin_child( "Configs", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+                                static int configs = 0;
+                                std::string config;
+                                ImGui::Combo( "Config", &configs, cfgs.data( ), cfgs.size( ) );
+                                switch ( configs ) {
+                                    case 0: config = "default"; break;
+                                    case 1: config = "legit"; break;
+                                    case 2: config = "auto_hvh"; break;
+                                    case 3: config = "scout_hvh"; break;
+                                    case 4: config = "pistol_hvh"; break;
+                                }
 
-                custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
-                {
+                                if ( Button( "Load" ) )
+                                    evo::_settings->load( config );
+
+                                if ( Button( "Save" ) )
+                                    evo::_settings->save( config );
+
+                            } custom.end_child( );
+
+                            ImGui::SameLine( );
+
+                            custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
 
 
-                } custom.end_child( );
+                            } custom.end_child( );
 
-                break;
+                            break;
+
+                    }
+
+                } EndChild( );
 
             } break;
         }
