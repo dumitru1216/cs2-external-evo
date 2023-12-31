@@ -236,7 +236,7 @@ namespace evo {
 
 		bone_t bone_data{};
 
-		vec2_t screen_pos{};
+		vec2_t screen_pos{}, viewangle{ /* 0x1518 */ };
 		vec3_t pos{}, vec_origin{};
 	public:
 		__forceinline bool _health( ) {
@@ -249,6 +249,10 @@ namespace evo {
 
 		__forceinline bool _spotted( ) {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
+		}
+		
+		__forceinline bool _viewangle( ) {
+			return mem::scan_memory<vec2_t>( "c_player_pawn::viewangle", this->address, offsets::pawn::viewangle, this->viewangle );
 		}
 
 		__forceinline bool _post_processing( ) {
@@ -635,6 +639,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._max_clip( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._viewangle( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );
