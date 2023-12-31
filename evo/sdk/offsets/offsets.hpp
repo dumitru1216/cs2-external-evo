@@ -69,6 +69,10 @@ namespace evo {
 			inline DWORD i_account = 0x40;
 		}
 
+		namespace damage_services {
+			inline DWORD i_dmg = 0x58;
+		}
+
 		namespace match_making {
 			inline DWORD m_i_competitive_ranking = 0x770; // int32_t
 			inline DWORD m_i_competitive_wins = 0x774; // int32_t

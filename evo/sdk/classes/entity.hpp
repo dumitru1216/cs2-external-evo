@@ -153,7 +153,7 @@ namespace evo {
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::damage_services2", addr2, ( DWORD )0x58, this->dmg_dealt ); /* dmg dealt */
+			return mem::scan_memory<int>( "c_player_pawn::damage_services2", addr2, offsets::damage_services::i_dmg, this->dmg_dealt ); /* dmg dealt */
 		}
 
 		__forceinline bool _team_id( ) {
