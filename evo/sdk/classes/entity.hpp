@@ -168,6 +168,8 @@ namespace evo {
 		int health{}, dormant{}, clip{}, max_clip{},
 			defuser{}, hemlet{}, heavy_ar{}, ping{}, money{};
 
+		float inaccuracy{};
+
 		cs_weapon_type weapon_type{};
 		std::string weapon_name{};
 
@@ -245,6 +247,20 @@ namespace evo {
 			}
 
 			return mem::scan_memory<int>( "c_player_pawn::clip", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
+		}
+
+		__forceinline bool _inacuracy( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<float>( "c_player_pawn::inaccuracy", clipping_weapon, offsets::c_base_weapon::inaccuracy, this->inaccuracy );
 		}
 
 		__forceinline bool _weapon_name( ) {
@@ -572,6 +588,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._defuser( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._inacuracy( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );
