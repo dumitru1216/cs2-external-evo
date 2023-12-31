@@ -57,6 +57,7 @@ namespace evo {
 		bool aimbot = false;
 		float fov = 0;
 		float smooth = 0;
+		int aim_distance_max = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

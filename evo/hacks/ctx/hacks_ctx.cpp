@@ -1,9 +1,14 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 
-
-
 void evo::hacks_t::run( ) { 
+	/* aimbot data */
+	float distance_to_sight = 0;
+	float max_aim_distance = _settings->aim_distance_max;
+	vec3_t head_pos{ 0, 0, 0 };
+	vec3_t aim_pos{ 0, 0, 0 };
+	vec2_t angles{ 0, 0 };
+
 	/* update matrix */
 	if ( !_proc_manager.read_memory( evo::_address->get_matrix_address( ), evo::_address->view.matrix, 64 ) ) {
 #ifdef read_data_dbg
@@ -87,6 +92,9 @@ void evo::hacks_t::run( ) {
 		if ( !entity.in_screen( ) ) {
 			continue;
 		}
+
+		distance_to_sight = entity.get_bone( ).bone_pos_list[ bone_index::head ].screen_pos.dist_to( { ( 1920 / 2 ), ( 1080 / 2 ) } );
+
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );

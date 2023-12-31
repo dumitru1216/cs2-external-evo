@@ -434,6 +434,10 @@ namespace evo { /* main namespace */
 			return *this == 0.f;
 		}
 
+		float dist_to( const vec2_t& pos ) {
+			return sqrtf( powf( pos.x - x, 2 ) + powf( pos.y - y, 2 ) );
+		}
+
 		float x{}, y{};
 	};
 
