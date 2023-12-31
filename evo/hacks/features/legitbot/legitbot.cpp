@@ -12,12 +12,33 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     float max_aim_distance = 1500;
     vec3_t aim_pos{ 0, 0, 0 };
 
+    /* hitbox shit */
+    switch ( evo::_settings->hitbox ) {
+        case 0:
+        {
+            _legit->aim_position = bone_index::head;
+        } break;
+        case 1:
+        {
+            _legit->aim_position = bone_index::neck_0;
+        } break;
+        case 2:
+        {
+            _legit->aim_position = bone_index::spine_1;
+        } break;
+        case 3:
+        {
+            _legit->aim_position = bone_index::pelvis;
+        } break;
+    }
+
     distance_to_sight = entity.get_bone( ).bone_pos_list[ bone_index::head ].screen_pos.dist_to( { ( 1920 / 2 ), ( 1080 / 2 ) } );
     if ( distance_to_sight < max_aim_distance ) {
         max_aim_distance = distance_to_sight;
 
         if ( !_settings->visible_check || entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( local_idx ) ) || local.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( ent_idx ) ) ) {
             aim_pos = entity.get_bone( ).bone_pos_list[ _legit->aim_position ].pos;
+                    
             if ( _legit->aim_position == bone_index::head )
                 aim_pos.z -= 1.f;
         }
@@ -89,5 +110,4 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         }
         mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
     }
-
 }

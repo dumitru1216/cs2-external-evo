@@ -117,6 +117,9 @@
     <ClInclude Include="evo\hacks\features\legitbot\legitbot.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\hacks\features\ragebot\ragebot.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -183,6 +186,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\hacks\features\legitbot\legitbot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\hacks\features\ragebot\ragebot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

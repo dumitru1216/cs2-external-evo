@@ -5,6 +5,7 @@ namespace evo {
 		namespace c_base_entity {
 			inline DWORD health = 0x32C;
 			inline DWORD team_id = 0x3BF;
+			inline DWORD vec_velocity = 0x3D8;
 			inline DWORD game_scene_node = 0x310;
 			inline DWORD bone_array = 0x1E0; /* xref: CSkeletonInstance_::m_modelState + CGameSceneNode_::m_vecOrigin -> if this gets outdate */
 		}

@@ -34,7 +34,7 @@ namespace evo {
 	public:
 		DWORD64 address{ 0 }, processing_adress{ 0 };
 		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 }, wins{ 0 }, total_dmg{ 0 },
-			dmg_dealt{ 0 };
+			dmg_dealt{ 0 }, velocity{ };
 
 		float inaccuracy{};
 
@@ -50,6 +50,10 @@ namespace evo {
 			/* we need this too whatever */
 			return mem::scan_memory<int>( "ccs_player_controler::alive", this->address,
 											offsets::c_base_player_controler::pawn_alive, this->alive );
+		}
+
+		__forceinline bool _velocity( ) {
+			return mem::scan_memory<int>( "c_player_pawn::vecveloci", this->address, offsets::c_base_entity::vec_velocity, this->velocity );
 		}
 
 		__forceinline bool _inacuracy( ) {
@@ -237,10 +241,14 @@ namespace evo {
 		bone_t bone_data{};
 
 		vec2_t screen_pos{}, viewangle{ /* 0x1518 */ };
-		vec3_t pos{}, vec_origin{}, camera_pos{ /* 0x1294 */ };
+		vec3_t pos{}, vec_origin{}, camera_pos{ /* 0x1294 */ }, vec_velocity{};
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
+		}
+
+		__forceinline bool _velocity( ) {
+			return mem::scan_memory<vec3_t>( "c_player_pawn::vecveloci", this->address, offsets::c_base_entity::vec_velocity, this->vec_velocity );
 		}
 
 		__forceinline bool _pos( ) {
@@ -550,6 +558,14 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->controller._velocity( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._health\n" );
+#endif 
+				return false;
+			}
+
 			if ( !this->controller._team_id( ) ) {
 #if 1
 				/* debug */
@@ -688,6 +704,15 @@ namespace evo {
 			}
 
 			if ( !this->player_pawn._defuser( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._spotted\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._velocity( ) ) {
 #if 1
 				/* debug */
 				printf( "[evo] error controller._spotted\n" );
