@@ -73,6 +73,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "framework/config/cfg.hpp"
 #include "hacks/features/esp/esp.hpp"
 #include "hacks/features/triggerbot/triggerbot.hpp"
+#include "hacks/features/legitbot/legitbot.hpp"
 
 #include "hacks/ctx/hacks_ctx.hpp"
 #include "framework/framework.hpp"
