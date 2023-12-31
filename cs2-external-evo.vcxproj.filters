@@ -120,6 +120,9 @@
     <ClInclude Include="evo\hacks\features\ragebot\ragebot.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\sdk\reverse\reversed_funcs.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">
@@ -189,6 +192,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="evo\hacks\features\ragebot\ragebot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="evo\sdk\reverse\reversed_funcs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

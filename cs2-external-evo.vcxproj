@@ -161,6 +161,7 @@
     <ClInclude Include="evo\sdk\render\render.hpp" />
     <ClInclude Include="evo\sdk\render\render_fonts.hpp" />
     <ClInclude Include="evo\sdk\render\render_sdk.hpp" />
+    <ClInclude Include="evo\sdk\reverse\reversed_funcs.hpp" />
     <ClInclude Include="evo\thirdparty\bytes.hpp" />
     <ClInclude Include="evo\thirdparty\custom.hpp" />
     <ClInclude Include="evo\thirdparty\imconfig.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="evo\sdk\input_system\input_system.cpp" />
     <ClCompile Include="evo\sdk\process_manager\process_manager.cpp" />
     <ClCompile Include="evo\sdk\render\render.cpp" />
+    <ClCompile Include="evo\sdk\reverse\reversed_funcs.cpp" />
     <ClCompile Include="evo\thirdparty\custom.cpp" />
     <ClCompile Include="evo\thirdparty\imgui.cpp" />
     <ClCompile Include="evo\thirdparty\imgui_demo.cpp" />
