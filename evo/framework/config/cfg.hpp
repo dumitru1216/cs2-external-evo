@@ -58,6 +58,8 @@ namespace evo {
 		float fov = 0;
 		float smooth = 0;
 		int aim_distance_max = 0;
+		bool visible_check = false; // autowall
+		int hitbox = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

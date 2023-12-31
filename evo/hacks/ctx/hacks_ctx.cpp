@@ -94,6 +94,15 @@ void evo::hacks_t::run( ) {
 		}
 
 		distance_to_sight = entity.get_bone( ).bone_pos_list[ bone_index::head ].screen_pos.dist_to( { ( 1920 / 2 ), ( 1080 / 2 ) } );
+		if ( distance_to_sight < max_aim_distance ) {
+			max_aim_distance = distance_to_sight;
+
+			if ( !_settings->visible_check || entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( local_player_index ) ) || local_player.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( i ) ) ) {
+				aim_pos = entity.get_bone( ).bone_pos_list[ _legit->aim_position ].pos;
+				if ( _legit->aim_position == bone_index::head )
+					aim_pos.z -= 1.f;
+			}
+		}
 
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
