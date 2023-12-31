@@ -179,7 +179,7 @@ namespace evo {
 
 	class ccs_player_pawn {
 	public:
-		DWORD64 address{ 0 }, spotted_by_mask{};
+		DWORD64 address{ 0 }, spotted_by_mask{}, processing_adress{};
 
 		/* get data in there */
 		int health{}, dormant{}, clip{}, max_clip{},
@@ -215,7 +215,7 @@ namespace evo {
 			return mem::scan_memory<DWORD64>( "c_player_pawn::spotted", this->address, offsets::pawn::spotted, this->spotted_by_mask );
 		}
 
-		__forceinline bool _exposure_control( ) {
+		__forceinline bool _post_processing( ) {
 			DWORD64 addr = 0;
 
 			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::ping_services, addr ) ) {

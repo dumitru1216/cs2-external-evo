@@ -24,6 +24,7 @@ namespace evo {
 			inline DWORD vec_old_origin = 0x1224;
 			inline DWORD dormant = 0xE7;
 			inline DWORD ping_services = 0x1268;
+			inline DWORD camera_services = 0x10E0;
 			inline DWORD ent_index = 0x1544; /* should work */
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
