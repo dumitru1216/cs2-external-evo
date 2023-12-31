@@ -51,6 +51,7 @@ namespace evo {
 		int triggerkey = 0;
 
 		int reaction_time = 0;
+		int shot_delay = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

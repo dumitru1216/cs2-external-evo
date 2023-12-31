@@ -10,7 +10,7 @@ bool allow_shot = false;
 
 void release_mouse_event( ) {
 	/* we can now shot so lets do it */
-	std::this_thread::sleep_for( std::chrono::milliseconds( 200 ) ); /* add a custom delay and more */
+	std::this_thread::sleep_for( std::chrono::milliseconds( evo::_settings->shot_delay ) ); /* add a custom delay and more */
 	mouse_event( MOUSEEVENTF_LEFTUP, 0, 0, 0, 0 ); /* release shot event */
 }
 
@@ -64,7 +64,7 @@ void evo::trigger_t::run_trigger( const evo::c_entity& local_entity ) {
 
 	static std::chrono::time_point last_point = std::chrono::steady_clock::now( );
 	auto cur_point = std::chrono::steady_clock::now( );
-	if ( cur_point - last_point >= std::chrono::milliseconds( 30 ) ) {
+	if ( cur_point - last_point >= std::chrono::milliseconds( _settings->reaction_time ) ) {
 		const bool shooting = GetAsyncKeyState( VK_LBUTTON ) < 0;
 
 		/* run if !shoting */

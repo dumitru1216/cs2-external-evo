@@ -252,6 +252,9 @@ void evo::menu_t::render( ) {
                                         "middle pulse",
                                         "tiny color" };
 
+    vector < const char* > keymode = { "hold",
+                                    "toggle",
+                                    "always" };
 
     vector < const char* > key_binds = { "none", "mouse1", "mouse2", "mouse3", "mouse4", "mouse5", "a", 
         "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", 
@@ -312,7 +315,12 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
+                                ImGui::Checkbox( "Triggerbot", &evo::_settings->triggerbot );
+                                ImGui::Combo( "Triggerbot key", &evo::_settings->triggerkey, key_binds.data( ), key_binds.size( ) );
+                                ImGui::Combo( "Triggerbot mode", &evo::_settings->activationz_type, keymode.data( ), keymode.size( ) );
 
+                                ImGui::SliderInt( "Reaction time", &evo::_settings->reaction_time, 100, 1000 );
+                                ImGui::SliderInt( "Shot delay", &evo::_settings->shot_delay, 10, 500 );
 
                             } custom.end_child( );
 
