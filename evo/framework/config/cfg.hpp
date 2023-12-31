@@ -57,7 +57,7 @@ namespace evo {
 		bool aimbot = false;
 		float fov = 0;
 		float smooth = 0;
-		int aim_distance_max = 0;
+		int aim_distance_max = 200;
 		bool visible_check = false; // autowall
 		int hitbox = 0;
 

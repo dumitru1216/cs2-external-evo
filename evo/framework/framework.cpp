@@ -256,6 +256,10 @@ void evo::menu_t::render( ) {
                                     "toggle",
                                     "always" };
 
+    vector < const char* > hitboxes = { "head",
+                                "neck",
+                                "chest", "pelvis" };
+
     vector < const char* > key_binds = { "none", "mouse1", "mouse2", "mouse3", "mouse4", "mouse5", "a", 
         "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", 
         "t", "u", "v", "w", "x", "y", "z", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "f1", 
@@ -307,6 +311,37 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
+                                ImGui::Checkbox( "Aimbot", &evo::_settings->aimbot );
+                                ImGui::Checkbox( "Only visible", &evo::_settings->visible_check );
+                                ImGui::Combo( "Aimbot key", &evo::_settings->a_triggerkey, key_binds.data( ), key_binds.size( ) );
+                                ImGui::Combo( "Aimbot mode", &evo::_settings->a_activationz_type, keymode.data( ), keymode.size( ) );
+                                ImGui::Combo( "Hitbox ", &evo::_settings->hitbox, hitboxes.data( ), hitboxes.size( ) );
+
+                                switch ( evo::_settings->hitbox ) {
+                                    case 0:
+                                    {
+                                        _legit->aim_position = bone_index::head;
+                                    } break;
+                                    case 1:
+                                    {
+                                        _legit->aim_position = bone_index::neck_0;
+                                    } break;
+                                    case 2:
+                                    {
+                                        _legit->aim_position = bone_index::spine_1;
+                                    } break;
+                                    case 3:
+                                    {
+                                        _legit->aim_position = bone_index::pelvis;
+                                    } break;
+                                }
+
+                                ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
+
+                                ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
+                                ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 50 );
+
+
                                
 
                             } custom.end_child( );
