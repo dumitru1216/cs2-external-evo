@@ -25,8 +25,15 @@ namespace evo {
 			inline DWORD dormant = 0xE7;
 			inline DWORD ping_services = 0x1268;
 			inline DWORD camera_services = 0x10E0;
+			inline DWORD processing_value = 0x120;
 			inline DWORD ent_index = 0x1544; /* should work */
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
+		}
+
+		namespace post_processing {
+			inline DWORD exposure_control = 0xD05; // bool
+			inline DWORD min_exposure = 0xCEC; // f
+			inline DWORD max_exposure = 0xCF0; // f
 		}
 
 		namespace item_services {

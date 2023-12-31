@@ -32,7 +32,7 @@ namespace evo {
 
 	class ccs_player_controler {
 	public:
-		DWORD64 address{ 0 };
+		DWORD64 address{ 0 }, processing_adress{ 0 };
 		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 }, wins{ 0 }, total_dmg{ 0 };
 
 		float inaccuracy{};
@@ -63,6 +63,19 @@ namespace evo {
 			}
 
 			return mem::scan_memory<float>( "c_player_pawn::inaccuracy", clipping_weapon, offsets::c_base_weapon::inaccuracy, this->inaccuracy );
+		}
+
+		__forceinline bool _post_processing( ) {
+			DWORD64 addr = 0; // camera services
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::camera_services, addr ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::camera_services -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<DWORD64>( "c_player_pawn::processing_value", addr, offsets::pawn::processing_value, this->processing_adress );
 		}
 
 		__forceinline bool _ping( ) {
@@ -216,16 +229,16 @@ namespace evo {
 		}
 
 		__forceinline bool _post_processing( ) {
-			DWORD64 addr = 0;
+			DWORD64 addr = 0; // camera services
 
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::ping_services, addr ) ) {
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::camera_services, addr ) ) {
 #ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::item_services_pawn -> error -> no memory" );
+				print_with_data_scoped( "ccs_player_pawn::camera_services -> error -> no memory" );
 #endif // read_data_dbg
 				return false;
 			}
 
-			return mem::scan_memory<int>( "c_player_pawn::has_defuser", addr, offsets::ping_services::player_ping, this->ping );
+			return mem::scan_memory<DWORD64>( "c_player_pawn::processing_value", addr, offsets::pawn::processing_value, this->processing_adress );
 		}
 
 		__forceinline bool _ping( ) {
@@ -643,6 +656,14 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->player_pawn._post_processing( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._post_processing\n" );
+#endif 
+
+				return false;
+			}
 
 			if ( !this->player_pawn._ping( ) ) {
 #if 1

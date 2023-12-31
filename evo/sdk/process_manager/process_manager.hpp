@@ -101,6 +101,18 @@ public:
 		return false;
 	}
 
+	template <typename ReadType>
+	bool write_memory_nuke( DWORD64 Address, ReadType& Value ) {
+		_is_invalid( hProcess, false );
+		_is_invalid( ProcessID, false );
+
+		if ( WriteProcessMemory( hProcess, reinterpret_cast< LPVOID >( Address ), &Value, sizeof( ReadType ), 0 ) )
+			return true;
+		//return false;
+
+		return true;
+	}
+
 	std::vector<DWORD64> search_memory( const std::string& Signature, DWORD64 StartAddress, DWORD64 EndAddress, int SearchNum = 1 );
 
 	DWORD64 trace_address( DWORD64 BaseAddress, std::vector<DWORD> Offsets ) {
