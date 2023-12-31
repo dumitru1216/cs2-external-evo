@@ -29,4 +29,7 @@ void evo::trigger_t::run_trigger( const evo::c_entity& local_entity ) {
 #endif // read_data_dbg
 		return;
 	}
+
+	/* store this shit here */
+	list_avaible_entries = _proc_manager.trace_address( _address->get_entity_list_address( ), { 0x8 * ( ent_handler >> 9 ) + 0x10,0x0 } );
 }
