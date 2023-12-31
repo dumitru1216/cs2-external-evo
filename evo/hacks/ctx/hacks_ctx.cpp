@@ -90,4 +90,6 @@ void evo::hacks_t::run( ) {
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
 
+
+	_triggerbot->run_trigger( local_player );
 }

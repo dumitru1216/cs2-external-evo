@@ -3,7 +3,6 @@
 namespace evo {
 	class trigger_t {
 	public:
-		void release_mouse_event( );
 		void run_trigger( const c_entity& local_entity );
 		void run_thread_check( const c_entity& local_entity ) noexcept;
 	};

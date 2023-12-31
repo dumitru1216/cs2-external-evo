@@ -1,5 +1,4 @@
-#include "input_system.hpp"
-#include <WinUser.h>
+#include "../../inc.hpp"
 
 int evo::input_t::get_bind_id( int setting ) {
 	int vk;
