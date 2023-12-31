@@ -46,6 +46,7 @@ namespace evo {
 
 
 		/* triggerbot */
+		bool triggerbot = false;
 		int activationz_type = 0; // hold - toggle - always on
 		int triggerkey = 0;
 

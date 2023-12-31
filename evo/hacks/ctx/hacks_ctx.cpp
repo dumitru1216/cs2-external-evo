@@ -93,13 +93,17 @@ void evo::hacks_t::run( ) {
 
 	/* trigger bot */
 	switch ( _settings->activationz_type ) {
-		case 0:
+		case 0: /* hold */
 		{
-
+			if ( GetAsyncKeyState( _input_key->get_bind_id( _settings->triggerkey ) ) ) {
+				_triggerbot->run_trigger( local_player );
+			}
 		} break;
 		case 1: /* toggle */
 		{
-
+			if ( GetKeyState( _input_key->get_bind_id( _settings->triggerkey ) ) ) {
+				_triggerbot->run_trigger( local_player );
+			}
 		} break;
 		case 2: /* always on */
 		{
