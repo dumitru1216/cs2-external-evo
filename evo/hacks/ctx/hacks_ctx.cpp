@@ -90,6 +90,7 @@ void evo::hacks_t::run( ) {
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
 
+	print_with_data_scoped( "i: " + std::to_string( local_player.player_pawn.inaccuracy ) )
 
 	/* trigger bot */
 	if ( _settings->triggerbot ) {
