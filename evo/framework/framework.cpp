@@ -319,8 +319,8 @@ void evo::menu_t::render( ) {
                                 ImGui::Combo( "Triggerbot key", &evo::_settings->triggerkey, key_binds.data( ), key_binds.size( ) );
                                 ImGui::Combo( "Triggerbot mode", &evo::_settings->activationz_type, keymode.data( ), keymode.size( ) );
 
-                                ImGui::SliderInt( "Reaction time", &evo::_settings->reaction_time, 100, 1000 );
-                                ImGui::SliderInt( "Shot delay", &evo::_settings->shot_delay, 10, 500 );
+                                ImGui::SliderInt( "Next reaction time", &evo::_settings->reaction_time, 200, 2500 );
+                                ImGui::SliderInt( "Next shot delay", &evo::_settings->shot_delay, 10, 2500 );
 
                             } custom.end_child( );
 
