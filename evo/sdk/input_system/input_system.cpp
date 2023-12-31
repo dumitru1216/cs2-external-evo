@@ -57,6 +57,7 @@ int evo::input_t::get_bind_id( int setting ) {
 		case 51: vk = VK_F10; break;
 		case 52: vk = VK_F11; break;
 		case 53: vk = VK_F12; break;
+		case 54: vk = VK_MENU; break;
 		default: break;
 	}
 	return vk;

@@ -48,7 +48,7 @@ namespace evo {
 		/* triggerbot */
 		bool triggerbot = false;
 		int activationz_type = 0; // hold - toggle - always on
-		int triggerkey = 0;
+		int triggerkey = 1;
 
 		int reaction_time = 0;
 		int shot_delay = 0;
