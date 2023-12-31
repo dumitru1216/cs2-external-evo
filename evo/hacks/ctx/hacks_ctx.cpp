@@ -2,11 +2,6 @@
 #include "../../inc.hpp"
 
 void evo::hacks_t::run( ) { 
-	/* aimbot data */
-	float distance_to_sight = 0;
-	float max_aim_distance = _settings->aim_distance_max;
-	vec3_t aim_pos{ 0, 0, 0 };
-
 	/* update matrix */
 	if ( !_proc_manager.read_memory( evo::_address->get_matrix_address( ), evo::_address->view.matrix, 64 ) ) {
 #ifdef read_data_dbg
@@ -89,19 +84,28 @@ void evo::hacks_t::run( ) {
 
 		if ( !entity.in_screen( ) ) {
 			continue;
-		}
+		}	
 
-		distance_to_sight = entity.get_bone( ).bone_pos_list[ bone_index::head ].screen_pos.dist_to( { ( 1920 / 2 ), ( 1080 / 2 ) } );
-		if ( distance_to_sight < max_aim_distance ) {
-			max_aim_distance = distance_to_sight;
-
-			if ( !_settings->visible_check || entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( local_player_index ) ) || local_player.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( i ) ) ) {
-				aim_pos = entity.get_bone( ).bone_pos_list[ _legit->aim_position ].pos;
-				if ( _legit->aim_position == bone_index::head )
-					aim_pos.z -= 1.f;
+		if ( _settings->aimbot ) {
+			switch ( _settings->a_activationz_type ) {
+				case 0: /* hold */
+				{
+					if ( GetAsyncKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+						_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
+					}
+				} break;
+				case 1: /* toggle */
+				{
+					if ( GetKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+						_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
+					}
+				} break;
+				case 2: /* always on */
+				{
+					_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
+				} break;
 			}
 		}
-
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
@@ -125,33 +129,6 @@ void evo::hacks_t::run( ) {
 			case 2: /* always on */
 			{
 				_triggerbot->run_trigger( local_player );
-			} break;
-		}
-	}
-
-	if ( _settings->aimbot ) {
-		switch ( _settings->a_activationz_type ) {
-			case 0: /* hold */
-			{
-				if ( GetAsyncKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
-					if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
-						_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
-					}
-				}
-			} break;
-			case 1: /* toggle */
-			{
-				if ( GetKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
-					if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
-						_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
-					}
-				}
-			} break;
-			case 2: /* always on */
-			{
-				if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
-					_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
-				}
 			} break;
 		}
 	}

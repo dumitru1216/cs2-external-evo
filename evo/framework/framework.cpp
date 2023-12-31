@@ -248,17 +248,17 @@ void evo::menu_t::render( ) {
     vector < const char* > items = { "Head", "Chest", "Body", "Legs", "Feet" };
     vector < const char* > cfgs = { "default", "legit", "auto", "scout", "other" };
 
-    vector < const char* > animation_types = { "left to right",
-                                        "middle pulse",
-                                        "tiny color" };
+    vector < const char* > animation_types = { "Left to right",
+                                        "Middle pulse",
+                                        "Tiny color" };
 
-    vector < const char* > keymode = { "hold",
-                                    "toggle",
-                                    "always" };
+    vector < const char* > keymode = { "Hold",
+                                    "Toggle",
+                                    "Always" };
 
-    vector < const char* > hitboxes = { "head",
-                                "neck",
-                                "chest", "pelvis" };
+    vector < const char* > hitboxes = { "Head",
+                                "Neck",
+                                "Chest", "Pelvis" };
 
     vector < const char* > key_binds = { "none", "mouse1", "mouse2", "mouse3", "mouse4", "mouse5", "a", 
         "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", 
@@ -336,7 +336,7 @@ void evo::menu_t::render( ) {
                                     } break;
                                 }
 
-                                ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
+                                // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
 
                                 ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
                                 ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 50 );
