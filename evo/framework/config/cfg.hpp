@@ -52,6 +52,11 @@ namespace evo {
 
 		int reaction_time = 0;
 		int shot_delay = 0;
+
+
+		bool aimbot = false;
+		float fov = 0;
+		float smooth = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );
