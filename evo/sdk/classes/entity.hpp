@@ -33,7 +33,8 @@ namespace evo {
 	class ccs_player_controler {
 	public:
 		DWORD64 address{ 0 }, processing_adress{ 0 };
-		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 }, wins{ 0 }, total_dmg{ 0 };
+		int health{ 0 }, alive{ 0 }, team_id{ 0 }, money{ 0 }, ping{ 0 }, defuser{ 0 }, hemlet{ 0 }, wins{ 0 }, total_dmg{ 0 },
+			dmg_dealt{ 0 };
 
 		float inaccuracy{};
 
@@ -132,6 +133,20 @@ namespace evo {
 			return mem::scan_memory<int>( "c_player_pawn::total_dma", addr, offsets::tracking_services::total_damage, this->total_dmg );
 		}
 
+		__forceinline bool _total_damage( ) {
+			// item services
+			// 0x10B0
+			DWORD64 addr = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::controller::tracking_services, addr ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::tracking_services -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<int>( "c_player_pawn::total_dma", addr, offsets::tracking_services::total_damage, this->total_dmg );
+		}
 
 		__forceinline bool _team_id( ) {
 			/* we need this too whatever */

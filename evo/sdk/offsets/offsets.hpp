@@ -62,6 +62,7 @@ namespace evo {
 		namespace controller {
 			inline DWORD money_services = 0x700;
 			inline DWORD tracking_services = 0x710;
+			inline DWORD damage_services = 0x718;
 		}
 
 		namespace c_money_services {
