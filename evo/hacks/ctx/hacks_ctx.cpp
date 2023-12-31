@@ -92,8 +92,6 @@ void evo::hacks_t::run( ) {
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
 
-	print_with_data_scoped( "d: " + std::to_string( local_player.controller.dmg_dealt ) )
-
 	/* trigger bot */
 	if ( _settings->triggerbot ) {
 		switch ( _settings->activationz_type ) {

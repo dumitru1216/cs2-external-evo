@@ -550,14 +550,6 @@ namespace evo {
 				return false;
 			}
 
-			if ( !this->controller._dmg_dealt( ) ) {
-#if 1
-				/* debug */
-				printf( "[evo] error controller._team_id\n" );
-#endif 
-				return false;
-			}
-
 
 			if ( !this->controller._player_name( ) ) {
 #if 1
