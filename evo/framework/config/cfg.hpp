@@ -60,6 +60,9 @@ namespace evo {
 		int aim_distance_max = 0;
 		bool visible_check = false; // autowall
 		int hitbox = 0;
+
+		int a_activationz_type = 0; // hold - toggle - always on
+		int a_triggerkey = 1;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

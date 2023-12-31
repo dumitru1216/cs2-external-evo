@@ -24,6 +24,7 @@ namespace evo {
 			inline DWORD vec_old_origin = 0x1224;
 			inline DWORD dormant = 0xE7;
 			inline DWORD viewangle = 0x1518;
+			inline DWORD camera_pos = 0x1294;
 			inline DWORD ping_services = 0x1268;
 			inline DWORD camera_services = 0x10E0;
 			inline DWORD processing_value = 0x120;

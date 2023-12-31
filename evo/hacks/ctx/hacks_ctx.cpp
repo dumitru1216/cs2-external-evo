@@ -128,4 +128,31 @@ void evo::hacks_t::run( ) {
 			} break;
 		}
 	}
+
+	if ( _settings->aimbot ) {
+		switch ( _settings->a_activationz_type ) {
+			case 0: /* hold */
+			{
+				if ( GetAsyncKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+					if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
+						_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
+					}
+				}
+			} break;
+			case 1: /* toggle */
+			{
+				if ( GetKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+					if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
+						_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
+					}
+				}
+			} break;
+			case 2: /* always on */
+			{
+				if ( aim_pos != vec3_t( 0, 0, 0 ) ) {
+					_legit->run_aimbot( local_player, local_player.player_pawn.camera_pos, aim_pos );
+				}
+			} break;
+		}
+	}
 }
