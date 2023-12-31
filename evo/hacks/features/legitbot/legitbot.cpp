@@ -12,7 +12,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, vec3_t local_pos, vec3_t 
 	distance = sqrt( pow( opp_pos.x, 2 ) + pow( opp_pos.y, 2 ) );
 	lenght = sqrt( distance * distance + opp_pos.z * opp_pos.z );
 
-	// yaw = atan2f( opp_pos.y, opp_pos.x ) * 57.295779513 - entity.player_pawn.vie.y;
-	// pitch = -atan( opp_pos.z / distance ) * 57.295779513 - Local.Pawn.ViewAngle.x;
-	// norm = sqrt( pow( yaw, 2 ) + pow( pitch, 2 ) );
+	yaw = atan2f( opp_pos.y, opp_pos.x ) * 57.295779513 - entity.player_pawn.viewangle.y;
+	pitch = -atan( opp_pos.z / distance ) * 57.295779513 - entity.player_pawn.viewangle.x;
+	norm = sqrt( pow( yaw, 2 ) + pow( pitch, 2 ) );
+
+	vec2_t screen_pos;
+	_address->view.world_to_screen( vec3_t( aim_pos ), screen_pos );
 }
