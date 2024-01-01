@@ -30,6 +30,11 @@ public:
 
     void render_arrows_for_horizontal_bar( ImVec2 pos, float alpha, float width, float height );
 
+    void prepared_popup( const char* id, const char* name, std::function<void( )> content );
+    void group_box_alternative( const char* name, ImVec2 size_arg, ImVec2 padding = ImVec2( 12, 12 ) );
+    void end_group_box_alternative( );
+    bool settings_widget( const char* u_id );
+
     bool expand_button( const char* label, bool selected, float rounding = 0.f, ImDrawFlags flags = NULL );
     bool tab( const char* icon, const char* label, bool selected );
     bool sub_tab( const char* label, bool selected );

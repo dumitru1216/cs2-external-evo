@@ -3,7 +3,7 @@
 #include <dwmapi.h>
 #include "../thirdparty/bytes.hpp"
 #include "../thirdparty/custom.hpp"
-
+#include "../sdk/render/render_fonts.hpp"
 LRESULT wnd_proc( HWND hwnd, UINT msg, WPARAM wp, LPARAM lp ) {
     if ( ImGui_ImplWin32_WndProcHandler( hwnd, msg, wp, lp ) ) {
         return 0;
@@ -324,6 +324,17 @@ void evo::menu_t::render( ) {
 
                                 // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
 
+                                ImGui::Checkbox( "Dynamic fov", &evo::_settings->legitbot_stuff[0] );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##aimbot.enable.settings" ) ) OpenPopup( "##aimbot.enable.popup" );
+                                custom.prepared_popup( "##aimbot.enable.popup", "Dynamic fov", [ ]( ) {
+                                    ImGui::Checkbox( "Enemy moving", &evo::_settings->legitbot_stuff[ 1 ] );
+                                    ImGui::Checkbox( "Enemy lethal", &evo::_settings->legitbot_stuff[ 2 ] );
+                                    ImGui::Checkbox( "Local lethal", &evo::_settings->legitbot_stuff[ 3 ] );
+
+                                                       } );
+                               
+
                                 ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
                                 ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
 
@@ -587,4 +598,6 @@ void evo::menu_t::initialize( ) {
     ImGuiIO& io = ImGui::GetIO( ); ( void )io;
     io.Fonts->AddFontFromFileTTF( "C:\\Windows\\Fonts\\tahoma.ttf", 14, &font_config, ranges );
     io.Fonts->AddFontFromMemoryTTF( icons_binary, sizeof icons_binary, 15, &font_config, ranges );
+    io.Fonts->AddFontFromMemoryCompressedTTF( MenuIcons_compressed_data, MenuIcons_compressed_size, 11, &font_config, io.Fonts->GetGlyphRangesJapanese( ) );
+
 }

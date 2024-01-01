@@ -149,6 +149,105 @@ void c_custom::tab_area( const char* str_id, ImVec2 size, std::function < void (
 
 }
 
+bool c_custom::settings_widget( const char* u_id ) {
+
+    ImGuiContext& g = *GImGui;
+    ImGuiWindow* window = GetCurrentWindow( );
+
+    ImGuiID id = window->GetID( u_id );
+
+    ImVec2 icon_size = GetIO( ).Fonts->Fonts[ 4 ]->CalcTextSizeA( GetIO( ).Fonts->Fonts[ 4 ]->FontSize + 1, FLT_MAX, 0, "7" );
+
+    ImVec2 pos = window->DC.CursorPos;
+    ImRect bb( pos + ImVec2( 0, 1 ), pos + icon_size + ImVec2( 0, 1 ) );
+
+    auto draw = window->DrawList;
+
+    ItemAdd( bb, id );
+    ItemSize( bb );
+
+    bool hovered, held;
+    bool pressed = ButtonBehavior( bb, id, &hovered, &held );
+
+    static std::unordered_map < ImGuiID, float > values;
+    auto value = values.find( id );
+    if ( value == values.end( ) ) {
+
+        values.insert( { id, { 0.f } } );
+        value = values.find( id );
+    }
+
+    value->second = ImLerp( value->second, ( hovered ? 1.f : 0.5f ), 0.035f );
+
+    //' ne4
+    draw->AddText( GetIO( ).Fonts->Fonts[ 4 ], GetIO( ).Fonts->Fonts[ 4 ]->FontSize + 1, bb.Min, GetColorU32( ImGuiCol_Text, value->second ), "7" );
+
+    return pressed;
+}
+
+void c_custom::prepared_popup( const char* id, const char* name, std::function<void( )> content ) {
+
+    ImGui::SetNextWindowSize( { 230,230 } );
+
+    ImGui::PushStyleVar( ImGuiStyleVar_ItemSpacing, { 8,11 } );
+    ImGui::PushStyleVar( ImGuiStyleVar_PopupRounding, 4 );
+    ImGui::PushStyleColor( ImGuiCol_PopupBg, ImVec4( ImColor( 21, 20, 27 ) ) );
+    PushStyleColor( ImGuiCol_Border, ImVec4( 1.f, 1.f, 1.f, 0.05f ) );
+
+    if ( ImGui::BeginPopup( id ) ) {
+
+        auto pos = ImGui::GetCurrentWindow( )->Pos, size = ImGui::GetCurrentWindow( )->Size;
+        //ImGui::GetCurrentWindow( )->DrawList->AddText( ImGui::GetIO( ).Fonts->Fonts[ 2 ], ImGui::GetIO( ).Fonts->Fonts[ 2 ]->FontSize - 2, ImVec2( pos.x + 15, pos.y + 10 ), ImColor( 1.f, 1.f, 1.f ), name );
+        //ImGui::GetCurrentWindow( )->DrawList->AddLine( ImVec2( pos.x + 10, pos.y + 35 ), ImVec2( pos.x + size.x - 10, pos.y + 35 ), ImColor( 1.f, 1.f, 1.f, 0.1f ), 2 );
+
+        ImGui::SetCursorPos( { 10, 10 } );
+        custom.group_box_alternative( id, ImVec2( size.x - 20, size.y - 20 ) );
+
+        content( );
+
+        custom.end_group_box_alternative( );
+
+
+        ImGui::EndPopup( );
+    }
+
+    ImGui::PopStyleColor( 2 );
+    ImGui::PopStyleVar( 2 );
+}
+
+void c_custom::group_box_alternative( const char* name, ImVec2 size_arg, ImVec2 padding ) {
+
+    ImGuiWindow* window = GetCurrentWindow( );
+    ImVec2 pos = window->DC.CursorPos;
+
+    auto name_size = GetIO( ).Fonts->Fonts[ 1 ]->CalcTextSizeA( GetIO( ).Fonts->Fonts[ 1 ]->FontSize, FLT_MAX, 0.f, name );
+
+    BeginChild( std::string( name ).append( ".main" ).c_str( ), size_arg, false, ImGuiWindowFlags_NoScrollbar );
+
+    GetWindowDrawList( )->AddRectFilled( pos, pos + size_arg, to_vec4( 28, 30, 36, custom.m_anim * GetStyle( ).Alpha ), 3 );
+    GetWindowDrawList( )->AddText( pos + ImVec2( 10, 8 ), custom.get_accent_color( custom.m_anim * GetStyle( ).Alpha ), name, FindRenderedTextEnd( name ) );
+
+    SetCursorPosY( padding.y );
+    BeginChild( name, { size_arg.x, size_arg.y - padding.y } );
+    SetCursorPosX( padding.x );
+
+    BeginGroup( );
+
+    GetWindowDrawList( )->AddText( pos + ImVec2( 10, 8 ), custom.get_accent_color( custom.m_anim ), name, FindRenderedTextEnd( name ) );
+
+    PushStyleVar( ImGuiStyleVar_ItemSpacing, { 8, 8 } );
+    PushStyleVar( ImGuiStyleVar_Alpha, custom.m_anim * GetStyle( ).Alpha );
+}
+
+void c_custom::end_group_box_alternative( ) {
+
+    PopStyleVar( 2 );
+    EndGroup( );
+    EndChild( );
+    EndChild( );
+}
+
+
 void c_custom::begin_child( const char* name, ImVec2 size ) {
 
     ImGuiContext& g = *GImGui;

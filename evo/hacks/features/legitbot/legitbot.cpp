@@ -44,23 +44,62 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         }
     }
 
+    /* dinamic scale will work when u use the aimbot */
+    bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
+    bool use_dinamic_while_player_lethal = _settings->legitbot_stuff[ 2 ] && entity.player_pawn.health < 30;
+    bool use_dinamic_while_local_is_lethal = _settings->legitbot_stuff[ 3 ] && local.player_pawn.health < 30;
+    static float dinamic_scale[3]; /* run this static, whatever */
+
     /* paste fix */
     if ( aim_pos == vec3_t( 0, 0, 0 ) ) {
+        dinamic_scale[0] = 0.f; /* reset */
+        dinamic_scale[1] = 0.f; /* reset */
+        dinamic_scale[2] = 0.f; /* reset */
         return;
     }
 
     if ( framework::m_b_open ) {
+        dinamic_scale[ 0 ] = 0.f; /* reset */
+        dinamic_scale[ 1 ] = 0.f; /* reset */
+        dinamic_scale[ 2 ] = 0.f; /* reset */
         return;
     }
 
     if ( entity.player_pawn.health <= 0 ) {
+        dinamic_scale[ 0 ] = 0.f; /* reset */
+        dinamic_scale[ 1 ] = 0.f; /* reset */
+        dinamic_scale[ 2 ] = 0.f; /* reset */
         return;
     }
 
-    bool dinamic_fov = _settings->legitbot_stuff[ 0 ]; // dinamic fov
-    bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
-    bool use_dinamic_while_player_lethal = _settings->legitbot_stuff[ 2 ] && entity.player_pawn.health < 30;
-    float dinamic_scale = 0;
+    if ( _settings->legitbot_stuff[ 0 ] ) { /* dinamic fov */
+        /* some conditions so we dont overrun this shit */
+        if ( use_dinamic_while_moving ) {
+            /* enemy is moving that is not that much of bullshit */
+            dinamic_scale[ 0 ] = 1.f; /* just 1.f added to fov, since he is moving, thats not much shit to do */
+        } else {
+            dinamic_scale[ 0 ] = 0.0f; /* reset it */
+        }
+
+
+        if ( use_dinamic_while_player_lethal ) {
+            /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
+            dinamic_scale[ 1 ] = 1.3f; /* just add to fov */
+        } else {
+            dinamic_scale[ 1 ] = 0.0f; /* just add to fov */
+        }
+
+        if ( use_dinamic_while_local_is_lethal ) {
+            /* local is lethal, so we might want to hit it easier, we are going to add 0.5f */
+            dinamic_scale[ 2 ] = 0.5f; /* just add to fov */
+        } else {
+            dinamic_scale[ 2 ] = 0.f;
+        }
+
+        this->dinamic_csale = dinamic_scale[ 0 ] + dinamic_scale[ 1 ] + dinamic_scale[ 2 ];
+    }
+
+    print_with_data_scoped( "d[0]: " + std::to_string( dinamic_scale[0] ) + "d[1]: " + std::to_string( dinamic_scale[ 1 ] ) + "d[2]: " + std::to_string( dinamic_scale[ 2 ] ) )
 
 	/* fix */
 	opp_pos = aim_pos - local_pos;
@@ -110,5 +149,5 @@ void evo::legit_t::draw_aimbot_fov( ) {
     float screen_x = GetSystemMetrics( SM_CXSCREEN ) / 2.f;
     float screen_y = GetSystemMetrics( SM_CYSCREEN ) / 2.f;
 
-    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( _settings->fov * 10 ), _render->to_main_color( _settings->fov_color ) );
+    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( ( _settings->fov + this->dinamic_csale ) * 10 ), _render->to_main_color( _settings->fov_color ) );
 }
