@@ -336,6 +336,17 @@ void evo::menu_t::render( ) {
                                
 
                                 ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
+
+                                ImGui::Checkbox( "Dynamic smooth", &evo::_settings->legitbot_stuff[ 4 ] );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##aimbot.enable.settings" ) ) OpenPopup( "##popup2" );
+                                custom.prepared_popup( "##popup2", "Dynamic smooth", [ ]( ) {
+                                    ImGui::Checkbox( "Enemy moving", &evo::_settings->legitbot_stuff[ 5 ] ); // 0.5
+                                    ImGui::Checkbox( "Local lethal", &evo::_settings->legitbot_stuff[ 6 ] ); // 0.5
+
+                                                       } );
+
+
                                 ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
 
 

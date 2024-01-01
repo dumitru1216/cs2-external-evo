@@ -51,6 +51,11 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     bool use_dinamic_while_local_is_lethal = _settings->legitbot_stuff[ 3 ] && local.player_pawn.health < 30;
     static float dinamic_scale[3]; /* run this static, whatever */
 
+    /* dinamic smooth */
+    bool use_dinamic_smoth_1 = _settings->legitbot_stuff[ 5 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
+    bool use_dinamic_smoth_2 = _settings->legitbot_stuff[ 6 ] && local.player_pawn.health < 30;
+    static float dinamic_smooth[ 2 ]; /* run this static, whatever */
+
     if ( _settings->aimbot ) {
         switch ( _settings->a_activationz_type ) {
             case 0: /* hold */
@@ -60,6 +65,8 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
                     this->dinamic_csale = 0.f;
+
+
                     return;
                 }
             } break;
