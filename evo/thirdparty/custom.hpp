@@ -21,7 +21,7 @@ public:
     vector < const char* > tabs = { "Rage", "Visuals", "Misc", "Profile", "Scripts" }, tabs_icons = { "B", "C", "D", "E", "F" };
 
     int m_rage_subtab = 0;
-    vector < const char* > rage_subtabs = { "Aimbot", "Anti-aim", "Other" };
+    vector < const char* > rage_subtabs = { "Legitbot", "Ragebot", "Other" };
 
     int m_visuals_subtab = 0;
     vector < const char* > visuals_subtabs = { "Players", "World" };

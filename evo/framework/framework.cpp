@@ -308,22 +308,22 @@ void evo::menu_t::render( ) {
                     switch ( custom.m_rage_subtab ) {
 
                         case 0:
-
+                        {
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-                                ImGui::Checkbox( "Aimbot", &evo::_settings->aimbot );
+                                ImGui::Checkbox( "Enable", &evo::_settings->aimbot );
                                 ImGui::Checkbox( "Only visible", &evo::_settings->visible_check );
                                 ImGui::Combo( "Aimbot key", &evo::_settings->a_triggerkey, key_binds.data( ), key_binds.size( ) );
                                 ImGui::Combo( "Aimbot mode", &evo::_settings->a_activationz_type, keymode.data( ), keymode.size( ) );
                                 ImGui::Combo( "Hitbox ", &evo::_settings->hitbox, hitboxes.data( ), hitboxes.size( ) );
-                            
+
                                 // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
 
                                 ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
-                                ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 50 );
+                                ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
 
 
-                               
+
 
                             } custom.end_child( );
 
@@ -339,8 +339,35 @@ void evo::menu_t::render( ) {
                                 ImGui::SliderInt( "Next shot delay", &evo::_settings->shot_delay, 10, 2500 );
 
                             } custom.end_child( );
+                        } break;
 
-                            break;
+                            
+                        case 1:
+                        {
+                            custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+                                ImGui::Checkbox( "Enable", &evo::_settings->rage );
+                                ImGui::Checkbox( "Ignore autowall", &evo::_settings->ignore_wall );
+                                ImGui::Combo( "Hitbox ", &evo::_settings->rage_hitbox, hitboxes.data( ), hitboxes.size( ) );
+
+                                // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
+
+                                std::string name_str = evo::_settings->rage_fov > 10 ? "Fov (!)" : "Fov";
+                                ImGui::SliderInt( "Fov", &evo::_settings->rage_fov, 1, 20 );
+
+
+
+
+                            } custom.end_child( );
+
+                            ImGui::SameLine( );
+
+                            custom.begin_child( "Other", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            {
+
+
+                            } custom.end_child( );
+                        } break;
 
                     }
 

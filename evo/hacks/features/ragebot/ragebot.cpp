@@ -1,11 +1,20 @@
 #include "../../../inc.hpp"
 
+void release_mouse_event_rage( ) {
+    /* we can now shot so lets do it */
+    std::this_thread::sleep_for( std::chrono::milliseconds( evo::_settings->shot_delay ) ); /* add a custom delay and more */
+    mouse_event( MOUSEEVENTF_LEFTUP, 0, 0, 0, 0 ); /* release shot event */
+}
+
 void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec3_t local_pos, int ent_idx, int local_idx ) {
+    if ( !_settings->rage )
+        return;
+    
     float yaw, pitch, distance, norm, lenght, target_x, target_y;
     vec3_t opp_pos;
     vec2_t angles{};
-    int screen_center_x = ( 1920 / 2 );
-    int screen_center_y = ( 1080 / 2 );
+    int screen_center_x = 1920 / 2;
+    int screen_center_y = 1080 / 2;
 
     /* hacks_ctx.cpp */
     float distance_to_sight = 0;
@@ -13,7 +22,7 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     vec3_t aim_pos{ 0, 0, 0 };
 
     /* hitbox shit */
-    switch ( evo::_settings->hitbox ) {
+    switch ( evo::_settings->rage_hitbox ) {
         case 0:
         {
             this->aim_position = bone_index::head;
@@ -36,7 +45,7 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     if ( distance_to_sight < max_aim_distance ) {
         max_aim_distance = distance_to_sight;
 
-        if ( !_settings->visible_check || entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( local_idx ) ) || local.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( ent_idx ) ) ) {
+        if ( !_settings->ignore_wall || entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( local_idx ) ) || local.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << ( ent_idx ) ) ) {
             aim_pos = entity.get_bone( ).bone_pos_list[ this->aim_position ].pos;
 
             if ( this->aim_position == bone_index::head )
@@ -69,7 +78,7 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     vec2_t screen_pos;
     _address->view.world_to_screen( vec3_t( aim_pos ), screen_pos );
 
-    if ( norm < 180 ) {
+    if ( norm < _settings->rage_fov ) {
         if ( screen_pos.x != screen_center_x ) {
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
             target_x /= 1.5f;
@@ -81,18 +90,17 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
                 target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
                 target_y /= 1.5f;
                 target_y = ( target_y + screen_center_y > screen_center_y * 2 || target_y + screen_center_y < 0 ) ? 0 : target_y;
-
-                print_with_data_scoped( "workdss" )
             }
         }
 
-        /* fix some shittty stuff */
-        if ( !_settings->smooth ) {
-            mouse_event( MOUSEEVENTF_MOVE, ( DWORD )( target_x ), ( DWORD )( target_y ), NULL, NULL );
-            return;
+        if ( target_x < 1 && target_y < 1 ) {
+            mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
+            std::thread trigger_thread( release_mouse_event_rage );
+            trigger_thread.detach( );
         }
+
    
-        float distance_ratio = norm / 180;
+        float distance_ratio = norm / _settings->rage_fov;
         float speed_factor = 1.0f + ( 1.0f - distance_ratio );
         target_x /= ( 1.5f * speed_factor );
         target_y /= ( 1.5f * speed_factor );

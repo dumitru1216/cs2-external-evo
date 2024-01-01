@@ -63,6 +63,11 @@ namespace evo {
 
 		int a_activationz_type = 0; // hold - toggle - always on
 		int a_triggerkey = 1;
+
+		bool rage = false;
+		int rage_fov = 10;
+		bool ignore_wall = true;
+		int rage_hitbox = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );
