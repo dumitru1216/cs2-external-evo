@@ -113,6 +113,8 @@ void evo::hacks_t::run( ) {
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
 
+	_legit->draw_aimbot_fov( );
+
 	/* trigger bot */
 	if ( _settings->triggerbot ) {
 		switch ( _settings->activationz_type ) {

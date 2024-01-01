@@ -53,13 +53,13 @@ namespace evo {
 		int reaction_time = 0;
 		int shot_delay = 0;
 
-
 		bool aimbot = false;
 		float fov = 0;
 		float smooth = 0;
 		int aim_distance_max = 200;
 		bool visible_check = false; // autowall
 		int hitbox = 0;
+		bool draw_fov = false;
 
 		int a_activationz_type = 0; // hold - toggle - always on
 		int a_triggerkey = 1;

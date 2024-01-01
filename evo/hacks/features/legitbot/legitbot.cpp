@@ -96,3 +96,14 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
 
 }
+
+void evo::legit_t::draw_aimbot_fov( ) { 
+    if ( !_settings->draw_fov ) {
+       // return;
+    }
+
+    float screen_x = GetSystemMetrics( SM_CXSCREEN ) / 2.f;
+    float screen_y = GetSystemMetrics( SM_CYSCREEN ) / 2.f;
+
+    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( _settings->fov ), evo::col_t( ) );
+}
