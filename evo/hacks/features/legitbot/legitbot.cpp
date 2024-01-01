@@ -1,4 +1,5 @@
 #include "../../../inc.hpp"
+#include "../../../sdk/animation_system/animation_system.hpp"
 
 void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, vec3_t local_pos, int ent_idx, int local_idx ) {
     float yaw, pitch, distance, norm, lenght;
@@ -147,7 +148,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
 	vec2_t screen_pos;
 	_address->view.world_to_screen( vec3_t( aim_pos ), screen_pos );
 
-    if ( norm >= _settings->fov ) {
+    if ( norm >= ( _settings->fov + this->dinamic_csale ) ) {
         return; // If condition not met, exit early
     }
 
@@ -165,7 +166,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         return;
     }
 
-    float distance_ratio = norm / _settings->fov;
+    float distance_ratio = norm / ( _settings->fov + this->dinamic_csale );
     float speed_factor = 1.0f + ( 1.0f - distance_ratio );
 
     target_x = calculate_target( screen_pos.x, screen_center_x, smooth_factor ) / ( _settings->smooth * speed_factor );
@@ -183,5 +184,9 @@ void evo::legit_t::draw_aimbot_fov( ) {
     float screen_x = GetSystemMetrics( SM_CXSCREEN ) / 2.f;
     float screen_y = GetSystemMetrics( SM_CYSCREEN ) / 2.f;
 
-    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( ( _settings->fov + this->dinamic_csale ) * 10 ), _render->to_main_color( _settings->fov_color ) );
+    /* run animation */
+    auto animation = animation_controller.get( "animation_fov" + std::to_string( 0 ) + animation_controller.current_child );
+    animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 1.f ) * ( ( this->dinamic_csale > 0.f ) ? 1.f : -1.f ) );
+
+    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( ( _settings->fov + this->dinamic_csale * animation.value ) * 10 ), _render->to_main_color( _settings->fov_color ) );
 }
