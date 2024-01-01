@@ -58,6 +58,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 0 ] = 0.f; /* reset */
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
+                    this->dinamic_csale = 0.f;
                     return;
                 }
             } break;
@@ -67,6 +68,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 0 ] = 0.f; /* reset */
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
+                    this->dinamic_csale = 0.f;
                     return;
                 }
             } break;
@@ -84,6 +86,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[0] = 0.f; /* reset */
         dinamic_scale[1] = 0.f; /* reset */
         dinamic_scale[2] = 0.f; /* reset */
+        this->dinamic_csale = 0.f;
         return;
     }
 
@@ -91,6 +94,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 0 ] = 0.f; /* reset */
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
+        this->dinamic_csale = 0.f;
         return;
     }
 
@@ -98,6 +102,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 0 ] = 0.f; /* reset */
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
+        this->dinamic_csale = 0.f;
         return;
     }
 
