@@ -66,6 +66,9 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 2 ] = 0.f; /* reset */
                     this->dinamic_csale = 0.f;
 
+                    dinamic_smooth[ 0 ] = 0.f;
+                    dinamic_smooth[ 1 ] = 0.f;
+                    this->dinamic_smoth = 0.f;
 
                     return;
                 }
@@ -77,6 +80,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
                     this->dinamic_csale = 0.f;
+
+                    dinamic_smooth[ 0 ] = 0.f;
+                    dinamic_smooth[ 1 ] = 0.f;
+                    this->dinamic_smoth = 0.f;
                     return;
                 }
             } break;
@@ -95,6 +102,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[1] = 0.f; /* reset */
         dinamic_scale[2] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
+
+        dinamic_smooth[ 0 ] = 0.f;
+        dinamic_smooth[ 1 ] = 0.f;
+        this->dinamic_smoth = 0.f;
         return;
     }
 
@@ -103,6 +114,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
+
+        dinamic_smooth[ 0 ] = 0.f;
+        dinamic_smooth[ 1 ] = 0.f;
+        this->dinamic_smoth = 0.f;
         return;
     }
 
@@ -111,6 +126,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
+
+        dinamic_smooth[ 0 ] = 0.f;
+        dinamic_smooth[ 1 ] = 0.f;
+        this->dinamic_smoth = 0.f;
         return;
     }
 
@@ -149,6 +168,32 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         this->dinamic_csale = 0.f;
     }
 
+    /* dinamic smooth */
+    if ( _settings->legitbot_stuff[ 4 ] ) {
+        /* some conditions so we dont overrun this shit */
+        if ( use_dinamic_smoth_1 ) {
+            /* enemy is moving that is not that much of bullshit */
+            dinamic_smooth[ 0 ] = 0.2f; /* just 1.f added to fov, since he is moving, thats not much shit to do */
+        } else {
+            dinamic_smooth[ 0 ] = 0.0f; /* reset it */
+        }
+
+        if ( use_dinamic_smoth_2 ) {
+            /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
+            dinamic_smooth[ 1 ] = 0.2f; /* just add to fov */
+        } else {
+            dinamic_smooth[ 1 ] = 0.0f; /* just add to fov */
+        }
+
+        this->dinamic_smoth = dinamic_smooth[ 0 ] + dinamic_smooth[ 1 ];
+    } 
+    
+    if ( !_settings->legitbot_stuff[ 4 ] ) {
+        dinamic_smooth[ 0 ] = 0.f;
+        dinamic_smooth[ 1 ] = 0.f;
+        this->dinamic_smoth = 0.f;
+    }
+
 	/* fix */
 	opp_pos = aim_pos - local_pos;
 	distance = sqrt( pow( opp_pos.x, 2 ) + pow( opp_pos.y, 2 ) );
@@ -165,7 +210,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         return; // If condition not met, exit early
     }
 
-    float smooth_factor = ( _settings->smooth != 0.0f ) ? _settings->smooth : 1.5f;
+    float smooth_factor = ( ( _settings->smooth - this->dinamic_smoth ) != 0.0f ) ? ( _settings->smooth - this->dinamic_smoth ) : 1.5f;
 
     auto calculate_target = [ ]( int screen_pos, int screen_center, float smooth ) {
         return ( screen_pos != screen_center ) ? ( ( screen_pos > screen_center ) ? -( screen_center - screen_pos ) : ( screen_pos - screen_center ) ) / smooth : 0;
@@ -182,8 +227,8 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     float distance_ratio = norm / ( _settings->fov + this->dinamic_csale );
     float speed_factor = 1.0f + ( 1.0f - distance_ratio );
 
-    target_x = calculate_target( screen_pos.x, screen_center_x, smooth_factor ) / ( _settings->smooth * speed_factor );
-    target_y = ( screen_pos.y != screen_center_y && screen_pos.y != 0 ) ? calculate_target( screen_pos.y, screen_center_y, smooth_factor ) / ( _settings->smooth * speed_factor ) : 0;
+    target_x = calculate_target( screen_pos.x, screen_center_x, smooth_factor ) / ( ( _settings->smooth - this->dinamic_smoth ) * speed_factor );
+    target_y = ( screen_pos.y != screen_center_y && screen_pos.y != 0 ) ? calculate_target( screen_pos.y, screen_center_y, smooth_factor ) / ( ( _settings->smooth - this->dinamic_smoth ) * speed_factor ) : 0;
 
     mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
 
