@@ -13,25 +13,31 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     float max_aim_distance = 1500;
     vec3_t aim_pos{ 0, 0, 0 };
 
+    bool body_if_lethal = _settings->legitbot_stuff[ 9 ] && local.player_pawn.health < 30;
+
     /* hitbox shit */
-    switch ( evo::_settings->hitbox ) {
-        case 0:
-        {
-            _legit->aim_position = bone_index::head;
-        } break;
-        case 1:
-        {
-            _legit->aim_position = bone_index::neck_0;
-        } break;
-        case 2:
-        {
-            _legit->aim_position = bone_index::spine_1;
-        } break;
-        case 3:
-        {
-            _legit->aim_position = bone_index::pelvis;
-        } break;
-    }
+    if ( !body_if_lethal ) {
+        switch ( evo::_settings->hitbox ) {
+            case 0:
+            {
+                _legit->aim_position = bone_index::head;
+            } break;
+            case 1:
+            {
+                _legit->aim_position = bone_index::neck_0;
+            } break;
+            case 2:
+            {
+                _legit->aim_position = bone_index::spine_1;
+            } break;
+            case 3:
+            {
+                _legit->aim_position = bone_index::pelvis;
+            } break;
+        }
+    } else if ( body_if_lethal ) {
+        _legit->aim_position = bone_index::pelvis;
+    } 
 
     distance_to_sight = entity.get_bone( ).bone_pos_list[ bone_index::head ].screen_pos.dist_to( { ( 1920 / 2 ), ( 1080 / 2 ) } );
     if ( distance_to_sight < max_aim_distance ) {
