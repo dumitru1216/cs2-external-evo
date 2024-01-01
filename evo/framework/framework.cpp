@@ -321,7 +321,7 @@ void evo::menu_t::render( ) {
                                 ImGui::Combo( "Aimbot key", &evo::_settings->a_triggerkey, key_binds.data( ), key_binds.size( ) );
                                 ImGui::Combo( "Aimbot mode", &evo::_settings->a_activationz_type, keymode.data( ), keymode.size( ) );
                                 ImGui::Combo( "Hitbox ", &evo::_settings->hitbox, hitboxes.data( ), hitboxes.size( ) );
-                                ImGui::Checkbox( "Body-aim if lethal", &evo::_settings->visible_check );
+                                ImGui::Checkbox( "Body-aim if lethal", &evo::_settings->legitbot_stuff[9] );
 
                                 // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
 

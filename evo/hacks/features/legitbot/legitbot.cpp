@@ -45,7 +45,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         }
     }
 
-    //bool[8] // last used
+    //bool[9] // last used
 
     /* dinamic scale will work when u use the aimbot */
     bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
