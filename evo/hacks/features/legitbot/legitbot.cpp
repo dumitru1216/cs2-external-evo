@@ -57,6 +57,11 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         return;
     }
 
+    bool dinamic_fov = _settings->legitbot_stuff[ 0 ]; // dinamic fov
+    bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
+    bool use_dinamic_while_player_lethal = _settings->legitbot_stuff[ 2 ] && entity.player_pawn.health < 30;
+    float dinamic_scale = 0;
+
 	/* fix */
 	opp_pos = aim_pos - local_pos;
 	distance = sqrt( pow( opp_pos.x, 2 ) + pow( opp_pos.y, 2 ) );
@@ -105,5 +110,5 @@ void evo::legit_t::draw_aimbot_fov( ) {
     float screen_x = GetSystemMetrics( SM_CXSCREEN ) / 2.f;
     float screen_y = GetSystemMetrics( SM_CYSCREEN ) / 2.f;
 
-    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( _settings->fov * 10 ), evo::col_t( ) );
+    _render->add_circle( evo::vec2_t( screen_x, screen_y ), ( _settings->fov * 10 ), _render->to_main_color( _settings->fov_color ) );
 }

@@ -62,6 +62,8 @@ namespace evo {
 		bool draw_fov = false;
 		float fov_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+		/* other shit for legitbot */
+		bool legitbot_stuff[ 50 ];
 
 		int a_activationz_type = 0; // hold - toggle - always on
 		int a_triggerkey = 29;
