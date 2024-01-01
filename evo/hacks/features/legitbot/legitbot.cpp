@@ -156,7 +156,6 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             dinamic_scale[ 0 ] = 0.0f; /* reset it */
         }
 
-
         if ( use_dinamic_while_player_lethal ) {
             /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
             dinamic_scale[ 1 ] = 1.3f; /* just add to fov */
@@ -169,6 +168,13 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             dinamic_scale[ 2 ] = 0.5f; /* just add to fov */
         } else {
             dinamic_scale[ 2 ] = 0.f;
+        }
+
+        if ( use_dinamic_while_good_player ) {
+            /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
+            dinamic_scale[ 3 ] = 1.f; /* just add to fov */
+        } else {
+            dinamic_scale[ 3 ] = 0.0f; /* just add to fov */
         }
 
         this->dinamic_csale = dinamic_scale[ 0 ] + dinamic_scale[ 1 ] + dinamic_scale[ 2 ];
@@ -197,6 +203,13 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             dinamic_smooth[ 1 ] = 0.2f; /* just add to fov */
         } else {
             dinamic_smooth[ 1 ] = 0.0f; /* just add to fov */
+        }
+
+        if ( use_dinamic_while_good_player2 ) {
+            /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
+            dinamic_smooth[ 2 ] = 0.2f; /* just add to fov */
+        } else {
+            dinamic_smooth[ 2 ] = 0.0f; /* just add to fov */
         }
 
         this->dinamic_smoth = dinamic_smooth[ 0 ] + dinamic_smooth[ 1 ];

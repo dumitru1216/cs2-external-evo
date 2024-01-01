@@ -331,6 +331,10 @@ void evo::menu_t::render( ) {
                                     ImGui::Checkbox( "Enemy moving", &evo::_settings->legitbot_stuff[ 1 ] );
                                     ImGui::Checkbox( "Enemy lethal", &evo::_settings->legitbot_stuff[ 2 ] );
                                     ImGui::Checkbox( "Local lethal", &evo::_settings->legitbot_stuff[ 3 ] );
+                                    ImGui::Checkbox( "Dealt alot of damage", &evo::_settings->legitbot_stuff[ 7 ] );
+                                    if ( evo::_settings->legitbot_stuff[ 7 ] ) {
+                                        ImGui::SliderInt( "Dealt damage", &evo::_settings->legitbot_stuff_int[0], 100, 500 );
+                                    }
 
                                                        } );
                                
@@ -340,7 +344,10 @@ void evo::menu_t::render( ) {
                                 custom.prepared_popup( "##popup2", "Dynamic smooth", [ ]( ) {
                                     ImGui::Checkbox( "Enemy moving", &evo::_settings->legitbot_stuff[ 5 ] ); // 0.5
                                     ImGui::Checkbox( "Local lethal", &evo::_settings->legitbot_stuff[ 6 ] ); // 0.5
-
+                                    ImGui::Checkbox( "Dealt alot of damage", &evo::_settings->legitbot_stuff[ 8 ] );
+                                    if ( evo::_settings->legitbot_stuff[ 8 ] ) {
+                                        ImGui::SliderInt( "Dealt damage", &evo::_settings->legitbot_stuff_int[ 1 ], 100, 500 );
+                                    }
                                                        } );
 
 
