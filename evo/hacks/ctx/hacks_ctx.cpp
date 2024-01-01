@@ -107,6 +107,8 @@ void evo::hacks_t::run( ) {
 			}
 		}
 
+		_rage->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
+
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
 	}
