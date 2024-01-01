@@ -86,27 +86,7 @@ void evo::hacks_t::run( ) {
 			continue;
 		}	
 
-		if ( _settings->aimbot ) {
-			switch ( _settings->a_activationz_type ) {
-				case 0: /* hold */
-				{
-					if ( GetAsyncKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
-						_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
-					}
-				} break;
-				case 1: /* toggle */
-				{
-					if ( GetKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
-						_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
-					}
-				} break;
-				case 2: /* always on */
-				{
-					_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
-				} break;
-			}
-		}
-
+		_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 		_rage->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );

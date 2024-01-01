@@ -50,6 +50,33 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     bool use_dinamic_while_local_is_lethal = _settings->legitbot_stuff[ 3 ] && local.player_pawn.health < 30;
     static float dinamic_scale[3]; /* run this static, whatever */
 
+    if ( _settings->aimbot ) {
+        switch ( _settings->a_activationz_type ) {
+            case 0: /* hold */
+            {
+                if ( !GetAsyncKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+                    dinamic_scale[ 0 ] = 0.f; /* reset */
+                    dinamic_scale[ 1 ] = 0.f; /* reset */
+                    dinamic_scale[ 2 ] = 0.f; /* reset */
+                    return;
+                }
+            } break;
+            case 1: /* toggle */
+            {
+                if ( !GetKeyState( _input_key->get_bind_id( _settings->a_triggerkey ) ) ) {
+                    dinamic_scale[ 0 ] = 0.f; /* reset */
+                    dinamic_scale[ 1 ] = 0.f; /* reset */
+                    dinamic_scale[ 2 ] = 0.f; /* reset */
+                    return;
+                }
+            } break;
+            case 2: /* always on */
+            {
+                /* shit is always on*/
+            } break;
+        }
+    }
+
     /* paste fix */
     if ( aim_pos == vec3_t( 0, 0, 0 ) ) {
         dinamic_scale[0] = 0.f; /* reset */
