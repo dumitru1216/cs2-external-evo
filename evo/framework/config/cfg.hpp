@@ -64,6 +64,8 @@ namespace evo {
 
 		/* other shit for legitbot */
 		bool legitbot_stuff[ 50 ];
+		int legitbot_stuff_int[ 50 ];
+		float legitbot_stuff_float[ 50 ];
 
 		int a_activationz_type = 0; // hold - toggle - always on
 		int a_triggerkey = 29;

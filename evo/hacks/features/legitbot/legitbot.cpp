@@ -45,16 +45,20 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         }
     }
 
+    //bool[8] // last used
+
     /* dinamic scale will work when u use the aimbot */
     bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
     bool use_dinamic_while_player_lethal = _settings->legitbot_stuff[ 2 ] && entity.player_pawn.health < 30;
     bool use_dinamic_while_local_is_lethal = _settings->legitbot_stuff[ 3 ] && local.player_pawn.health < 30;
-    static float dinamic_scale[3]; /* run this static, whatever */
+    bool use_dinamic_while_good_player = _settings->legitbot_stuff[ 7 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[0];
+    static float dinamic_scale[4]; /* run this static, whatever */
 
     /* dinamic smooth */
     bool use_dinamic_smoth_1 = _settings->legitbot_stuff[ 5 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
     bool use_dinamic_smoth_2 = _settings->legitbot_stuff[ 6 ] && local.player_pawn.health < 30;
-    static float dinamic_smooth[ 2 ]; /* run this static, whatever */
+    bool use_dinamic_while_good_player2 = _settings->legitbot_stuff[ 8 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[ 2 ];
+    static float dinamic_smooth[ 3 ]; /* run this static, whatever */
 
     if ( _settings->aimbot ) {
         switch ( _settings->a_activationz_type ) {
@@ -64,10 +68,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 0 ] = 0.f; /* reset */
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
+                    dinamic_scale[ 3 ] = 0.f; /* reset */
                     this->dinamic_csale = 0.f;
 
                     dinamic_smooth[ 0 ] = 0.f;
                     dinamic_smooth[ 1 ] = 0.f;
+                    dinamic_smooth[ 2 ] = 0.f;
                     this->dinamic_smoth = 0.f;
 
                     return;
@@ -79,10 +85,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                     dinamic_scale[ 0 ] = 0.f; /* reset */
                     dinamic_scale[ 1 ] = 0.f; /* reset */
                     dinamic_scale[ 2 ] = 0.f; /* reset */
+                    dinamic_scale[ 3 ] = 0.f; /* reset */
                     this->dinamic_csale = 0.f;
 
                     dinamic_smooth[ 0 ] = 0.f;
                     dinamic_smooth[ 1 ] = 0.f;
+                    dinamic_smooth[ 2 ] = 0.f;
                     this->dinamic_smoth = 0.f;
                     return;
                 }
@@ -101,10 +109,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[0] = 0.f; /* reset */
         dinamic_scale[1] = 0.f; /* reset */
         dinamic_scale[2] = 0.f; /* reset */
+        dinamic_scale[3] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
 
         dinamic_smooth[ 0 ] = 0.f;
         dinamic_smooth[ 1 ] = 0.f;
+        dinamic_smooth[ 2 ] = 0.f;
         this->dinamic_smoth = 0.f;
         return;
     }
@@ -113,10 +123,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 0 ] = 0.f; /* reset */
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
+        dinamic_scale[ 3 ] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
 
         dinamic_smooth[ 0 ] = 0.f;
         dinamic_smooth[ 1 ] = 0.f;
+        dinamic_smooth[ 2 ] = 0.f;
         this->dinamic_smoth = 0.f;
         return;
     }
@@ -125,10 +137,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         dinamic_scale[ 0 ] = 0.f; /* reset */
         dinamic_scale[ 1 ] = 0.f; /* reset */
         dinamic_scale[ 2 ] = 0.f; /* reset */
+        dinamic_scale[ 3 ] = 0.f; /* reset */
         this->dinamic_csale = 0.f;
 
         dinamic_smooth[ 0 ] = 0.f;
         dinamic_smooth[ 1 ] = 0.f;
+        dinamic_smooth[ 2 ] = 0.f;
         this->dinamic_smoth = 0.f;
         return;
     }
