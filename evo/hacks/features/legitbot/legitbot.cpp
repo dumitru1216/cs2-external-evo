@@ -70,7 +70,6 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
 	_address->view.world_to_screen( vec3_t( aim_pos ), screen_pos );
 
     if ( norm < _settings->fov ) {
-        // Shake Fixed by @Sweely
         if ( screen_pos.x != screen_center_x ) {
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
             target_x /= _settings->smooth != 0.0f ? _settings->smooth : 1.5f;
