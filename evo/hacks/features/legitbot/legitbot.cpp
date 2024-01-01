@@ -75,6 +75,8 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                 /* shit is always on*/
             } break;
         }
+    } else if ( !_settings->aimbot ) {
+        return;
     }
 
     /* paste fix */
