@@ -51,19 +51,13 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
     bool use_dinamic_while_moving = _settings->legitbot_stuff[ 1 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
     bool use_dinamic_while_player_lethal = _settings->legitbot_stuff[ 2 ] && entity.player_pawn.health < 30;
     bool use_dinamic_while_local_is_lethal = _settings->legitbot_stuff[ 3 ] && local.player_pawn.health < 30;
-    bool use_dinamic_while_good_player[ 64 ];
-    use_dinamic_while_good_player[ ent_idx ] = _settings->legitbot_stuff[ 7 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[ 0 ];
-
-
+    bool use_dinamic_while_good_player = _settings->legitbot_stuff[ 7 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[0];
     static float dinamic_scale[4]; /* run this static, whatever */
 
     /* dinamic smooth */
     bool use_dinamic_smoth_1 = _settings->legitbot_stuff[ 5 ] && entity.player_pawn.vec_velocity.length( ) > 50.f;
     bool use_dinamic_smoth_2 = _settings->legitbot_stuff[ 6 ] && local.player_pawn.health < 30;
-    bool use_dinamic_while_good_player2[64];
-    use_dinamic_while_good_player2[ent_idx] = _settings->legitbot_stuff[ 8 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[ 2 ];
-
-
+    bool use_dinamic_while_good_player2 = _settings->legitbot_stuff[ 8 ] && entity.controller.total_dmg > _settings->legitbot_stuff_int[ 2 ];
     static float dinamic_smooth[ 3 ]; /* run this static, whatever */
 
     if ( _settings->aimbot ) {
@@ -176,7 +170,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             dinamic_scale[ 2 ] = 0.f;
         }
 
-        if ( use_dinamic_while_good_player[ ent_idx ] ) { /* iterate */
+        if ( use_dinamic_while_good_player ) {
             /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
             dinamic_scale[ 3 ] = 1.f; /* just add to fov */
         } else {
@@ -211,7 +205,7 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             dinamic_smooth[ 1 ] = 0.0f; /* just add to fov */
         }
 
-        if ( use_dinamic_while_good_player2[ ent_idx ] ) { /* iterate */
+        if ( use_dinamic_while_good_player2 ) {
             /* player is lethal, so we might want to hit it easier, we are going to add 1.3f */
             dinamic_smooth[ 2 ] = 0.2f; /* just add to fov */
         } else {
