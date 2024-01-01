@@ -296,8 +296,6 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
 
-	print_with_data_scoped( "p: " + std::to_string( local_player.player_pawn.penetration ) )
-
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
 
