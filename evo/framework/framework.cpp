@@ -552,7 +552,7 @@ void evo::menu_t::render( ) {
         // footer
         draw->AddRectFilled( pos + ImVec2( 0, size.y - 20 ), pos + size, ImColor( 15, 14, 21 ), style.WindowRounding, ImDrawFlags_RoundCornersBottom );
         draw->AddText( pos + ImVec2( 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "deathrow for Counter-Strike: Global Offensive" );
-        draw->AddText( pos + ImVec2( size.x - CalcTextSize( "cs2 | internal cheat" ).x - 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "cs2 | internal cheat" );
+        draw->AddText( pos + ImVec2( size.x - CalcTextSize( "cs2 | external cheat" ).x - 5, size.y - 18 ), GetColorU32( ImGuiCol_Text ), "cs2 | external cheat" );
 
     } ImGui::End( );
 
