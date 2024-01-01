@@ -334,9 +334,6 @@ void evo::menu_t::render( ) {
 
                                                        } );
                                
-
-                                ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );
-
                                 ImGui::Checkbox( "Dynamic smooth", &evo::_settings->legitbot_stuff[ 4 ] );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup2" ) ) OpenPopup( "##popup2" );
@@ -347,6 +344,7 @@ void evo::menu_t::render( ) {
                                                        } );
 
 
+                                ImGui::SliderFloat( "Fov", &evo::_settings->fov, 0, 10 );                             
                                 ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
 
 
