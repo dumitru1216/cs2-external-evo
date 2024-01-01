@@ -312,6 +312,11 @@ void evo::menu_t::render( ) {
                             custom.begin_child( "General", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
                                 ImGui::Checkbox( "Enable", &evo::_settings->aimbot );
+
+                                ImGui::Checkbox( "Draw fov", &evo::_settings->draw_fov );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###foviclo", evo::_settings->fov_color, ALPHA );
+
                                 ImGui::Checkbox( "Only visible", &evo::_settings->visible_check );
                                 ImGui::Combo( "Aimbot key", &evo::_settings->a_triggerkey, key_binds.data( ), key_binds.size( ) );
                                 ImGui::Combo( "Aimbot mode", &evo::_settings->a_activationz_type, keymode.data( ), keymode.size( ) );

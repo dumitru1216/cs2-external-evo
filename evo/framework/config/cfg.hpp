@@ -57,9 +57,11 @@ namespace evo {
 		float fov = 0;
 		float smooth = 0;
 		int aim_distance_max = 200;
-		bool visible_check = false; // autowall
+		bool visible_check = true; // autowall
 		int hitbox = 0;
 		bool draw_fov = false;
+		float fov_color[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 
 		int a_activationz_type = 0; // hold - toggle - always on
 		int a_triggerkey = 29;
