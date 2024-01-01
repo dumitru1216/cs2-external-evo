@@ -134,7 +134,13 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
         this->dinamic_csale = dinamic_scale[ 0 ] + dinamic_scale[ 1 ] + dinamic_scale[ 2 ];
     }
 
-    print_with_data_scoped( "d[0]: " + std::to_string( dinamic_scale[0] ) + "d[1]: " + std::to_string( dinamic_scale[ 1 ] ) + "d[2]: " + std::to_string( dinamic_scale[ 2 ] ) )
+    /* reset if this is off */
+    if ( !_settings->legitbot_stuff[ 0 ] ) {
+        dinamic_scale[ 0 ] = 0.f; /* reset */
+        dinamic_scale[ 1 ] = 0.f; /* reset */
+        dinamic_scale[ 2 ] = 0.f; /* reset */
+        this->dinamic_csale = 0.f;
+    }
 
 	/* fix */
 	opp_pos = aim_pos - local_pos;
