@@ -78,22 +78,23 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     vec2_t screen_pos;
     _address->view.world_to_screen( vec3_t( aim_pos ), screen_pos );
 
+#if 0
     if ( norm < _settings->rage_fov ) {
         if ( screen_pos.x != screen_center_x ) {
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
-            target_x /= 1.5f;
+            target_x /= 0.5f;
             target_x = ( target_x + screen_center_x > screen_center_x * 2 || target_x + screen_center_x < 0 ) ? 0 : target_x;
         }
 
         if ( screen_pos.y != 0 ) {
             if ( screen_pos.y != screen_center_y ) {
                 target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
-                target_y /= 1.5f;
+                target_y /= 0.5f;
                 target_y = ( target_y + screen_center_y > screen_center_y * 2 || target_y + screen_center_y < 0 ) ? 0 : target_y;
             }
         }
 
-        if ( target_x < 1 && target_y < 1 ) {
+        if ( target_x < 2 && target_y < 2 ) {
             mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
             std::thread trigger_thread( release_mouse_event_rage );
             trigger_thread.detach( );
@@ -102,23 +103,49 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
    
         float distance_ratio = norm / _settings->rage_fov;
         float speed_factor = 1.0f + ( 1.0f - distance_ratio );
-        target_x /= ( 1.5f * speed_factor );
-        target_y /= ( 1.5f * speed_factor );
+        target_x /= ( 0.5f * speed_factor );
+        target_y /= ( 0.5f * speed_factor );
 
         if ( screen_pos.x != screen_center_x ) {
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
-            target_x /= 1.5f;
+            target_x /= 0.5f;
             target_x = ( target_x + screen_center_x > screen_center_x * 2 || target_x + screen_center_x < 0 ) ? 0 : target_x;
         }
 
         if ( screen_pos.y != 0 ) {
             if ( screen_pos.y != screen_center_y ) {
                 target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
-                target_y /= 1.5f;
+                target_y /= 0.5f;
                 target_y = ( target_y + screen_center_y > screen_center_y * 2 || target_y + screen_center_y < 0 ) ? 0 : target_y;
             }
         }
         mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
       
     }
+#endif
+
+    if ( norm < _settings->rage_fov ) {
+        if ( screen_pos.x != screen_center_x ) {
+            target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
+        }
+
+        if ( screen_pos.y != 0 && screen_pos.y != screen_center_y ) {
+            target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
+        }
+
+        if ( target_x < 2 && target_y < 2 ) {
+            mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
+            std::thread trigger_thread( release_mouse_event_rage );
+            trigger_thread.detach( );
+        }
+
+        float distance_ratio = norm / _settings->rage_fov;
+        float speed_factor = 1.0f + ( 1.0f - distance_ratio );
+
+        target_x /= speed_factor;
+        target_y /= speed_factor;
+
+        mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
+    }
+
 }
