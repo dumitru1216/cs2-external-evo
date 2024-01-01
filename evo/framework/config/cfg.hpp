@@ -62,7 +62,7 @@ namespace evo {
 		bool draw_fov = false;
 
 		int a_activationz_type = 0; // hold - toggle - always on
-		int a_triggerkey = 1;
+		int a_triggerkey = 29;
 
 		bool rage = false;
 		int rage_fov = 10;
