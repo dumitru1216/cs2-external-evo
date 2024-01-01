@@ -1,4 +1,5 @@
 #pragma once
+#include <numbers>
 
 namespace evo { /* main namespace */
 	namespace macros {
@@ -645,6 +646,10 @@ namespace evo { /* main namespace */
 
 		__forceinline float dot( float* v ) const {
 			return ( x * v[ 0 ] + y * v[ 1 ] + z * v[ 2 ] );
+		}
+
+		constexpr const bool zero( ) const noexcept {
+			return x == 0.f && y == 0.f && z == 0.f;
 		}
 
 		__forceinline vec3_t cross( const vec3_t& v ) const {

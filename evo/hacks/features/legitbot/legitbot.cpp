@@ -1,5 +1,11 @@
 #include "../../../inc.hpp"
 
+void release_mouse_event_rage( ) {
+    /* we can now shot so lets do it */
+    std::this_thread::sleep_for( std::chrono::milliseconds( 30 ) ); /* add a custom delay and more */
+    mouse_event( MOUSEEVENTF_LEFTUP, 0, 0, 0, 0 ); /* release shot event */
+}
+
 void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, vec3_t local_pos, int ent_idx, int local_idx ) {
 	float yaw, pitch, distance, norm, lenght, target_x, target_y;
 	vec3_t opp_pos;
@@ -74,6 +80,9 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
             target_x /= _settings->smooth != 0.0f ? _settings->smooth : 1.5f;
             target_x = ( target_x + screen_center_x > screen_center_x * 2 || target_x + screen_center_x < 0 ) ? 0 : target_x;
+#if 0
+            print_with_data_scoped( "1.tx: " + std::to_string( target_x ) )
+#endif
         }
 
         if ( screen_pos.y != 0 ) {
@@ -81,8 +90,19 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                 target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
                 target_y /= _settings->smooth != 0.0f ? _settings->smooth : 1.5f;
                 target_y = ( target_y + screen_center_y > screen_center_y * 2 || target_y + screen_center_y < 0 ) ? 0 : target_y;
+#if 0
+                print_with_data_scoped( "1.ty: " + std::to_string( target_y ) )
+#endif
             }
         }
+
+#ifdef _rage
+        if ( target_x < 1 && target_y < 1 ) {
+            mouse_event( MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0 );
+            std::thread trigger_thread( release_mouse_event_rage );
+            trigger_thread.detach( );
+        }
+#endif
 
         if ( !_settings->smooth ) {
             mouse_event( MOUSEEVENTF_MOVE, ( DWORD )( target_x ), ( DWORD )( target_y ), NULL, NULL );
@@ -98,6 +118,10 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
             target_x = ( screen_pos.x > screen_center_x ) ? -( screen_center_x - screen_pos.x ) : screen_pos.x - screen_center_x;
             target_x /= _settings->smooth != 0.0f ? _settings->smooth : 1.5f;
             target_x = ( target_x + screen_center_x > screen_center_x * 2 || target_x + screen_center_x < 0 ) ? 0 : target_x;
+
+#if 0
+            print_with_data_scoped( "2.tx: " + std::to_string( target_x ) )
+#endif
         }
 
         if ( screen_pos.y != 0 ) {
@@ -105,8 +129,12 @@ void evo::legit_t::run_aimbot( const c_entity& entity, const c_entity& local, ve
                 target_y = ( screen_pos.y > screen_center_y ) ? -( screen_center_y - screen_pos.y ) : screen_pos.y - screen_center_y;
                 target_y /= _settings->smooth != 0.0f ? _settings->smooth : 1.5f;
                 target_y = ( target_y + screen_center_y > screen_center_y * 2 || target_y + screen_center_y < 0 ) ? 0 : target_y;
+#if 0
+                print_with_data_scoped( "2.ty: " + std::to_string( target_y ) )
+#endif
             }
         }
         mouse_event( MOUSEEVENTF_MOVE, target_x, target_y, NULL, NULL );
     }
+
 }
