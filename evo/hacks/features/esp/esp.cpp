@@ -1,10 +1,6 @@
 #include "../../../inc.hpp"
 #include "esp.hpp"
 
-evo::c_entity* get_entity_handle( int index ) { // just leave it like that
-	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry( ) + 0x78 * ( index + 1 ) );
-	return ent;
-}
 
 void evo::esp_t::setup_alpha( const c_entity& local_player, const c_entity& entity, int local_index, int index ) { 
 	float frame_time = 0.015;
@@ -341,34 +337,9 @@ void evo::esp_t::remove_smoke( uintptr_t ent ) {
 
 }
 
-void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
-	uintptr_t ent_base, adrr;
-	char to_read[ 32 ];
-	std::string class_name;
-
-	/* read.memory */
-	_proc_manager.read_memory<uintptr_t>( ( uintptr_t )ent, ent_base );
-	_proc_manager.read_memory<uintptr_t>( ent_base + 0x10, adrr );
-	_proc_manager.read_memory<uintptr_t>( adrr + 0x20, adrr );
-	_proc_manager.read_memory<char[ 32 ]>( adrr, to_read );
-
-	class_name = to_read;
-
-	if ( strstr( class_name.c_str( ), "weapon_" ) ) class_name.erase( 0, 7 );
-	else if ( strstr( class_name.c_str( ), "_projectile" ) ) class_name.erase( class_name.length( ) - 11, 11 );
-	else if ( strstr( class_name.c_str( ), "baseanimgraph" ) ) class_name = "defuse kit";
-	else return;
-
-	c_game_scene_node game_node;
-	game_node.update_game_scene(  )
-
-
-	if ( class_name == "weapon_incgrenade" ) {
-		printf( "we've got incgrenade" );
-		evo::_render->add_text( get_entity_handle( idx )->game_node.origin.x, get_entity_handle( idx )->game_node.origin.y
-								, evo::col_t( ), evo::fonts_t::_default, "suka" );
-		
-	}
+void evo::esp_t::render_incendiary( ) {
+  /* thi shit is not workins */
+	
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 

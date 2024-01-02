@@ -54,6 +54,7 @@ void evo::hacks_t::run( ) {
 		return;
 	}
 
+
 	/* loop between entity */
 	for ( int i = 0; i < 64; i++ ) {
 		c_entity entity;
@@ -113,9 +114,7 @@ void evo::hacks_t::run( ) {
 
 		evo::_esp->change_smoke_color( ent );
 		evo::_esp->remove_smoke( ent );
-		evo::_esp->render_incendiary( ent, i_smoke );
 	}
-
 
 	_legit->draw_aimbot_fov( );
 
