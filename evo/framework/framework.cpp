@@ -512,6 +512,8 @@ void evo::menu_t::render( ) {
                                 ImGui::Checkbox( "Colored smoke", &evo::_settings->change_smoke );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 ImGui::ColorEdit4( "###smokecolori", evo::_settings->smoke_coloringol, ALPHA );
+
+                                ImGui::Checkbox( "Remove smoke", &evo::_settings->remove_smoke );
                             } custom.end_child( );
 
                             break;

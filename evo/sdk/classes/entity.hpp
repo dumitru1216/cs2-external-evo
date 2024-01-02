@@ -225,6 +225,8 @@ namespace evo {
 		int health{}, dormant{}, clip{}, max_clip{},
 			defuser{}, hemlet{}, heavy_ar{}, ping{}, money{}, exposure_control{}, penetration{};
 
+		c_utlvector post_procesing{};
+
 		float inaccuracy{};
 
 		// m_pCameraServices = 0x10E0 // - get gamera services 
@@ -253,6 +255,19 @@ namespace evo {
 
 		__forceinline bool _pos( ) {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::pos", this->address, offsets::pawn::vec_old_origin, this->pos );
+		}
+
+		__forceinline bool _postprocess( ) {
+			DWORD64 addr = 0; // camera services
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::camera_services, addr ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::camera_services -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<c_utlvector>( "c_player_pawn::postprocess", this->address, offsets::pawn::processing_value, this->post_procesing );
 		}
 
 		__forceinline bool _spotted( ) {
@@ -760,10 +775,10 @@ namespace evo {
 				return false;
 			}
 
-			if ( !this->player_pawn._post_processing( ) ) {
+			if ( !this->player_pawn._postprocess( ) ) {
 #if 1
 				/* debug */
-				printf( "[evo] error controller._post_processing\n" );
+				printf( "[evo] error controller._hemlet\n" );
 #endif 
 
 				return false;

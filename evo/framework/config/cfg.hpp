@@ -77,6 +77,8 @@ namespace evo {
 
 		bool change_smoke = false;
 		float smoke_coloringol[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		bool remove_smoke = false;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

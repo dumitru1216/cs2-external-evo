@@ -28,7 +28,7 @@ namespace evo {
 			inline DWORD camera_pos = 0x1294;
 			inline DWORD ping_services = 0x1268;
 			inline DWORD camera_services = 0x10E0;
-			inline DWORD processing_value = 0x120;
+			inline DWORD processing_value = 0x1F4;
 			inline DWORD ent_index = 0x1544; /* should work */
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
@@ -61,6 +61,13 @@ namespace evo {
 			inline DWORD weapon_type = 0x240;
 			inline DWORD zs_name = 0xC18;
 			inline DWORD inaccuracy = 0xC7C;
+		}
+
+		namespace c_base_smoke {
+			inline DWORD effect_begin = 0x1108;
+			inline DWORD effect_spawn = 0x1149;
+			inline DWORD smoke_effect = 0x110C;
+			inline DWORD smoke_color = 0x1114;
 		}
 
 		namespace controller {
