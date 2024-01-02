@@ -1,6 +1,7 @@
 #include "../../../inc.hpp"
 #include "../../../sdk/animation_system/animation_system.hpp"
 
+/* rendering stuff gonna sit there */
 void render_filled_3d_circle( const evo::vec3_t& origin, float radius, evo::col_t color ) {
 	static constexpr float pi = 3.14159265358979323846f;
 
@@ -15,6 +16,7 @@ void render_filled_3d_circle( const evo::vec3_t& origin, float radius, evo::col_
 	ImGui::GetBackgroundDrawList( )->AddConvexPolyFilled( points.data( ), points.size( ), color.convert( ) );
 }
 
+/* rendering stuff gonna sit there */
 void render_3d_circle( const evo::vec3_t& origin, float radius, evo::col_t color ) {
 	static constexpr float pi = 3.14159265358979323846f;
 	static constexpr float Step = pi * 2.0f / 60;
@@ -34,6 +36,9 @@ void render_3d_circle( const evo::vec3_t& origin, float radius, evo::col_t color
 }
 
 void evo::sound_info::push_sound( const c_entity& entity ) {
+	if ( !_settings->local_sound )
+		return; /* do not run */
+
 	// game::m_flEmitSoundTime
 	float smth3; // will we need to iterate?
 	_proc_manager.read_memory<float>( entity.player_pawn.address + 0x1404, smth3 );
@@ -45,30 +50,30 @@ void evo::sound_info::push_sound( const c_entity& entity ) {
 		printf( "mem[0]\n" );
 #endif
 		/* should pushback */
-		this->s_info.push_back( sound_info_t{ entity.player_pawn.vec_origin, true } );
+		this->s_info_l.push_back( sound_info_t{ entity.player_pawn.vec_origin, true } );
 
 		/* reupdate */
 		main = smth3;
 	}
 
 	/* draw */
-	for ( int i = 0; i < this->s_info.size( ); i++ ) {
+	for ( int i = 0; i < this->s_info_l.size( ); i++ ) {
 		auto animation = animation_controller.get( "soundinfo" + std::to_string( i ) + animation_controller.current_child );
-		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.1f ) * ( this->s_info[i].has_changed ? 1.f : -1.f ) );
+		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.1f ) * ( this->s_info_l[i].has_changed ? 1.f : -1.f ) );
 
 		if ( animation.value >= 0.99f )
-			this->s_info[ i ].has_changed = false;
+			this->s_info_l[ i ].has_changed = false;
 
-		render_3d_circle( this->s_info[ i ].player_origin, 35 * animation.value, evo::col_t( ) );
+		render_3d_circle( this->s_info_l[ i ].player_origin, 35 * animation.value, evo::col_t( ) );
 
 		if ( i >= 60 ) {
 #if 0
 			printf( "mem[1]" );
 #endif
-			this->s_info.erase( this->s_info.begin( ), this->s_info.begin( ) + 51 );
+			this->s_info_l.erase( this->s_info_l.begin( ), this->s_info_l.begin( ) + 51 );
 
 #if 0
-			print_with_data_scoped( "size: " + std::to_string( this->s_info.size( ) ) )
+			print_with_data_scoped( "size: " + std::to_string( this->s_info_l.size( ) ) )
 #endif
 		}
 	}
