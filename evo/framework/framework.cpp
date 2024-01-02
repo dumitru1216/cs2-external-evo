@@ -381,7 +381,14 @@ void evo::menu_t::render( ) {
                             {
                                 ImGui::Checkbox( "Enable", &evo::_settings->rage );
                                 ImGui::Checkbox( "Ignore autowall", &evo::_settings->ignore_wall );
-                                ImGui::Combo( "Hitbox ", &evo::_settings->rage_hitbox, hitboxes.data( ), hitboxes.size( ) );
+                                ImGui::Checkbox( "Multipoint", &evo::_settings->ragebot_stuff[0] );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##popup2" ) ) OpenPopup( "##popup2" );
+                                custom.prepared_popup( "##popup2", "Dynamic smooth", [ ]( ) {
+                                   
+                                } );
+
+                               // ImGui::Combo( "Hitbox ", &evo::_settings->rage_hitbox, hitboxes.data( ), hitboxes.size( ) );
 
                                 ImGui::Checkbox( "Ignore if dist is over max", &evo::_settings->ignore_if_Distance_tO_high );
                                 if ( evo::_settings->ignore_if_Distance_tO_high )

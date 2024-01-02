@@ -28,6 +28,12 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
         }
     }
 
+    // multipoint [0]
+
+    if ( _settings->ragebot_stuff[ 0 ] ) { /* thats the multipoint bruther */
+
+    }
+
     /* hitbox shit */
     switch ( evo::_settings->rage_hitbox ) {
         case 0:

@@ -85,6 +85,7 @@ namespace evo {
 		bool ignore_if_Distance_tO_high;
 		int distance_to_rage;
 
+		bool ragebot_stuff[ 50 ];
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );
