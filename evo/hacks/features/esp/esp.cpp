@@ -154,6 +154,8 @@ void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity,
 									rect.y - 3 + rect.w + 2, evo::col_t( ).modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, std::to_string( bullets ).c_str( ), evo::font_flags_t::outline );
 		}
 	}
+
+
 }
 
 void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 

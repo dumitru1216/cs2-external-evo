@@ -227,15 +227,10 @@ namespace evo {
 
 		c_utlvector post_procesing{};
 
-		float inaccuracy{};
+		float inaccuracy{}, cycle_time{}, next_attack{};
 
-		// m_pCameraServices = 0x10E0 // - get gamera services 
-		// m_hActivePostProcessingVolume = 0x1F4 - from cameraservices to C_PostProcessingVolume
-
-		// C_PostProcessingVolume
-		//  constexpr std::ptrdiff_t m_bExposureControl = 0xD05; // bool
-		// constexpr std::ptrdiff_t m_flMinExposure = 0xCEC; // float
-		// constexpr std::ptrdiff_t m_flMaxExposure = 0xCF0; // float
+		// constexpr std::ptrdiff_t m_flCycleTime = 0xC34; // CFiringModeFloat
+		// constexpr std::ptrdiff_t m_flNextAttack = 0xC0; // Weapon services 
 
 		cs_weapon_type weapon_type{};
 		std::string weapon_name{};
