@@ -113,6 +113,7 @@ void evo::hacks_t::run( ) {
 
 		evo::_esp->change_smoke_color( ent );
 		evo::_esp->remove_smoke( ent );
+		evo::_esp->render_incendiary( ent );
 	}
 
 

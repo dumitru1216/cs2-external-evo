@@ -336,7 +336,7 @@ void evo::esp_t::remove_smoke( uintptr_t ent ) {
 
 }
 
-void evo::esp_t::render_incendiary( uintptr_t ent ) {
+void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
 	uintptr_t ent_base, adrr;
 	char to_read[ 32 ];
 	std::string class_name;
@@ -351,6 +351,7 @@ void evo::esp_t::render_incendiary( uintptr_t ent ) {
 
 	if ( class_name == "weapon_incgrenade" ) {
 		printf( "we've got incgrenade" );
+		
 	}
 }
 
