@@ -28,7 +28,7 @@ void render_3d_circle( const evo::vec3_t& origin, float radius, evo::col_t color
 	}
 
 	if ( !points.empty( ) ) {
-		points.push_back( points.front( ) ); // Connect back to the start
+		points.push_back( points.front( ) );
 		ImGui::GetBackgroundDrawList( )->AddPolyline( points.data( ), points.size( ), color.convert( ), false, 1.0f );
 	}
 }
