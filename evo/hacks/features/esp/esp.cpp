@@ -341,7 +341,7 @@ void evo::esp_t::remove_smoke( uintptr_t ent ) {
 
 }
 
-void evo::esp_t::render_incendiary( const c_entity& entity, uintptr_t ent, int idx ) {
+void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
 	uintptr_t ent_base, adrr;
 	char to_read[ 32 ];
 	std::string class_name;
@@ -359,14 +359,11 @@ void evo::esp_t::render_incendiary( const c_entity& entity, uintptr_t ent, int i
 	else if ( strstr( class_name.c_str( ), "baseanimgraph" ) ) class_name = "defuse kit";
 	else return;
 
-	// Origin position of entity
-	CGameSceneNode.value = C_CSPlayerPawn.getCGameSceneNode( );
-	CGameSceneNode.getOrigin( );
-	CGameSceneNode.origin = CGameSceneNode.origin.worldToScreen( viewMatrix );
+	get_entity_handle( idx )->update_game_scene( );
 
 	if ( class_name == "weapon_incgrenade" ) {
 		printf( "we've got incgrenade" );
-		evo::_render->add_text( get_entity_handle( idx )->player_pawn.vec_origin.x, get_entity_handle( idx )->player_pawn.vec_origin.y
+		evo::_render->add_text( get_entity_handle( idx )->game_node.origin.x, get_entity_handle( idx )->game_node.origin.y
 								, evo::col_t( ), evo::fonts_t::_default, "suka" );
 		
 	}
