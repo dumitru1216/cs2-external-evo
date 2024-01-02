@@ -80,6 +80,8 @@ void evo::sound_info::push_sound( const c_entity& entity ) {
 }
 
 void evo::sound_info::push_sound2( const c_entity& entity, int idx ) { /* use that for enemy */
+	if ( !_settings->enemy_sound )
+		return;
 
 	// game::m_flEmitSoundTime
 	float smth3; // will we need to iterate?
