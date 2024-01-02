@@ -507,9 +507,11 @@ void evo::menu_t::render( ) {
 
                             ImGui::SameLine( );
 
-                            custom.begin_child( "Colored models", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
+                            custom.begin_child( "Other stuff", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-
+                                ImGui::Checkbox( "Colored smoke", &evo::_settings->change_smoke );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###smokecolori", evo::_settings->smoke_coloringol, ALPHA );
                             } custom.end_child( );
 
                             break;
