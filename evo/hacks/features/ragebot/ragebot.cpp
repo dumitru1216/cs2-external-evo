@@ -29,9 +29,29 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     }
 
     // multipoint [0]
+    bool b1 = evo::_settings->ragebot_stuff[ 1 ] && entity.player_pawn.health < 30;
+    bool entity_lol = entity.player_pawn.health > local.player_pawn.health;
+    bool b2 = evo::_settings->ragebot_stuff[ 2 ] && entity_lol;
 
     if ( _settings->ragebot_stuff[ 0 ] ) { /* thats the multipoint bruther */
 
+        if ( !b1 || !b2 ) {
+            switch ( _settings->ragebot_stuff2[ 0 ] ) {
+                case 0:
+                {
+                    this->aim_position = bone_index::head;
+                } break;
+                case 1:
+                {
+                    this->aim_position = bone_index::pelvis;
+                } break;
+            }
+        }
+
+        if ( b1 || b2 ) {
+            this->aim_position = bone_index::pelvis;
+        }
+       
     }
 
     /* hitbox shit */
