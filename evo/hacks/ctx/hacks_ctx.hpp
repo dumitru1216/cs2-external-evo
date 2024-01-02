@@ -4,6 +4,7 @@
 namespace evo {
 	class hacks_t {
 	public:
+		evo::c_entity* get_entity( int index );
 		void run( );
 	};
 
