@@ -88,6 +88,18 @@ namespace evo {
 		bool ragebot_stuff[ 50 ];
 		int ragebot_stuff2[ 50 ];
 		float ragebot_stuff3[ 50 ];
+
+		bool local_sound = false;
+		bool enemy_sound = false;
+
+		int local_range = 0;
+		int enemy_range = 0;
+
+		float sound_animation_speed_l = 0.1f;
+		float sound_animation_speed_e = 0.1f;
+
+		float sound_col_l[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+		float sound_col_e[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

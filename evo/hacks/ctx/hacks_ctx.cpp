@@ -2,22 +2,6 @@
 #include "../../inc.hpp"
 #include "../../sdk/animation_system/animation_system.hpp"
 
-// this is just a test
-
-void render_filled_3d_circle( const evo::vec3_t& origin, float radius, evo::col_t color ) {
-	static constexpr float pi = 3.14159265358979323846f;
-
-	static constexpr float Step = pi * 2.0f / 60;
-	std::vector<ImVec2> points;
-	for ( float lat = 0.f; lat <= pi * 2.0f; lat += Step ) {
-		const auto& point3d = evo::vec3_t( sin( lat ), cos( lat ), 0.f ) * radius;
-		evo::vec2_t point2d;
-		if ( evo::_address->view.world_to_screen( origin + point3d, point2d ) )
-			points.push_back( ImVec2( point2d.x, point2d.y ) );
-	}
-	ImGui::GetBackgroundDrawList( )->AddConvexPolyFilled( points.data( ), points.size( ), color.convert( ) );
-}
-
 evo::c_entity* get_entity( int index ) { // just leave it like that
 	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
 	return ent;
@@ -109,6 +93,8 @@ void evo::hacks_t::run( ) {
 			continue;
 		}
 
+		_sound->push_sound2( entity, i );
+
 		_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 		_rage->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 
@@ -141,34 +127,34 @@ void evo::hacks_t::run( ) {
 	*/
 
 
-	bool is = true;
-	bool smth;
-	float smth3;
-	DWORD64 smth2;
-	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x1404, smth3 );
-
-	static float sound = smth3;
-	static bool diff = false;
-
-	if ( smth3 != sound ) {
-		printf( "diff \n" );
-		sound = smth3;
-
-		diff = true;
-	}
-
-	/* run animation */
-	auto animation = animation_controller.get( "animation_fov" + std::to_string( 0 ) + animation_controller.current_child );
-	animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.3f ) * ( diff ? 1.f : -1.f ) );
-
-	if ( animation.value >= 0.99 )
-		diff = false;
-
-	//_render->add_circle( evo::vec2_t( 1920 / 2, 1080 / 2 ), ( ( 20 * animation.value ) * 10 ), _render->to_main_color( _settings->fov_color ) );
-	render_filled_3d_circle( local_player.player_pawn.vec_origin, 20 * animation.value, evo::col_t( ) );
-
-	if ( GetAsyncKeyState( VK_F2 ) )
-		print_with_data_scoped( "s: " + std::to_string( smth3 )  )
+	//bool is = true;
+	//bool smth;
+	//float smth3;
+	//DWORD64 smth2;
+	//_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x1404, smth3 );
+	//
+	//static float sound = smth3;
+	//static bool diff = false;
+	//
+	//if ( smth3 != sound ) {
+	//	printf( "diff \n" );
+	//	sound = smth3;
+	//
+	//	diff = true;
+	//}
+	//
+	///* run animation */
+	//auto animation = animation_controller.get( "animation_fov" + std::to_string( 0 ) + animation_controller.current_child );
+	//animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.3f ) * ( diff ? 1.f : -1.f ) );
+	//
+	//if ( animation.value >= 0.99 )
+	//	diff = false;
+	//
+	////_render->add_circle( evo::vec2_t( 1920 / 2, 1080 / 2 ), ( ( 20 * animation.value ) * 10 ), _render->to_main_color( _settings->fov_color ) );
+	//render_filled_3d_circle( local_player.player_pawn.vec_origin, 20 * animation.value, evo::col_t( ) );
+	//
+	//if ( GetAsyncKeyState( VK_F2 ) )
+	//	print_with_data_scoped( "s: " + std::to_string( smth3 )  )
 
 	//if ( smth ) {
 	//	printf( "yes\n" );
@@ -176,6 +162,8 @@ void evo::hacks_t::run( ) {
 	//	printf( "no\n" );
 	//}
 	
+	//_sound->push_sound( local_player );
+
 	/* trigger bot */
 	if ( _settings->triggerbot ) {
 		switch ( _settings->activationz_type ) {
