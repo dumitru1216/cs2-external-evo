@@ -531,6 +531,11 @@ namespace evo {
 		}
 	};
 
+	class c_game_scene_node {
+	public:
+		DWORD64 address{ 0 };
+	};
+
 	class c_entity {
 	public:
 		ccs_player_controler controller;

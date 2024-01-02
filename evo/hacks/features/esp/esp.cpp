@@ -1,6 +1,11 @@
 #include "../../../inc.hpp"
 #include "esp.hpp"
 
+evo::c_entity* get_entity_handle( int index ) { // just leave it like that
+	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry( ) + 0x78 * ( index + 1 ) );
+	return ent;
+}
+
 void evo::esp_t::setup_alpha( const c_entity& local_player, const c_entity& entity, int local_index, int index ) { 
 	float frame_time = 0.015;
 	float delta_time = ( 1.0f / 0.3f ) * frame_time * 0.10f;
@@ -351,6 +356,8 @@ void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
 
 	if ( class_name == "weapon_incgrenade" ) {
 		printf( "we've got incgrenade" );
+		evo::_render->add_text( get_entity_handle( idx )->player_pawn.vec_origin.x, get_entity_handle( idx )->player_pawn.vec_origin.y
+								, evo::col_t( ), evo::fonts_t::_default, "suka" );
 		
 	}
 }
