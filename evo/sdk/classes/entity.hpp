@@ -237,8 +237,8 @@ namespace evo {
 
 		bone_t bone_data{};
 
-		vec2_t screen_pos{}, viewangle{ /* 0x1518 */ };
-		vec3_t pos{}, vec_origin{}, camera_pos{ /* 0x1294 */ }, vec_velocity{};
+		vec2_t screen_pos{};
+		vec3_t pos{}, vec_origin{}, camera_pos{ /* 0x1294 */ }, vec_velocity{}, viewangle{ /* 0x1518 */ };
 	public:
 		__forceinline bool _health( ) {
 			return mem::scan_memory<int>( "c_player_pawn::health", this->address, offsets::pawn::health, this->health );
@@ -270,7 +270,7 @@ namespace evo {
 		}
 		
 		__forceinline bool _viewangle( ) {
-			return mem::scan_memory<vec2_t>( "c_player_pawn::viewangle", this->address, offsets::pawn::viewangle, this->viewangle );
+			return mem::scan_memory<vec3_t>( "c_player_pawn::viewangle", this->address, offsets::pawn::viewangle, this->viewangle );
 		}
 
 		__forceinline DWORD64 get_game_scene_address( ) {

@@ -670,6 +670,14 @@ namespace evo { /* main namespace */
 			return delta.length_2d( );
 		}
 
+		const vec3_t& ToAngle( ) const noexcept {
+			return vec3_t{
+				std::atan2( -z, std::hypot( x, y ) ) * ( 180.0f / std::numbers::pi_v<float> ),
+				std::atan2( y, x ) * ( 180.0f / std::numbers::pi_v<float> ),
+				0.0f
+			};
+		}
+
 		__forceinline float normalize( ) {
 			float len = length( );
 

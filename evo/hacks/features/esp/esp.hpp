@@ -25,7 +25,14 @@ namespace evo {
 		bool spotted( const c_entity& entity, const c_entity& local_player, int local_index, int index ) {
 			return ( ( entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << local_index ) )
 					 || ( local_player.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << index ) ) );
+		}
 
+		bool l_spotted( const c_entity& entity, const c_entity& local_player, int local_index, int index ) {
+			return ( ( entity.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << local_index ) ) );
+		}
+
+		bool e_spotted( const c_entity& entity, const c_entity& local_player, int local_index, int index ) {
+			return ( ( local_player.player_pawn.spotted_by_mask & ( DWORD64( 1 ) << index ) ) );
 		}
 	private:
 		float esp_alpha[64]; /* max entity index */
