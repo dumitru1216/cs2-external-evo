@@ -287,7 +287,7 @@ void evo::esp_t::render_dropped_esp( const c_entity& local_player, const c_entit
 		evo::_render->add_text( entity.player_pawn.vec_origin.x, entity.player_pawn.vec_origin.y, evo::col_t( ), 1, name.c_str( ) );
 	}
 }
-
+#pragma warning ( disable :4996)
 void evo::esp_t::change_smoke_color( uintptr_t ent ) {
 	if ( !_settings->change_smoke )
 		return; /* do not run bro */
@@ -304,6 +304,15 @@ void evo::esp_t::change_smoke_color( uintptr_t ent ) {
 	_proc_manager.read_memory<char[ 32 ]>( adrr, to_read );
 
 	class_name = to_read;
+
+#if 0
+	static char prev_class_name[ 50 ] = ""; 
+	if ( strcmp( class_name.c_str( ), prev_class_name ) != 0 ) {
+		printf( "str -> %s \n", class_name );
+		strcpy( prev_class_name, class_name.c_str( ) ); 
+	}
+#endif
+
 	if ( class_name == "smokegrenade_projectile" ) {
 		vec3_t smoke_coloringo = { _settings->smoke_coloringol[0] * 255.f, _settings->smoke_coloringol[ 1 ] * 255.f, _settings->smoke_coloringol[ 2 ] * 255.f };	
 		_proc_manager.write_memory<vec3_t>( ent_base + 0x1114 /* m_vSmokeColor  */, smoke_coloringo );

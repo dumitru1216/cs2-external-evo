@@ -1,21 +1,7 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 
-#if 0 // l
-class c_glow_propety {
-public:
-	evo::vec3_t color; // 0x8
-	int glow_type;  //0x30
-	int glow_team; // 0x34
-	int glow_range; // 0x38
-	evo::col_t color_override; // 0x40
-	bool flashing; // 0x44
-	float glow_time;// 0x48
-	float glow_start_time; // 0x4c
-	bool elibile_for_screen; // 0x50
-	bool glowing; // 0x51
-};
-#endif
+// this is just a test
 
 evo::c_entity* get_entity( int index ) { // just leave it like that
 	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
@@ -107,7 +93,6 @@ void evo::hacks_t::run( ) {
 			continue;
 		}	
 
-
 		_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 		_rage->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
 
@@ -128,12 +113,7 @@ void evo::hacks_t::run( ) {
 
 		evo::_esp->change_smoke_color( ent );
 		evo::_esp->remove_smoke( ent );
-
 	}
-
-	//for ( int i_post = 0; i_post < local_player.player_pawn.post_procesing.count; i_post++ ) {
-	//	print_with_data_scoped( std::to_string( i_post ) + " count" )
-	//}
 
 
 	_legit->draw_aimbot_fov( );
