@@ -341,7 +341,7 @@ void evo::esp_t::remove_smoke( uintptr_t ent ) {
 
 }
 
-void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
+void evo::esp_t::render_incendiary( const c_entity& entity, uintptr_t ent, int idx ) {
 	uintptr_t ent_base, adrr;
 	char to_read[ 32 ];
 	std::string class_name;
@@ -353,6 +353,16 @@ void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
 	_proc_manager.read_memory<char[ 32 ]>( adrr, to_read );
 
 	class_name = to_read;
+
+	if ( strstr( class_name.c_str( ), "weapon_" ) ) class_name.erase( 0, 7 );
+	else if ( strstr( class_name.c_str( ), "_projectile" ) ) class_name.erase( class_name.length( ) - 11, 11 );
+	else if ( strstr( class_name.c_str( ), "baseanimgraph" ) ) class_name = "defuse kit";
+	else return;
+
+	// Origin position of entity
+	CGameSceneNode.value = C_CSPlayerPawn.getCGameSceneNode( );
+	CGameSceneNode.getOrigin( );
+	CGameSceneNode.origin = CGameSceneNode.origin.worldToScreen( viewMatrix );
 
 	if ( class_name == "weapon_incgrenade" ) {
 		printf( "we've got incgrenade" );

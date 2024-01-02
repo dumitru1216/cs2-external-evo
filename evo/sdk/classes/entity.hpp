@@ -273,6 +273,19 @@ namespace evo {
 			return mem::scan_memory<vec2_t>( "c_player_pawn::viewangle", this->address, offsets::pawn::viewangle, this->viewangle );
 		}
 
+		__forceinline DWORD64 get_game_scene_address( ) {
+			DWORD64 entity_pawn_list_entry = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + 0x310, entity_pawn_list_entry ) ) {
+#ifdef read_data_dbg 
+				print_with_data_scoped( "error get_pawn_address::get_entity_list_address" );
+#endif
+				return 0;
+			}
+
+			return entity_pawn_list_entry;
+		}
+
 		__forceinline bool _camera_pos( ) {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::_camera_pos", this->address, offsets::pawn::camera_pos, this->camera_pos );
 		}
@@ -534,12 +547,20 @@ namespace evo {
 	class c_game_scene_node {
 	public:
 		DWORD64 address{ 0 };
+
+		uintptr_t bone_array;
+		vec3_t origin;
+
+		__forceinline bool get_origin( ) {
+			return mem::scan_memory<vec3_t>( "c_player_pawn::_camera_pos", this->address, 0xC8, this->origin );
+		}
 	};
 
 	class c_entity {
 	public:
 		ccs_player_controler controller;
 		ccs_player_pawn player_pawn;
+		c_game_scene_node game_node;
 	public:
 		__forceinline bool update_controller( const DWORD64& player_controler ) {
 			if ( player_controler == 0 ) {
@@ -844,7 +865,28 @@ namespace evo {
 			return true;
 		}
 
-		
+		__forceinline bool update_game_scene( ) {
+			game_node.address = player_pawn.get_game_scene_address( );
+
+			if ( !this->game_node.get_origin( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error game_node.get_origin\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( game_node.address == 0 ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory [ game_node-x01 ]" );
+#endif // read_data_dbg
+
+				return false;
+			}
+
+			return true;
+		}
 
 		__forceinline bone_t get_bone( ) const {
 			if ( this->player_pawn.address == 0 ) {

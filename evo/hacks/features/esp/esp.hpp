@@ -15,7 +15,7 @@ namespace evo {
 		void render_dropped_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index );
 		void change_smoke_color( uintptr_t ent );
 		void remove_smoke( uintptr_t ent );
-		void render_incendiary( uintptr_t ent, int idx );
+		void render_incendiary( const c_entity& entity, uintptr_t ent, int idx );
 
 		void render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect,
 							  int local_index, int index );
