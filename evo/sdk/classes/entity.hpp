@@ -277,19 +277,6 @@ namespace evo {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::_camera_pos", this->address, offsets::pawn::camera_pos, this->camera_pos );
 		}
 
-		__forceinline bool _post_processing( ) {
-			DWORD64 addr = 0; // camera services
-
-			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::pawn::camera_services, addr ) ) {
-#ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::camera_services -> error -> no memory" );
-#endif // read_data_dbg
-				return false;
-			}
-
-			return mem::scan_memory<DWORD64>( "c_player_pawn::processing_value", addr, offsets::pawn::processing_value, this->processing_adress );
-		}
-
 		__forceinline bool _ping( ) {
 			// item services
 			// 0x10B0
