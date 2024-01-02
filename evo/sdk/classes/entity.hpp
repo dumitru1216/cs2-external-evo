@@ -554,6 +554,30 @@ namespace evo {
 		__forceinline bool get_origin( ) {
 			return mem::scan_memory<vec3_t>( "c_player_pawn::_camera_pos", this->address, 0xC8, this->origin );
 		}
+
+		__forceinline bool update_game_scene( ccs_player_pawn player_pawn ) {
+			address = player_pawn.get_game_scene_address( );
+
+			if ( address == 0 ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory [ game_node-x01 ]" );
+#endif // read_data_dbg
+
+				return false;
+			}
+
+			if ( !this->get_origin( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error game_node.get_origin\n" );
+#endif 
+
+				return false;
+			}
+
+			return true;
+		}
+
 	};
 
 	class c_entity {
@@ -859,29 +883,6 @@ namespace evo {
 				/* debug */
 				printf( "[evo] error bone_data.update_bone_data\n" );
 #endif 
-				return false;
-			}
-
-			return true;
-		}
-
-		__forceinline bool update_game_scene( ) {
-			game_node.address = player_pawn.get_game_scene_address( );
-
-			if ( !this->game_node.get_origin( ) ) {
-#if 1
-				/* debug */
-				printf( "[evo] error game_node.get_origin\n" );
-#endif 
-
-				return false;
-			}
-
-			if ( game_node.address == 0 ) {
-#ifdef read_data_dbg
-				print_with_data_scoped( "ccs_player_pawn::_dormant -> error -> no memory [ game_node-x01 ]" );
-#endif // read_data_dbg
-
 				return false;
 			}
 

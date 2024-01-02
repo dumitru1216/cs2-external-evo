@@ -359,7 +359,9 @@ void evo::esp_t::render_incendiary( uintptr_t ent, int idx ) {
 	else if ( strstr( class_name.c_str( ), "baseanimgraph" ) ) class_name = "defuse kit";
 	else return;
 
-	get_entity_handle( idx )->update_game_scene( );
+	c_game_scene_node game_node;
+	game_node.update_game_scene(  )
+
 
 	if ( class_name == "weapon_incgrenade" ) {
 		printf( "we've got incgrenade" );
