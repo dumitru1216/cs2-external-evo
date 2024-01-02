@@ -256,6 +256,9 @@ void evo::menu_t::render( ) {
                                     "Toggle",
                                     "Always" };
 
+    vector < const char* > keymode2 = { "Prefer head",
+                                "Prefer baim" };
+
     vector < const char* > hitboxes = { "Head",
                                 "Neck",
                                 "Chest", "Pelvis" };
@@ -383,9 +386,12 @@ void evo::menu_t::render( ) {
                                 ImGui::Checkbox( "Ignore autowall", &evo::_settings->ignore_wall );
                                 ImGui::Checkbox( "Multipoint", &evo::_settings->ragebot_stuff[0] );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
-                                if ( custom.settings_widget( "##popup2" ) ) OpenPopup( "##popup2" );
-                                custom.prepared_popup( "##popup2", "Dynamic smooth", [ ]( ) {
-                                   
+                                if ( custom.settings_widget( "##popup3" ) ) OpenPopup( "##popup3" );
+                                custom.prepared_popup( "##popup3", "Multipoint", [ & ]( ) {
+                                    ImGui::Combo( "Prefer..", &evo::_settings->ragebot_stuff2[0], keymode2.data( ), keymode2.size( ) );
+                                    ImGui::Checkbox( "Baim while lethal", &evo::_settings->ragebot_stuff[ 1 ] );
+                                    ImGui::Checkbox( "Baim unsafe", &evo::_settings->ragebot_stuff[ 2 ] );
+
                                 } );
 
                                // ImGui::Combo( "Hitbox ", &evo::_settings->rage_hitbox, hitboxes.data( ), hitboxes.size( ) );

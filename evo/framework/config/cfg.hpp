@@ -86,6 +86,8 @@ namespace evo {
 		int distance_to_rage;
 
 		bool ragebot_stuff[ 50 ];
+		int ragebot_stuff2[ 50 ];
+		float ragebot_stuff3[ 50 ];
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );
