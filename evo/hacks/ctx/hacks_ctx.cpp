@@ -1,9 +1,7 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 
-evo::c_entity* get_entity( int index ) {
-	uintptr_t entlist;
-
+evo::c_entity* get_entity( int index ) { // just leave it like that
 	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
 	return ent;
 }
