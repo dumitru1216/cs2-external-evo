@@ -79,6 +79,12 @@ namespace evo {
 		float smoke_coloringol[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		bool remove_smoke = false;
+
+
+		int ragebot_spot_type;
+		bool ignore_if_Distance_tO_high;
+		int distance_to_rage;
+
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

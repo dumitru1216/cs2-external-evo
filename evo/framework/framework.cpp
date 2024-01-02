@@ -383,7 +383,9 @@ void evo::menu_t::render( ) {
                                 ImGui::Checkbox( "Ignore autowall", &evo::_settings->ignore_wall );
                                 ImGui::Combo( "Hitbox ", &evo::_settings->rage_hitbox, hitboxes.data( ), hitboxes.size( ) );
 
-                                // ImGui::SliderInt( "Max distance", &evo::_settings->aim_distance_max, 200, 10000 );
+                                ImGui::Checkbox( "Ignore if dist is over max", &evo::_settings->ignore_if_Distance_tO_high );
+                                if ( evo::_settings->ignore_if_Distance_tO_high )
+                                    ImGui::SliderInt( "Max aim distance", &evo::_settings->distance_to_rage, 200, 3000 );
 
                                 std::string name_str = evo::_settings->rage_fov > 10 ? "Fov (!)" : "Fov";
                                 ImGui::SliderInt( "Fov", &evo::_settings->rage_fov, 1, 20 );

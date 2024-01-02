@@ -21,6 +21,13 @@ void evo::rage_t::run_aimbot( const c_entity& entity, const c_entity& local, vec
     float max_aim_distance = 1500;
     vec3_t aim_pos{ 0, 0, 0 };
 
+    float distance = local.player_pawn.vec_origin.dist_to( entity.player_pawn.vec_origin );
+    if ( _settings->ignore_if_Distance_tO_high ) {
+        if ( distance > _settings->distance_to_rage ) {
+            return; /* do not try for higher distance */
+        }
+    }
+
     /* hitbox shit */
     switch ( evo::_settings->rage_hitbox ) {
         case 0:
