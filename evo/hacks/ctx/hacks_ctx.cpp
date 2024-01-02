@@ -1,6 +1,14 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 
+evo::c_entity* get_entity( int index ) {
+	uintptr_t entlist;
+
+
+	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
+	return ent;
+}
+
 void evo::hacks_t::run( ) { 
 	/* update matrix */
 	if ( !_proc_manager.read_memory( evo::_address->get_matrix_address( ), evo::_address->view.matrix, 64 ) ) {
@@ -91,6 +99,20 @@ void evo::hacks_t::run( ) {
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
+	}
+
+	/* loop between other entity */
+	for ( int i_smoke = 64; i_smoke < 1024; i_smoke++ ) {
+		uintptr_t ent = ( uintptr_t )get_entity( i_smoke );
+
+		if ( ent == 0 ) {
+#ifdef read_data_dbg
+			print_with_data_scoped( "hacks_t::run2 -> error -> loop::continue - 1024 [ 0 ]" );
+#endif // read_data_dbg
+			continue;
+		}
+
+		evo::_esp->change_smoke_color( ent );
 	}
 
 	_legit->draw_aimbot_fov( );

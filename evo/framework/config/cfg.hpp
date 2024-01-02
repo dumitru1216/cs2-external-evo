@@ -74,6 +74,9 @@ namespace evo {
 		int rage_fov = 10;
 		bool ignore_wall = true;
 		int rage_hitbox = 0;
+
+		bool change_smoke = false;
+		float smoke_coloringol[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

@@ -1,4 +1,5 @@
 #include "../../../inc.hpp"
+#include "esp.hpp"
 
 void evo::esp_t::setup_alpha( const c_entity& local_player, const c_entity& entity, int local_index, int index ) { 
 	float frame_time = 0.015;
@@ -284,6 +285,25 @@ void evo::esp_t::render_dropped_esp( const c_entity& local_player, const c_entit
 
 		name = entity.player_pawn.weapon_name;
 		evo::_render->add_text( entity.player_pawn.vec_origin.x, entity.player_pawn.vec_origin.y, evo::col_t( ), 1, name.c_str( ) );
+	}
+}
+
+void evo::esp_t::change_smoke_color( uintptr_t ent ) {
+	vec2_t screen;
+	uintptr_t ent_base, adrr;
+	char to_read[ 32 ];
+	std::string class_name;
+
+	/* read.memory */
+	_proc_manager.read_memory<uintptr_t>( ( uintptr_t )ent, ent_base );
+	_proc_manager.read_memory<uintptr_t>( ent_base + 0x10, adrr );
+	_proc_manager.read_memory<uintptr_t>( adrr + 0x20, adrr );
+	_proc_manager.read_memory<char[ 32 ]>( adrr, to_read );
+
+	class_name = to_read;
+	if ( class_name == "smokegrenade_projectile" ) {
+		vec3_t red_color = { 1.f, 0.f, 0.f };
+		_proc_manager.write_memory<vec3_t>( ent_base + 0x1114 /* smoke color */, red_color );
 	}
 }
 

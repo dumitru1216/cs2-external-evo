@@ -790,6 +790,8 @@ namespace evo {
 			return true;
 		}
 
+		
+
 		__forceinline bone_t get_bone( ) const {
 			if ( this->player_pawn.address == 0 ) {
 #if 1
