@@ -317,7 +317,7 @@ void evo::esp_t::change_smoke_color( uintptr_t ent ) {
 
 	if ( class_name == "smokegrenade_projectile" ) {
 		vec3_t smoke_coloringo = { _settings->smoke_coloringol[0] * 255.f, _settings->smoke_coloringol[ 1 ] * 255.f, _settings->smoke_coloringol[ 2 ] * 255.f };	
-		_proc_manager.write_memory<vec3_t>( ent_base + 0x1114 /* m_vSmokeColor  */, smoke_coloringo );
+		_proc_manager.write_memory<vec3_t>( ent_base + offsets::c_base_smoke::smoke_color /* m_vSmokeColor  */, smoke_coloringo );
 	}
 }
 
@@ -330,10 +330,28 @@ void evo::esp_t::remove_smoke( uintptr_t ent ) {
 	int uf = 0; // 0x1108
 
 	_proc_manager.read_memory<uintptr_t>( ( uintptr_t )ent, ent_base );
-	_proc_manager.write_memory<bool>( ent_base + 0x110C /* m_bDidSmokeEffect  */, begin );
-	_proc_manager.write_memory<bool>( ent_base + 0x1149 /* m_bSmokeEffectSpawned  */, begin );
-	_proc_manager.write_memory<int>( ent_base + 0x1108 /* m_nSmokeEffectTickBegin  */, uf );
+	_proc_manager.write_memory<bool>( ent_base + offsets::c_base_smoke::smoke_effect /* m_bDidSmokeEffect  */, begin );
+	_proc_manager.write_memory<bool>( ent_base + offsets::c_base_smoke::effect_spawn /* m_bSmokeEffectSpawned  */, begin );
+	_proc_manager.write_memory<int>( ent_base + offsets::c_base_smoke::effect_begin /* m_nSmokeEffectTickBegin  */, uf );
 
+}
+
+void evo::esp_t::render_incendiary( uintptr_t ent ) {
+	uintptr_t ent_base, adrr;
+	char to_read[ 32 ];
+	std::string class_name;
+
+	/* read.memory */
+	_proc_manager.read_memory<uintptr_t>( ( uintptr_t )ent, ent_base );
+	_proc_manager.read_memory<uintptr_t>( ent_base + 0x10, adrr );
+	_proc_manager.read_memory<uintptr_t>( adrr + 0x20, adrr );
+	_proc_manager.read_memory<char[ 32 ]>( adrr, to_read );
+
+	class_name = to_read;
+
+	if ( class_name == "weapon_incgrenade" ) {
+		printf( "we've got incgrenade" );
+	}
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
