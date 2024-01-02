@@ -145,6 +145,7 @@
     <ClInclude Include="evo\hacks\features\esp\esp.hpp" />
     <ClInclude Include="evo\hacks\features\legitbot\legitbot.hpp" />
     <ClInclude Include="evo\hacks\features\ragebot\ragebot.hpp" />
+    <ClInclude Include="evo\hacks\features\sound_system\sound.hpp" />
     <ClInclude Include="evo\hacks\features\triggerbot\triggerbot.hpp" />
     <ClInclude Include="evo\inc.hpp" />
     <ClInclude Include="evo\sdk\animation_system\animation_system.hpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="evo\hacks\features\esp\esp.cpp" />
     <ClCompile Include="evo\hacks\features\legitbot\legitbot.cpp" />
     <ClCompile Include="evo\hacks\features\ragebot\ragebot.cpp" />
+    <ClCompile Include="evo\hacks\features\sound_system\sound.cpp" />
     <ClCompile Include="evo\hacks\features\triggerbot\triggerbot.cpp" />
     <ClCompile Include="evo\sdk\animation_system\animation_system.cpp" />
     <ClCompile Include="evo\sdk\input_system\input_system.cpp" />
