@@ -336,6 +336,41 @@ namespace evo {
 			return mem::scan_memory<int>( "c_player_pawn::clip", clipping_weapon, offsets::c_base_weapon::clip_1, this->clip );
 		}
 
+		__forceinline bool _nextattack( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::weapon_services, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::weapon_services -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<float>( "c_player_pawn::clip", clipping_weapon, 0xC0, this->next_attack );
+		}
+
+		__forceinline bool _cycle_time( ) {
+			DWORD64 clipping_weapon = 0;
+			DWORD64 weapon_data = 0;
+
+			if ( !_proc_manager.read_memory<DWORD64>( this->address + offsets::c_base_weapon::clipping_weapon, clipping_weapon ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			if ( !_proc_manager.read_memory<DWORD64>( clipping_weapon + offsets::c_base_weapon::wpn_data_ptr, weapon_data ) ) {
+#ifdef read_data_dbg
+				print_with_data_scoped( "ccs_player_pawn::clipping_weapon::_max_clip -> error -> no memory" );
+#endif // read_data_dbg
+				return false;
+			}
+
+			return mem::scan_memory<float>( "c_player_pawn::cycle_time", weapon_data, offsets::c_base_weapon::cycle_time, this->cycle_time );
+		}
+
 		__forceinline bool _inacuracy( ) {
 			DWORD64 clipping_weapon = 0;
 			DWORD64 weapon_data = 0;
@@ -775,6 +810,23 @@ namespace evo {
 				return false;
 			}
 
+			if ( !this->player_pawn._cycle_time( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._hemlet\n" );
+#endif 
+
+				return false;
+			}
+
+			if ( !this->player_pawn._nextattack( ) ) {
+#if 1
+				/* debug */
+				printf( "[evo] error controller._hemlet\n" );
+#endif 
+
+				return false;
+			}
 
 			if ( !this->player_pawn.bone_data.update_bone_data( player_pawn_address ) ) {
 #if 1

@@ -345,6 +345,7 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 			xref: this->spotted( entity, local_player, local_index, index )
 	*/
 
+		
 	/* setup dormancy */
 	this->setup_alpha( local_player, entity, local_index, index ); 
 
