@@ -342,7 +342,28 @@ void evo::esp_t::render_incendiary( ) {
 	
 }
 
-void evo::esp_t::killed_by_hs( ) { }
+void evo::esp_t::killed_by_hs( const c_entity& entity ) {
+	// headshot kill: 
+	static bool has_been_killed_by_hs[ 64 ]{ false };
+
+	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
+
+	bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
+
+	if ( smth ) {
+		has_been_killed_by_hs[ i ] = true;
+	}
+
+	auto animation = animation_controller.get( "killshot" + std::to_string( i ) + animation_controller.current_child );
+	animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.2f ) * ( has_been_killed_by_hs[ i ] ? 1.f : -1.f ) );
+
+	if ( animation.value >= 0.90 ) {
+		has_been_killed_by_hs[ i ] = false;
+	}
+
+	evo::_render->add_text( head.screen_pos.x, head.screen_pos.y,
+							evo::col_t( ).modify_alpha( 255 * animation.value ), evo::fonts_t::_default, "headshot" );
+}
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
 	/* 
