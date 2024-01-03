@@ -447,7 +447,7 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "ESP", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-                                ImGui::Checkbox( "Spotted esp (!)", &evo::_settings->change_by_visibility );
+                                ImGui::Checkbox( "Spotted esp", &evo::_settings->change_by_visibility );
                                 ImGui::Checkbox( "Dormancy esp", &evo::_settings->dormancy );
                                 ImGui::Checkbox( "Bounding box", &evo::_settings->bounding_box );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
@@ -523,11 +523,26 @@ void evo::menu_t::render( ) {
 
                             custom.begin_child( "Other stuff", ImVec2( GetWindowWidth( ) / 2 - GetStyle( ).ItemSpacing.x / 2, GetWindowHeight( ) ) );
                             {
-                                ImGui::Checkbox( "Colored smoke", &evo::_settings->change_smoke );
+                                ImGui::Checkbox( "Colored smoke (!)", &evo::_settings->change_smoke );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 ImGui::ColorEdit4( "###smokecolori", evo::_settings->smoke_coloringol, ALPHA );
 
-                                ImGui::Checkbox( "Remove smoke", &evo::_settings->remove_smoke );
+                                ImGui::Checkbox( "Remove smoke (!)", &evo::_settings->remove_smoke );
+                                ImGui::Checkbox( "Flashbang builder (!)", &evo::_settings->flash_builder );
+                                if ( evo::_settings->flash_builder )
+                                    ImGui::Checkbox( "Remove flash completly (!)", &evo::_settings->remove_full_flash );
+
+                                if ( !_settings->remove_full_flash ) {
+                                    if ( custom.settings_widget( "##popup6" ) ) OpenPopup( "##popup6" );
+                                    custom.prepared_popup( "##popup6", "Flashbang builder (!)", [ & ]( ) {
+                                        ImGui::SliderFloat( "Flashbang duration", &evo::_settings->flash_time, 0.f, 5.f );
+                                        ImGui::SliderFloat( "Flashbang alpha", &evo::_settings->flash_alpha, 0.f, 255.f );
+
+                                        ImGui::SliderInt( "Sound range", &evo::_settings->local_range, 10, 100 );
+
+                                                           } );
+                                }
+                                
 
                                 ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
