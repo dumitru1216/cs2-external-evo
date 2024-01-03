@@ -108,6 +108,9 @@ namespace evo {
 		float flash_time = 0.5f;
 
 		bool killedby_hs = false;
+
+		bool hitsound = false;
+		int hitsound_type = 0;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

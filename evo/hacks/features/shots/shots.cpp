@@ -12,9 +12,33 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 
 	if ( total_hits != prev_total_hits ) {
 		if ( total_hits == 0 && prev_total_hits != 0 ) { } else {
+			/*xref
+				
+			*/
+			switch ( _settings->hitsound_type ) {
+				case 0:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( neverlose_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+				case 1:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( skeet_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+				case 2:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( primordial_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+				case 3:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( cock_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+				case 4:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( bepis_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+			}
 
-
-			PlaySoundA( reinterpret_cast< char* > ( skeet_sound ), NULL, SND_ASYNC | SND_MEMORY );
+			
 		}
 	}
 	prev_total_hits = total_hits;
