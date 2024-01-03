@@ -342,13 +342,15 @@ void evo::esp_t::render_incendiary( ) {
 	
 }
 
-void evo::esp_t::killed_by_hs( const c_entity& entity ) {
-	// headshot kill: 
-	static bool has_been_killed_by_hs[ 64 ]{ false };
-
-	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
-
+void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
+	/* vars */
 	bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
+
+	static bool has_been_killed_by_hs[ 64 ]{ false };
+	bool was_hs;
+
+	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
+
 
 	if ( smth ) {
 		has_been_killed_by_hs[ i ] = true;
