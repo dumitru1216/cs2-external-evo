@@ -106,6 +106,8 @@ namespace evo {
 		bool remove_full_flash = false;
 		float flash_alpha = 255.f;
 		float flash_time = 0.5f;
+
+		bool killedby_hs = false;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

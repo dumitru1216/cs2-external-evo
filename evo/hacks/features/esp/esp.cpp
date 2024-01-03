@@ -353,7 +353,7 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
 
 	/* target it */
-	if ( smth ) {
+	if ( was_hs ) {
 		has_been_killed_by_hs[ i ] = true;
 	}
 
@@ -364,8 +364,11 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 		has_been_killed_by_hs[ i ] = false;
 	}
 
+	std::string hs = "HEADSHOT";
+	std::transform( hs.begin( ), hs.end( ), hs.begin( ), ::toupper );
+
 	evo::_render->add_text( head.screen_pos.x, head.screen_pos.y,
-							evo::col_t( ).modify_alpha( 255 * animation.value ), evo::fonts_t::_default, "headshot" );
+							evo::col_t( 0, 255, 0 ).modify_alpha( 255 * animation.value ), evo::fonts_t::_default_2, hs.c_str( ), evo::font_flags_t::outline );
 }
 
 void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 

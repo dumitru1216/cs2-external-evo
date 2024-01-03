@@ -129,6 +129,7 @@ void evo::hacks_t::run( ) {
 
 		ImVec4 rect = evo::_esp->get_player_bounding_box( entity );
 		evo::_esp->render_esp( local_player, entity, rect, local_player_index, i );
+		evo::_esp->killed_by_hs( entity, i );
 	}
 
 	/* loop between other entity */
