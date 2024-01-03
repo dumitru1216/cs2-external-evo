@@ -125,45 +125,33 @@ void evo::hacks_t::run( ) {
 		defusing: _proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x13B0, smth );
 		grabbing_hostage: _proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x13B1, smth );
 		gungame_imunity: _proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x13C4, smth );
+
+		shots fired, calc 1 shot, when u do shot : local_player.player_pawn.address + 0x1420
 	*/
 
 
-	//bool is = true;
-	//bool smth;
-	//float smth3;
-	//DWORD64 smth2;
-	//_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x1404, smth3 );
-	//
-	//static float sound = smth3;
-	//static bool diff = false;
-	//
-	//if ( smth3 != sound ) {
-	//	printf( "diff \n" );
-	//	sound = smth3;
-	//
-	//	diff = true;
-	//}
-	//
-	///* run animation */
-	//auto animation = animation_controller.get( "animation_fov" + std::to_string( 0 ) + animation_controller.current_child );
-	//animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.3f ) * ( diff ? 1.f : -1.f ) );
-	//
-	//if ( animation.value >= 0.99 )
-	//	diff = false;
-	//
-	////_render->add_circle( evo::vec2_t( 1920 / 2, 1080 / 2 ), ( ( 20 * animation.value ) * 10 ), _render->to_main_color( _settings->fov_color ) );
-	//render_filled_3d_circle( local_player.player_pawn.vec_origin, 20 * animation.value, evo::col_t( ) );
-	//
-	//if ( GetAsyncKeyState( VK_F2 ) )
-	//	print_with_data_scoped( "s: " + std::to_string( smth3 )  )
-
-	//if ( smth ) {
-	//	printf( "yes\n" );
-	//} else {
-	//	printf( "no\n" );
-	//}
+	bool is = true;
+	bool smth;
+	float smth3;
+	int smth4;
+	DWORD64 smth2;
+	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x142C, smth3 );
 	
-	//_sound->push_sound( local_player );
+
+#if 1
+	if ( GetAsyncKeyState( VK_F2 ) )
+		print_with_data_scoped( "s: " + std::to_string( smth3 )  )
+
+#endif
+
+#if 0
+	if ( smth ) {
+		printf( "yes\n" );
+	} else {
+		printf( "no\n" );
+	}
+#endif
+
 
 	/* trigger bot */
 	if ( _settings->triggerbot ) {
