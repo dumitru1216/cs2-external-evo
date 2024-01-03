@@ -92,8 +92,8 @@ namespace evo {
 		bool local_sound = false;
 		bool enemy_sound = false;
 
-		int local_range = 0;
-		int enemy_range = 0;
+		int local_range = 30;
+		int enemy_range = 30;
 
 		float sound_animation_speed_l = 0.1f;
 		float sound_animation_speed_e = 0.1f;
