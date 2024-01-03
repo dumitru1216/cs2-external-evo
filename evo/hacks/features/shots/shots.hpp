@@ -16,6 +16,7 @@ namespace evo {
 
 	struct hitmarker_info {
 		bool impacted;
+		bool headshot;
 	};
 
 	class shots_t {

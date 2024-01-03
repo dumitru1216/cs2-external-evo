@@ -79,10 +79,17 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 				}
 			}
 				
-			hitmarker_info info;
-			info.impacted = true;
-			
-			this->hitmarkers.push_back( info );
+			if ( _settings->hitmarker ) {
+				bool was_hs;
+
+				/* read memory */
+				_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
+
+				hitmarker_info info;
+				info.impacted = true;
+				info.headshot = was_hs;
+				this->hitmarkers.push_back( info );
+			}
 		}
 	}
 	prev_total_hits = total_hits;
@@ -92,6 +99,15 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 	https://github.com/aiuka/neverlose-cs2/Cheat/Visuals/Hitmarkers.cpp#L20
 */
 void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
+	if ( !_settings->hitmarker ) {
+		if ( !this->hitmarkers.empty( ) ) { /* clear these mothercukers */
+			this->hitmarkers.clear( );
+		}
+
+		/* do not run multiple times */
+		return;
+	}
+
 	if ( local.player_pawn.health <= 0 ) { /* clear these mothercukers */
 		if ( !this->hitmarkers.empty( ) ) {
 			this->hitmarkers.clear( );
