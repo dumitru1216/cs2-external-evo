@@ -135,14 +135,22 @@ void evo::hacks_t::run( ) {
 	float smth3;
 	int smth4;
 	DWORD64 smth2;
-	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x142C, smth3 );
-	
 
-#if 1
-	if ( GetAsyncKeyState( VK_F2 ) )
-		print_with_data_scoped( "s: " + std::to_string( smth3 )  )
-
+#define int_2
+#ifdef int_
+	_proc_manager.read_memory<int>( local_player.player_pawn.address + 0x142C, smth4 );
+#elif defined(int_2)
+	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x145C, smth3 );
 #endif
+
+#ifdef int_
+	if ( GetKeyState( VK_F2 ) )
+		print_with_data_scoped( "s: " + std::to_string( smth4 ) )
+#elif defined(int_2)
+	if ( GetKeyState( VK_F2 ) )
+		print_with_data_scoped( "s: " + std::to_string( smth3 ) )
+#endif
+
 
 #if 0
 	if ( smth ) {
