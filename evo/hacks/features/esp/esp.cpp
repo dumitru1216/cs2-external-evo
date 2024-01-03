@@ -317,19 +317,23 @@ void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& 
 
     /* we re gonna initialize this later */
 	int offset = evo::_settings->ammobar ? 5 : 0;
-
 	int distance = local_player.player_pawn.vec_origin.dist_to( entity.player_pawn.vec_origin ) * 0.01904f;
 
 	std::string dist = std::to_string( distance ) + "FT";
+
+	evo::col_t clr{ };
+	if ( evo::_settings->change_by_visibility ) {
+		clr = this->spotted( entity, local_player, local_index, index ) ? _render->to_main_color( _settings->visuals_c[2] ).modify_alpha( this->esp_alpha[ index ] ) : _render->to_main_color( _settings->visuals_c[ 2 ] ).modify_alpha( this->esp_alpha[ index ] );
+	} else {
+		clr = _render->to_main_color( _settings->visuals_c[ 2 ] ).modify_alpha( this->esp_alpha[ index ] );
+	}
 
 	/* text sizes */
 	int text_width = evo::_render->text_size( dist.c_str( ), evo::fonts_t::_default_2 ).x;
 	int text_height = evo::_render->text_size( dist.c_str( ), evo::fonts_t::_default_2 ).y;
 
-	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + offset + rect.w + 1, evo::col_t(),
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + offset + rect.w + 1, clr,
 							evo::fonts_t::_default_2, dist.c_str( ), evo::font_flags_t::outline );
-
-
 }
 
 #pragma warning ( disable :4996)
