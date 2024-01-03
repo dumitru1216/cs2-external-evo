@@ -1,5 +1,6 @@
 #include "../../../inc.hpp"
 #include "shots_hitsound.hpp"
+#pragma comment(lib, "Winmm.lib")
 
 void evo::shots_t::hitsound( const c_entity& entity ) {
 	static int prev_total_hits;

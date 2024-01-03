@@ -3,7 +3,6 @@
 namespace evo {
 	class shots_t {
 	public:
-
 		void hitsound( const c_entity& entity );
 
 	};

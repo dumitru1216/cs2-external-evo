@@ -1,8 +1,6 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 #include "../../sdk/animation_system/animation_system.hpp"
-#include "../features/shots/shots_hitsound.hpp"
-#pragma comment(lib, "Winmm.lib")
 
 evo::c_entity* get_entity( int index ) { // just leave it like that
 	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
