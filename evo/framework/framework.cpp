@@ -533,10 +533,9 @@ void evo::menu_t::render( ) {
                                     ImGui::SameLine( GetWindowWidth( ) - 33 );
                                     if ( custom.settings_widget( "##popup6" ) ) OpenPopup( "##popup6" );
                                     custom.prepared_popup( "##popup6", "Flashbang builder (!)", [ & ]( ) {
-                                        ImGui::SliderFloat( "Flashbang duration", &evo::_settings->flash_time, 0.f, 5.f );
+                                        ImGui::SliderFloat( "Flashbang delay (5<)", &evo::_settings->flash_time, 0.f, 5.f );
                                         ImGui::SliderFloat( "Flashbang alpha", &evo::_settings->flash_alpha, 0.f, 255.f );
 
-                                        ImGui::SliderInt( "Sound range", &evo::_settings->local_range, 10, 100 );
 
                                                            } );
                                 }
