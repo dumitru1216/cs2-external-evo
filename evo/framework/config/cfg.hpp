@@ -113,6 +113,7 @@ namespace evo {
 		bool hitsounduh = false;
 		int hitsound_type = 0;
 		bool hitmarker = false;
+		float hitmarker_col[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

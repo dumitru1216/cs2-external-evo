@@ -124,11 +124,12 @@ void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
 		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( _settings->sound_animation_speed_l ) * ( this->hitmarkers[i].impacted ? 1.f : -1.f ) );
 
 		// evo::_render->add_line( );
+		evo::col_t col = this->hitmarkers[ i ].headshot ? evo::col_t( 255, 0, 0 ) : _render->to_main_color( _settings->hitmarker_col );
 
-		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y - 8 ), evo::vec2_t( center.x - 4, center.y - 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
-		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y + 8 ), evo::vec2_t( center.x - 4, center.y + 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
-		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y - 8 ), evo::vec2_t( center.x + 4, center.y - 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
-		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y + 8 ), evo::vec2_t( center.x + 4, center.y + 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y - 8 ), evo::vec2_t( center.x - 4, center.y - 4 ), col.modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y + 8 ), evo::vec2_t( center.x - 4, center.y + 4 ), col.modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y - 8 ), evo::vec2_t( center.x + 4, center.y - 4 ), col.modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y + 8 ), evo::vec2_t( center.x + 4, center.y + 4 ), col.modify_alpha( 255 * animation.value ), 1 );
 
 		if ( animation.value >= 0.99 ) {
 			this->hitmarkers[ i ].impacted = false;
