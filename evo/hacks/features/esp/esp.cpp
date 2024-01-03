@@ -336,6 +336,12 @@ void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& 
 							evo::fonts_t::_default_2, dist.c_str( ), evo::font_flags_t::outline );
 }
 
+void evo::esp_t::render_taser_range( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
+	if ( entity.player_pawn.weapon_type != evo::cs_weapon_type::weapon_type_taser ) {
+		return; /* do not draw on anything else */
+	}
+}
+
 #pragma warning ( disable :4996)
 void evo::esp_t::change_smoke_color( uintptr_t ent ) {
 	if ( !_settings->change_smoke )
