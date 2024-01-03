@@ -545,10 +545,8 @@ void evo::menu_t::render( ) {
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup5" ) ) OpenPopup( "##popup5" );
                                 custom.prepared_popup( "##popup5", "Enemy sound esp", [ & ]( ) {
-                                    ImGui::SliderInt( "Fov", &evo::_settings->rage_fov, 1, 20 );
-                                    ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
                                     ImGui::SliderFloat( "Animation###enemy", &evo::_settings->sound_animation_speed_e, 0.1, 1.f );
-                                    ImGui::SliderInt( "Sound range###enemy", &evo::_settings->enemy_range, 10, 100 );
+                                    ImGui::SliderInt( "Sound range###enemysound", &evo::_settings->enemy_range, 10, 100 );
                                                        } );
 
                                 ImGui::SameLine( GetWindowWidth( ) - 55 );
