@@ -29,6 +29,11 @@ namespace evo {
 			inline DWORD ping_services = 0x1268;
 			inline DWORD camera_services = 0x10E0;
 			inline DWORD processing_value = 0x1F4;
+
+			inline DWORD max_alpha = 0x146C;
+			inline DWORD flash_Duration = 0x1470;
+			inline DWORD flashbang_time = 0x145C;
+
 			inline DWORD ent_index = 0x1544; /* should work */
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */
 		}
