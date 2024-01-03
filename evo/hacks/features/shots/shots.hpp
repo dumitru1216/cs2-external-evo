@@ -18,6 +18,9 @@ namespace evo {
 	public:
 		void hitsound( const c_entity& entity );
 		void hitmarker( const c_entity& entity, const c_entity& local );
+
+		std::vector<impact_info> impacts;
+		std::vector<hitmarker_info> hitmarkers;
 	};
 
 	inline const auto _shots = std::make_unique< shots_t >( );
