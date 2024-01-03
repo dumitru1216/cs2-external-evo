@@ -533,7 +533,7 @@ void evo::menu_t::render( ) {
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup4" ) ) OpenPopup( "##popup4" );
                                 custom.prepared_popup( "##popup4", "Local sound esp", [ & ]( ) {
-                                    ImGui::SliderFloat( "Animation###local", &evo::_settings->sound_animation_speed_l, 0.1, 1.f );
+                                    ImGui::SliderFloat( "Animation###local", &evo::_settings->sound_animation_speed_l, 0.1, 0.3f );
                                     ImGui::SliderInt( "Sound range", &evo::_settings->local_range, 10, 100 );
 
                                                        } );
@@ -545,7 +545,7 @@ void evo::menu_t::render( ) {
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup5" ) ) OpenPopup( "##popup5" );
                                 custom.prepared_popup( "##popup5", "Enemy sound esp", [ & ]( ) {
-                                    ImGui::SliderFloat( "Animation###enemy", &evo::_settings->sound_animation_speed_e, 0.1, 1.f );
+                                    ImGui::SliderFloat( "Animation###enemy", &evo::_settings->sound_animation_speed_e, 0.1, 0.3f );
                                     ImGui::SliderInt( "Sound range###enemysound", &evo::_settings->enemy_range, 10, 100 );
                                                        } );
 
