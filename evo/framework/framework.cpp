@@ -529,10 +529,8 @@ void evo::menu_t::render( ) {
 
                                 ImGui::Checkbox( "Remove smoke (!)", &evo::_settings->remove_smoke );
                                 ImGui::Checkbox( "Flashbang builder (!)", &evo::_settings->flash_builder );
-                                if ( evo::_settings->flash_builder )
-                                    ImGui::Checkbox( "Remove flash completly (!)", &evo::_settings->remove_full_flash );
-
                                 if ( !_settings->remove_full_flash ) {
+                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
                                     if ( custom.settings_widget( "##popup6" ) ) OpenPopup( "##popup6" );
                                     custom.prepared_popup( "##popup6", "Flashbang builder (!)", [ & ]( ) {
                                         ImGui::SliderFloat( "Flashbang duration", &evo::_settings->flash_time, 0.f, 5.f );
@@ -542,6 +540,11 @@ void evo::menu_t::render( ) {
 
                                                            } );
                                 }
+
+                                if ( evo::_settings->flash_builder )
+                                    ImGui::Checkbox( "Remove flash completly (!)", &evo::_settings->remove_full_flash );
+
+                               
                                 
 
                                 ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
