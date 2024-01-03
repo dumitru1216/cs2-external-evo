@@ -13,7 +13,14 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 	if ( total_hits != prev_total_hits ) {
 		if ( total_hits == 0 && prev_total_hits != 0 ) { } else {
 			/*xref
-				
+				    vector < const char* > hitsound = { 
+						"Neverlose",
+                        "Skeet",
+                        "Primordial",
+                        "Sound 1",
+                        "Sound 2",
+						"Toy duck"
+								};
 			*/
 			switch ( _settings->hitsound_type ) {
 				case 0:
@@ -35,6 +42,10 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 				case 4:
 				{
 					PlaySoundA( reinterpret_cast< char* > ( bepis_sound ), NULL, SND_ASYNC | SND_MEMORY );
+				} break;
+				case 5:
+				{
+					PlaySoundA( reinterpret_cast< char* > ( ratamac ), NULL, SND_ASYNC | SND_MEMORY );
 				} break;
 			}
 
