@@ -310,6 +310,11 @@ void evo::esp_t::render_dropped_esp( const c_entity& local_player, const c_entit
 		evo::_render->add_text( entity.player_pawn.vec_origin.x, entity.player_pawn.vec_origin.y, evo::col_t( ), 1, name.c_str( ) );
 	}
 }
+
+void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) {
+
+}
+
 #pragma warning ( disable :4996)
 void evo::esp_t::change_smoke_color( uintptr_t ent ) {
 	if ( !_settings->change_smoke )
