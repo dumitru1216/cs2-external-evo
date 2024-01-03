@@ -30,7 +30,6 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 						"Wow"
 								};
 			*/
-
 			switch ( _settings->hitsound_type ) {
 				case 0:
 				{

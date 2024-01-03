@@ -353,15 +353,8 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 	static bool has_been_killed_by_hs[ 64 ]{ false };
 	bool was_hs;
 
-	static bool play_sound[ 64 ]{ false };
-
-	if ( !play_sound[ i ] ) {
-		if ( _settings->hitsounduh ) {
-			PlaySoundA( reinterpret_cast< char* > ( robloxsnd ), NULL, SND_ASYNC | SND_MEMORY );
-		}
-
-		play_sound[ i ] = true;
-	}
+	static bool play_sound{ false };
+	static bool reseted{ false };
 
 	/* read memory */
 	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
@@ -371,12 +364,27 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 		has_been_killed_by_hs[ i ] = true;
 	}
 
+#if 0 // meme
+	if ( !play_sound && reseted ) {
+		reseted = false;
+
+		if ( _settings->hitsounduh ) {
+			PlaySoundA( reinterpret_cast< char* > ( robloxsnd ), NULL, SND_ASYNC | SND_MEMORY );
+		}
+
+		play_sound = true;
+	}
+
+	if ( entity.player_pawn.health <= 0 && play_sound ) {
+		play_sound = false;
+		reseted = true;
+	}
+#endif
 	auto animation = animation_controller.get( "killshot" + std::to_string( i ) + animation_controller.current_child );
 	animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.2f ) * ( has_been_killed_by_hs[ i ] ? 1.f : -1.f ) );
 
 	if ( animation.value >= 0.90 ) {
 		has_been_killed_by_hs[ i ] = false;
-		play_sound[ i ] = false;
 	}
 
 	std::string hs = "HEADSHOT";
