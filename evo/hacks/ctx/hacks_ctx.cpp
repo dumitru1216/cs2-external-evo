@@ -99,7 +99,31 @@ void evo::hacks_t::run( ) {
 		int smth4;
 		DWORD64 smth2;
 
-		// headshot kill: _proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
+		// headshot kill: 
+		static bool has_been_killed_by_hs[ 64 ]{ false };
+
+		_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
+
+		bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
+
+		if ( smth ) {
+			has_been_killed_by_hs[ i ] = true;
+		}
+
+		if ( GetKeyState( VK_F2 ) )
+			print_with_data_scoped( "s: " + std::to_string( smth ) + " f: " + std::to_string( has_been_killed_by_hs[ i ] ) )
+
+
+		auto animation = animation_controller.get( "killshot" + std::to_string( i ) + animation_controller.current_child );
+		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.2f ) * ( has_been_killed_by_hs[ i ] ? 1.f : -1.f ) );
+
+		if ( animation.value >= 0.90 && entity.player_pawn.health <= 0 ) {
+			has_been_killed_by_hs[ i ] = false;
+		}
+
+		evo::_render->add_text( head.screen_pos.x, head.screen_pos.y,
+								evo::col_t( ).modify_alpha( 255 * animation.value ), evo::fonts_t::_default, "headshot" );
+
 #if 0
 #define int_3
 #ifdef int_
