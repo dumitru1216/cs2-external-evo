@@ -110,6 +110,7 @@ namespace evo {
 		bool killedby_hs = false;
 
 		bool hitsound = false;
+		bool hitsounduh = false;
 		int hitsound_type = 0;
 	};
 

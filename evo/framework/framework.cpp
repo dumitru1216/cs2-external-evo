@@ -259,6 +259,20 @@ void evo::menu_t::render( ) {
     vector < const char* > keymode2 = { "Prefer head",
                                 "Prefer baim" };
 
+    vector < const char* > hitsound = {
+                       "Neverlose",
+                       "Skeet",
+                       "Primordial",
+                       "Sound 1",
+                       "Sound 2",
+                       "Toy duck",
+                       "Bell 1",
+                       "Bell 2",
+                       "Button",
+                       "Pop",
+                       "Wow"
+    };
+
     vector < const char* > hitboxes = { "Head",
                                 "Neck",
                                 "Chest", "Pelvis" };
@@ -545,6 +559,9 @@ void evo::menu_t::render( ) {
                                                    
 
                                 ImGui::Checkbox( "Killed by hs", &evo::_settings->killedby_hs );
+                                ImGui::Checkbox( "Hitsound", &evo::_settings->hitsound );
+                                ImGui::Combo( "Sound", &evo::_settings->hitsound_type, hitsound.data( ), hitsound.size( ) );
+
                                 ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup4" ) ) OpenPopup( "##popup4" );
