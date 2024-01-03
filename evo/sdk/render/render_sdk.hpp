@@ -670,6 +670,16 @@ namespace evo { /* main namespace */
 			return delta.length_2d( );
 		}
 
+		__forceinline float dist_to_3d( const vec3_t& vOther ) const {
+			vec3_t delta;
+
+			delta.x = x - vOther.x;
+			delta.y = y - vOther.y;
+			delta.z = z - vOther.z;
+
+			return delta.length( );
+		}
+
 		const vec3_t& ToAngle( ) const noexcept {
 			return vec3_t{
 				std::atan2( -z, std::hypot( x, y ) ) * ( 180.0f / std::numbers::pi_v<float> ),

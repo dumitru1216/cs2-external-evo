@@ -50,6 +50,12 @@
 #define print_with_data(s) std::cout << "[evo-debug] " + s << std::endl;
 #define print_with_data_scoped(s) std::cout << "[evo-debug] " + std::string(s) << std::endl;
 
+#define custompi 3.14159265358979323846264338327950288f
+#define rad_pi 57.295779513082f;
+
+#define rad2deg(x) ((float)(x) * (float)(180.f / custompi))
+#define deg2rad(x) ((float)(x) * (float)(custompi / 180.f))
+
 /* inc */
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam );
 
