@@ -1,6 +1,6 @@
 #include "../../../inc.hpp"
 #include "esp.hpp"
-
+#include "../../../sdk/animation_system/animation_system.hpp"
 
 void evo::esp_t::setup_alpha( const c_entity& local_player, const c_entity& entity, int local_index, int index ) { 
 	float frame_time = 0.015;
@@ -349,9 +349,10 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 	static bool has_been_killed_by_hs[ 64 ]{ false };
 	bool was_hs;
 
+	/* read memory */
 	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
 
-
+	/* target it */
 	if ( smth ) {
 		has_been_killed_by_hs[ i ] = true;
 	}
