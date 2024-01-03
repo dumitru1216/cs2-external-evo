@@ -561,7 +561,8 @@ void evo::menu_t::render( ) {
                                 ImGui::Checkbox( "Killed by headshot", &evo::_settings->killedby_hs );
 
                                 ImGui::Checkbox( "Hitsound", &evo::_settings->hitsound );
-                                ImGui::Combo( "Sound", &evo::_settings->hitsound_type, hitsound.data( ), hitsound.size( ) );
+                                if ( evo::_settings->hitsound )
+                                    ImGui::Combo( "Sound", &evo::_settings->hitsound_type, hitsound.data( ), hitsound.size( ) );
 
                                 ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
