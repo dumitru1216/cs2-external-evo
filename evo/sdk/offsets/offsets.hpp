@@ -33,6 +33,7 @@ namespace evo {
 			inline DWORD max_alpha = 0x146C;
 			inline DWORD flash_Duration = 0x1470;
 			inline DWORD flashbang_time = 0x145C;
+			inline DWORD emit_sound_time = 0x1404;
 
 			inline DWORD ent_index = 0x1544; /* should work */
 			inline DWORD spotted = 0x1638 + 0xC; /* xref: m_entitySpottedState + m_bSpottedByMask  */

@@ -41,7 +41,7 @@ void evo::sound_info::push_sound( const c_entity& entity ) {
 
 	// game::m_flEmitSoundTime
 	float smth3; // will we need to iterate?
-	_proc_manager.read_memory<float>( entity.player_pawn.address + 0x1404, smth3 );
+	_proc_manager.read_memory<float>( entity.player_pawn.address + offsets::pawn::emit_sound_time, smth3 );
 
 	static float main = smth3;
 	
@@ -85,7 +85,7 @@ void evo::sound_info::push_sound2( const c_entity& entity, int idx ) { /* use th
 
 	// game::m_flEmitSoundTime
 	float smth3; // will we need to iterate?
-	_proc_manager.read_memory<float>( entity.player_pawn.address + 0x1404, smth3 );
+	_proc_manager.read_memory<float>( entity.player_pawn.address + offsets::pawn::emit_sound_time, smth3 );
 
 	static float main[ 64 ]{smth3};
 
