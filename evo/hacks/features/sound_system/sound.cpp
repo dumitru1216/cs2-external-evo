@@ -64,7 +64,7 @@ void evo::sound_info::push_sound( const c_entity& entity ) {
 		if ( animation.value >= 0.99f )
 			this->s_info_l[ i ].has_changed = false;
 
-		render_3d_circle( this->s_info_l[ i ].player_origin, _settings->soun * animation.value, evo::col_t( ) );
+		render_3d_circle( this->s_info_l[ i ].player_origin, _settings->local_range * animation.value, _render->to_main_color( _settings->sound_col_l ) );
 
 		if ( i >= 60 ) {
 #if 0
@@ -103,12 +103,12 @@ void evo::sound_info::push_sound2( const c_entity& entity, int idx ) { /* use th
 	/* draw */
 	for ( int i = 0; i < this->s_info.size( ); i++ ) {
 		auto animation = animation_controller.get( "soundinfo" + std::to_string( i ) + animation_controller.current_child );
-		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( 0.1f ) * ( this->s_info[ i ].has_changed ? 1.f : -1.f ) );
+		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( _settings->sound_animation_speed_e ) * ( this->s_info[ i ].has_changed ? 1.f : -1.f ) );
 
 		if ( animation.value >= 0.99f )
 			this->s_info[ i ].has_changed = false;
 
-		render_3d_circle( this->s_info[ i ].player_origin, 35 * animation.value, evo::col_t( ) );
+		render_3d_circle( this->s_info[ i ].player_origin, _settings->enemy_range * animation.value, _render->to_main_color( _settings->sound_col_e ) );
 
 		if ( i >= 60 ) {
 #if 0

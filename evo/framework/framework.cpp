@@ -405,7 +405,6 @@ void evo::menu_t::render( ) {
 
 
 
-
                             } custom.end_child( );
 
                             ImGui::SameLine( );
@@ -529,6 +528,32 @@ void evo::menu_t::render( ) {
                                 ImGui::ColorEdit4( "###smokecolori", evo::_settings->smoke_coloringol, ALPHA );
 
                                 ImGui::Checkbox( "Remove smoke", &evo::_settings->remove_smoke );
+
+                                ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##popup4" ) ) OpenPopup( "##popup4" );
+                                custom.prepared_popup( "##popup4", "Local sound esp", [ & ]( ) {
+                                    ImGui::SliderFloat( "Animation###local", &evo::_settings->sound_animation_speed_l, 0.1, 1.f );
+                                    ImGui::SliderInt( "Sound range", &evo::_settings->local_range, 10, 100 );
+
+                                                       } );
+                                ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                ImGui::ColorEdit4( "###solcol", evo::_settings->sound_col_l, ALPHA );
+
+
+                                ImGui::Checkbox( "Enemy sound esp", &evo::_settings->enemy_sound );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##popup5" ) ) OpenPopup( "##popup5" );
+                                custom.prepared_popup( "##popup5", "Enemy sound esp", [ & ]( ) {
+                                    ImGui::SliderInt( "Fov", &evo::_settings->rage_fov, 1, 20 );
+                                    ImGui::SliderFloat( "Smooth", &evo::_settings->smooth, 0, 10 );
+                                    ImGui::SliderFloat( "Animation###enemy", &evo::_settings->sound_animation_speed_e, 0.1, 1.f );
+                                    ImGui::SliderInt( "Sound range###enemy", &evo::_settings->enemy_range, 10, 100 );
+                                                       } );
+
+                                ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                ImGui::ColorEdit4( "###solcol3e", evo::_settings->sound_col_e, ALPHA );
+
                             } custom.end_child( );
 
                             break;
