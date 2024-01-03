@@ -317,7 +317,7 @@ void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& 
 
     /* we re gonna initialize this later */
 	int offset = evo::_settings->ammobar ? 5 : 0;
-	int distance = local_player.player_pawn.vec_origin.dist_to( entity.player_pawn.vec_origin ) * 0.01904f;
+	int distance = local_player.player_pawn.vec_origin.dist_to( entity.player_pawn.vec_origin ) ; // * 0.01904f
 
 	std::string dist = std::to_string( distance ) + "FT";
 
@@ -337,9 +337,15 @@ void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& 
 }
 
 void evo::esp_t::render_taser_range( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
-	if ( entity.player_pawn.weapon_type != evo::cs_weapon_type::weapon_type_taser ) {
-		return; /* do not draw on anything else */
-	}
+	//if ( entity.player_pawn.weapon_type != evo::cs_weapon_type::weapon_type_taser ) {
+	//	return; /* do not draw on anything else */
+	//}
+
+	// xref: 204ft
+	//bone_pos head = local_player.get_bone( ).bone_pos_list[ bone_index::pelvis ];
+	//
+	//
+	//_render->add_circle( head.screen_pos, 102, evo::col_t( ) );
 }
 
 #pragma warning ( disable :4996)
@@ -484,6 +490,7 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 	*/
 	this->skeleton_esp( local_player, entity, rect, local_index, index );
 	this->render_distance( local_player, entity, rect, local_index, index );
+	this->render_taser_range( local_player, entity, rect, local_index, index );
 
 	if ( evo::_settings->flags ) {
 		this->render_side_info( local_player, entity, rect, local_index, index );
