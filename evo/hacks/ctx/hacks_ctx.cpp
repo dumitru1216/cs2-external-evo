@@ -93,6 +93,35 @@ void evo::hacks_t::run( ) {
 			continue;
 		}
 
+		bool is = true;
+		bool smth;
+		float smth3;
+		int smth4;
+		DWORD64 smth2;
+
+		// headshot kill: _proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
+#if 0
+#define int_3
+#ifdef int_
+		_proc_manager.read_memory<int>( local_player.player_pawn.address + 0x1537, smth4 );
+#elif defined(int_2)
+		_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x15BC, smth3 );
+#elif defined(int_3)
+		_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, smth );
+#endif
+
+#ifdef int_
+		if ( GetKeyState( VK_F2 ) )
+			print_with_data_scoped( "s: " + std::to_string( smth4 ) )
+#elif defined(int_2)
+		if ( GetKeyState( VK_F2 ) )
+			print_with_data_scoped( "s: " + std::to_string( smth3 ) )
+#elif defined(int_3)
+		if ( GetKeyState( VK_F2 ) )
+			print_with_data_scoped( "s: " + std::to_string( smth ) )
+#endif
+#endif
+
 		_sound->push_sound2( entity, i );
 
 		_legit->run_aimbot( entity, local_player, local_player.player_pawn.camera_pos, i, local_player_index );
@@ -139,11 +168,14 @@ void evo::hacks_t::run( ) {
 	int smth4;
 	DWORD64 smth2;
 
+#if 0
 #define int_2
 #ifdef int_
-	_proc_manager.read_memory<int>( local_player.player_pawn.address + 0x142C, smth4 );
+	_proc_manager.read_memory<int>( local_player.player_pawn.address + 0x1537, smth4 );
 #elif defined(int_2)
-	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x1470, smth3 );
+	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x15BC, smth3 );
+#elif defined(int_3)
+	_proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x1537, smth );
 #endif
 
 #ifdef int_
@@ -152,10 +184,13 @@ void evo::hacks_t::run( ) {
 #elif defined(int_2)
 	if ( GetKeyState( VK_F2 ) )
 		print_with_data_scoped( "s: " + std::to_string( smth3 ) )
+#elif defined(int_3)
+	if ( GetKeyState( VK_F2 ) )
+		print_with_data_scoped( "s: " + std::to_string( smth ) )
 #endif
-
-		float fl = 125.f;
-	//_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x1470, fl );
+#endif
+		float fl = 0.5f;
+	//_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x15C0, fl );
 	//_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x1464, fl );
 
 #if 0
