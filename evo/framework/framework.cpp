@@ -535,6 +535,7 @@ void evo::menu_t::render( ) {
 
                                
 
+                                ImGui::Checkbox( "Distance", &evo::_settings->visuals_b[0] );
                                 ImGui::Checkbox( "Weapon name", &evo::_settings->eap );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 ImGui::ColorEdit4( "###weponsadhg", evo::_settings->eap_color, ALPHA );

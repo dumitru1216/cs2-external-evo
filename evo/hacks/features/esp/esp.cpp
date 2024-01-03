@@ -197,7 +197,7 @@ void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& en
 	int text_width = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).x;
 	int text_height = evo::_render->text_size( weaepon_name.c_str( ), evo::fonts_t::_default_2 ).y;
 
-	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 1 + offset, weapon_clr,
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + rect.w + 1 + offset + ( _settings->visuals_b[ 0 ] ? text_height : 0 ), weapon_clr,
 							evo::fonts_t::_default_2, weaepon_name.c_str( ), evo::font_flags_t::outline );
 }
 
@@ -312,6 +312,23 @@ void evo::esp_t::render_dropped_esp( const c_entity& local_player, const c_entit
 }
 
 void evo::esp_t::render_distance( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) {
+	if ( !_settings->visuals_b[ 0 ] )
+		return;
+
+    /* we re gonna initialize this later */
+	int offset = evo::_settings->ammobar ? 5 : 0;
+
+	int distance = local_player.player_pawn.vec_origin.dist_to( entity.player_pawn.vec_origin ) * 0.01904f;
+
+	std::string dist = std::to_string( distance ) + "FT";
+
+	/* text sizes */
+	int text_width = evo::_render->text_size( dist.c_str( ), evo::fonts_t::_default_2 ).x;
+	int text_height = evo::_render->text_size( dist.c_str( ), evo::fonts_t::_default_2 ).y;
+
+	evo::_render->add_text( rect.x + ( rect.z * 0.5f ) - ( text_width * 0.5f ), rect.y + offset + rect.w + 1, evo::col_t(),
+							evo::fonts_t::_default_2, dist.c_str( ), evo::font_flags_t::outline );
+
 
 }
 
@@ -456,6 +473,7 @@ void evo::esp_t::render_esp( const c_entity& local_player, const c_entity& entit
 		or skeleton
 	*/
 	this->skeleton_esp( local_player, entity, rect, local_index, index );
+	this->render_distance( local_player, entity, rect, local_index, index );
 
 	if ( evo::_settings->flags ) {
 		this->render_side_info( local_player, entity, rect, local_index, index );

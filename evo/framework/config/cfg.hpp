@@ -115,6 +115,7 @@ namespace evo {
 		bool hitmarker = false;
 		float hitmarker_col[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+		bool visuals_b[ 120 ]{ false };
 		int visuals_i[ 120 ]{ 0 };
 		float visuals_c[120][ 4 ]{ 1.0f, 1.0f, 1.0f, 1.0f };
 	};
