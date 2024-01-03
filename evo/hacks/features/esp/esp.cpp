@@ -343,6 +343,9 @@ void evo::esp_t::render_incendiary( ) {
 }
 
 void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
+	if ( !_settings->killedby_hs )
+		return;
+
 	/* vars */
 	bone_pos head = entity.get_bone( ).bone_pos_list[ bone_index::head ];
 

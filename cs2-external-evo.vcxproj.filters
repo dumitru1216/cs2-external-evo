@@ -129,6 +129,9 @@
     <ClInclude Include="evo\hacks\features\flash_builder\flash_builder.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="evo\hacks\features\shots\shots_hitsound.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="evo\thirdparty\imgui.cpp">

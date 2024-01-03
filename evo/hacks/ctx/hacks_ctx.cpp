@@ -1,6 +1,8 @@
 #include "hacks_ctx.hpp"
 #include "../../inc.hpp"
 #include "../../sdk/animation_system/animation_system.hpp"
+#include "../features/shots/shots_hitsound.hpp"
+#pragma comment(lib, "Winmm.lib")
 
 evo::c_entity* get_entity( int index ) { // just leave it like that
 	evo::c_entity* ent = ( evo::c_entity* )( evo::_address->get_entity_list_entry() + 0x78 * ( index + 1 ) );
@@ -162,12 +164,27 @@ void evo::hacks_t::run( ) {
 		
 	*/
 
+	static int PreviousTotalHits;
+	uintptr_t pBulletServices;
+	int totalHits;
+	_proc_manager.read_memory( local_player.player_pawn.address + 0x16B8, pBulletServices );
+	_proc_manager.read_memory( pBulletServices + 0x40, totalHits );
+
+	if ( totalHits != PreviousTotalHits ) {
+		if ( totalHits == 0 && PreviousTotalHits != 0 ) {
+			// `totalHits` changed from non-zero to zero, do not play hitsound
+		} else {
+			// Play the HitSound
+
+			PlaySoundA( reinterpret_cast< char* > ( neverlose_sound ), NULL, SND_ASYNC | SND_MEMORY );
+		}
+	}
+	PreviousTotalHits = totalHits;
 
 	bool is = true;
 	bool smth;
 	float smth3;
 	int smth4;
-	DWORD64 smth2;
 
 #if 0
 #define int_2

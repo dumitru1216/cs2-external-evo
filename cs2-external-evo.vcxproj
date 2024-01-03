@@ -146,6 +146,7 @@
     <ClInclude Include="evo\hacks\features\flash_builder\flash_builder.hpp" />
     <ClInclude Include="evo\hacks\features\legitbot\legitbot.hpp" />
     <ClInclude Include="evo\hacks\features\ragebot\ragebot.hpp" />
+    <ClInclude Include="evo\hacks\features\shots\shots_hitsound.hpp" />
     <ClInclude Include="evo\hacks\features\sound_system\sound.hpp" />
     <ClInclude Include="evo\hacks\features\triggerbot\triggerbot.hpp" />
     <ClInclude Include="evo\inc.hpp" />

@@ -542,10 +542,9 @@ void evo::menu_t::render( ) {
 
                                 if ( evo::_settings->flash_builder )
                                     ImGui::Checkbox( "Remove flash completly (!)", &evo::_settings->remove_full_flash );
+                                                   
 
-                               
-                                
-
+                                ImGui::Checkbox( "Killed by hs", &evo::_settings->killedby_hs );
                                 ImGui::Checkbox( "Local sound esp", &evo::_settings->local_sound );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup4" ) ) OpenPopup( "##popup4" );
