@@ -112,6 +112,7 @@ namespace evo {
 		bool hitsound = false;
 		bool hitsounduh = false;
 		int hitsound_type = 0;
+
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

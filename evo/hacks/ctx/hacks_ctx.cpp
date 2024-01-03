@@ -93,6 +93,8 @@ void evo::hacks_t::run( ) {
 			continue;
 		}
 
+		_shots->hitmarker( entity, local_player );
+
 		bool is = true;
 		bool smth;
 		float smth3;

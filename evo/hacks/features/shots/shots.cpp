@@ -1,10 +1,10 @@
 #include "../../../inc.hpp"
 #include "shots_hitsound.hpp"
 #pragma comment(lib, "Winmm.lib")
+#include "../../../sdk/animation_system/animation_system.hpp"
 
 void evo::shots_t::hitsound( const c_entity& entity ) {
-	if ( !_settings->hitsound )
-		return;
+
 
 	static int prev_total_hits;
 	int total_hits;
@@ -30,54 +30,59 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 						"Wow"
 								};
 			*/
-			switch ( _settings->hitsound_type ) {
-				case 0:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( neverlose_sound ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 1:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( skeet_sound ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 2:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( primordial_sound ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 3:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( cock_sound ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 4:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( bepis_sound ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 5:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( ratamac ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 6:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( bell1 ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 7:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( bell2 ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 8:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( button_snd ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 9:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( popsnd ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
-				case 10:
-				{
-					PlaySoundA( reinterpret_cast< char* > ( wowsnd ), NULL, SND_ASYNC | SND_MEMORY );
-				} break;
+			if ( _settings->hitsound ) {
+				switch ( _settings->hitsound_type ) {
+					case 0:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( neverlose_sound ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 1:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( skeet_sound ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 2:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( primordial_sound ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 3:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( cock_sound ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 4:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( bepis_sound ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 5:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( ratamac ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 6:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( bell1 ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 7:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( bell2 ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 8:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( button_snd ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 9:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( popsnd ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+					case 10:
+					{
+						PlaySoundA( reinterpret_cast< char* > ( wowsnd ), NULL, SND_ASYNC | SND_MEMORY );
+					} break;
+				}
 			}
-
+				
+			hitmarker_info info;
+			info.impacted = true;
 			
+			this->hitmarkers.push_back( info );
 		}
 	}
 	prev_total_hits = total_hits;
@@ -88,10 +93,6 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 */
 void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
 	if ( local.player_pawn.health <= 0 ) { /* clear these mothercukers */
-		if ( !this->impacts.empty( ) ) {
-			this->impacts.clear( );
-		}
-
 		if ( !this->hitmarkers.empty( ) ) {
 			this->hitmarkers.clear( );
 		}
@@ -100,39 +101,27 @@ void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
 		return;
 	}
 
-	/* xref:
-		https://github.com/aiuka/neverlose-cs2/Cheat/Visuals/Hitmarkers.cpp#L25
-	*/
-	std::vector<hitmarker_info>::iterator p_iterator;
-	for ( p_iterator = this->hitmarkers.begin( ); p_iterator != this->hitmarkers.end( ); ) {
-		static auto line_size = 6;
+	auto center = ImGui::GetIO( ).DisplaySize * 0.5;
 
-		/* xref:
-			https://github.com/aiuka/neverlose-cs2/Cheat/Visuals/Hitmarkers.cpp#L28
+	for ( int i = 0; i < this->hitmarkers.size( ); i++ ) {
+		auto animation = animation_controller.get( "hitmurker" + std::to_string( i ) + animation_controller.current_child );
+		animation.adjust( animation.value + 3.f * animation_controller.get_min_deltatime( _settings->sound_animation_speed_l ) * ( this->hitmarkers[i].impacted ? 1.f : -1.f ) );
 
-			lazyness globalvar-frametime = 0.015
-		*/
+		// evo::_render->add_line( );
 
-		const auto step = 255.f / 1.f * 0.015;
-		const auto step_move = 30.f / 1.5f * 0.015;
-		const auto multiplicator = 0.3f;
+		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y - 8 ), evo::vec2_t( center.x - 4, center.y - 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x - 8, center.y + 8 ), evo::vec2_t( center.x - 4, center.y + 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y - 8 ), evo::vec2_t( center.x + 4, center.y - 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
+		evo::_render->add_line( evo::vec2_t( center.x + 8, center.y + 8 ), evo::vec2_t( center.x + 4, center.y + 4 ), evo::col_t().modify_alpha( 255 * animation.value ), 1 );
 
-		if ( p_iterator->pImpact.time + 0.5f <= 0.015 /* curtime */ && p_iterator->alpha > 0.0f )
-			p_iterator->alpha -= step;
-
-		p_iterator->moved -= step_move;
-
-		if ( p_iterator->pImpact.time + 0.5f <= 0.015 /* curtime */ && p_iterator->alpha2 > 0 )
-			p_iterator->alpha2 -= 5;
-
-		if ( p_iterator->alpha <= 0 && p_iterator->alpha2 <= 0 ) {
-			p_iterator = hitmarkers.erase( p_iterator );
-			continue;
+		if ( animation.value >= 0.99 ) {
+			this->hitmarkers[ i ].impacted = false;
 		}
 
-		/* xref:
-			https://github.com/aiuka/neverlose-cs2/Cheat/Visuals/Hitmarkers.cpp#L125
-		*/
-		++p_iterator;
+		if ( animation.value <= 0.0f && !this->hitmarkers[ i ].impacted ) {
+			this->hitmarkers.erase( this->hitmarkers.begin( ) + i );
+		}
 	}
+
+	print_with_data_scoped( std::to_string( this->hitmarkers.size( ) ) )
 }
