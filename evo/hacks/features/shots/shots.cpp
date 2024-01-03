@@ -80,14 +80,9 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 			}
 				
 			if ( _settings->hitmarker ) {
-				bool was_hs;
-
-				/* read memory */
-				_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
-
 				hitmarker_info info;
 				info.impacted = true;
-				info.headshot = was_hs;
+				info.headshot = false;
 				this->hitmarkers.push_back( info );
 			}
 		}

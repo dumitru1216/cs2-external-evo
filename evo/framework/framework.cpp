@@ -559,6 +559,9 @@ void evo::menu_t::render( ) {
                                                    
 
                                 ImGui::Checkbox( "Killed by headshot", &evo::_settings->killedby_hs );
+                                ImGui::Checkbox( "Hitmarker", &evo::_settings->hitmarker );
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::ColorEdit4( "###hitmarkecol", evo::_settings->hitmarker_col, ALPHA );
 
                                 ImGui::Checkbox( "Hitsound", &evo::_settings->hitsound );
                                 if ( evo::_settings->hitsound )
@@ -573,9 +576,10 @@ void evo::menu_t::render( ) {
 
                                                        } );
                                 ImGui::SameLine( GetWindowWidth( ) - 55 );
-                                ImGui::ColorEdit4( "###solcol", evo::_settings->sound_col_l, ALPHA );
+                                ImGui::ColorEdit4( "###solc1231231ol", evo::_settings->sound_col_l, ALPHA );
 
 
+          
                                 ImGui::Checkbox( "Enemy sound esp", &evo::_settings->enemy_sound );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );
                                 if ( custom.settings_widget( "##popup5" ) ) OpenPopup( "##popup5" );
