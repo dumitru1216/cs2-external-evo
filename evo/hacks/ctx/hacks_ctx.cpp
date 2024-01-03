@@ -127,15 +127,8 @@ void evo::hacks_t::run( ) {
 		gungame_imunity: _proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x13C4, smth );
 
 		shots fired, calc 1 shot, when u do shot : local_player.player_pawn.address + 0x1420
-
 		is_flashed: _proc_manager.read_memory<float>( local_player.player_pawn.address + 0x145C, smth3 ); // smth3 > 0
-		remove flash: float fl = 0.f; _proc_manager.write_memory<float>( local_player.player_pawn.address + 0x145C, fl );
-
-		/* modify flash alpha 
-		* 		float fl = 125.f;
-				_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x146C, fl );
-		*
-
+		
 	*/
 
 
@@ -149,7 +142,7 @@ void evo::hacks_t::run( ) {
 #ifdef int_
 	_proc_manager.read_memory<int>( local_player.player_pawn.address + 0x142C, smth4 );
 #elif defined(int_2)
-	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x145C, smth3 );
+	_proc_manager.read_memory<float>( local_player.player_pawn.address + 0x1470, smth3 );
 #endif
 
 #ifdef int_
@@ -161,7 +154,7 @@ void evo::hacks_t::run( ) {
 #endif
 
 		float fl = 125.f;
-	_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x146C, fl );
+	//_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x1470, fl );
 	//_proc_manager.write_memory<float>( local_player.player_pawn.address + 0x1464, fl );
 
 #if 0
