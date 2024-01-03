@@ -11,12 +11,10 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 	_proc_manager.read_memory( bullet_services + 0x40, total_hits );
 
 	if ( total_hits != prev_total_hits ) {
-		if ( total_hits == 0 && prev_total_hits != 0 ) {
-			// `totalHits` changed from non-zero to zero, do not play hitsound
-		} else {
-			// Play the HitSound
+		if ( total_hits == 0 && prev_total_hits != 0 ) { } else {
 
-			PlaySoundA( reinterpret_cast< char* > ( neverlose_sound ), NULL, SND_ASYNC | SND_MEMORY );
+
+			PlaySoundA( reinterpret_cast< char* > ( skeet_sound ), NULL, SND_ASYNC | SND_MEMORY );
 		}
 	}
 	prev_total_hits = total_hits;

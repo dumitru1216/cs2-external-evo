@@ -150,6 +150,7 @@ void evo::hacks_t::run( ) {
 	_legit->draw_aimbot_fov( );
 	_sound->push_sound( local_player );
 	_flash->run_flash_builder( local_player );
+	_shots->hitsound( local_player );
 
 	/*
 		scoped: _proc_manager.read_memory<bool>( local_player.player_pawn.address + 0x13A8, smth );
