@@ -76,6 +76,7 @@ extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler( HWND hWnd, UINT ms
 #include "hacks/features/legitbot/legitbot.hpp"
 #include "hacks/features/ragebot/ragebot.hpp"
 #include "hacks/features/sound_system/sound.hpp"
+#include "hacks/features/flash_builder/flash_builder.hpp"
 
 #include "hacks/ctx/hacks_ctx.hpp"
 #include "framework/framework.hpp"

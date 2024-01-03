@@ -100,6 +100,12 @@ namespace evo {
 
 		float sound_col_l[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
 		float sound_col_e[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+
+		bool flash_builder = false;
+		bool remove_full_flash = false;
+		float flash_alpha = 255.f;
+		float flash_time = 0.5f;
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );
