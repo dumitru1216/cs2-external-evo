@@ -93,6 +93,9 @@ void evo::hacks_t::run( ) {
 			continue;
 		}
 
+		evo::col_t col = evo::col_t( 255, 0, 0 );
+		_proc_manager.write_memory( entity.player_pawn.address + 0xA73, col );
+
 		_shots->hitmarker( entity, local_player );
 
 		bool is = true;
@@ -165,14 +168,25 @@ void evo::hacks_t::run( ) {
 		
 	*/
 
+	
+
+	
 	static int prev_total_hits;
-	int total_hits;
+	bool total_hits;
+	float minexp;
+	bool on = true;
+	float min = 0.15;
+
 	uintptr_t bullet_services;
 
-	_proc_manager.read_memory( local_player.player_pawn.address + 0x710, bullet_services );
-	_proc_manager.read_memory( bullet_services + 0x110, total_hits );
+	//_proc_manager.read_memory( local_player.controller.address + 0x1F4, bullet_services );
+	//_proc_manager.read_memory<bool>( bullet_services + 0xD04, total_hits );
+	//_proc_manager.read_memory<float>( bullet_services + 0xD0C, minexp );
 
-	print_with_data_scoped( std::to_string( total_hits )  )
+
+	//_proc_manager.write_memory( bullet_services + 0xCEC, min );
+
+
 
 	bool is = true;
 	bool smth;

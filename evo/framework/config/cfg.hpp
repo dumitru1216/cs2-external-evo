@@ -114,6 +114,9 @@ namespace evo {
 		int hitsound_type = 0;
 		bool hitmarker = false;
 		float hitmarker_col[ 4 ] = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		int visuals_i[ 120 ]{ 0 };
+		float visuals_c[120][ 4 ]{ 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
 	inline const auto _settings = std::make_unique< settings_t >( );

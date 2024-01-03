@@ -31,7 +31,7 @@ void evo::render_t::initialize_font_system( ) {
 
 
 	add_font( "C:\\Windows\\Fonts\\verdana.ttf", 12.0f );
-	io.Fonts->AddFontFromMemoryTTF( _smallest_pixel, sizeof( _smallest_pixel ), 10.f, &cfg, ranges );
+	io.Fonts->AddFontFromMemoryTTF( _smallest_pixel, sizeof( _smallest_pixel ), 10.f );
 
 
 	/* freetype build */

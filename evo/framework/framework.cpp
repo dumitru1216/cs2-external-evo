@@ -259,6 +259,9 @@ void evo::menu_t::render( ) {
     vector < const char* > keymode2 = { "Prefer head",
                                 "Prefer baim" };
 
+    vector < const char* > stuff21 = { "Normal",
+                            "Gradient" };
+
     vector < const char* > hitsound = {
                        "Neverlose",
                        "Skeet",
@@ -490,26 +493,47 @@ void evo::menu_t::render( ) {
                                 }
 
                                 ImGui::Checkbox( "Health bar", &evo::_settings->health_bar );
-
-
-                                if ( evo::_settings->health_bar ) {
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##popup7" ) ) OpenPopup( "##popup7" );
+                                custom.prepared_popup( "##popup7", "Health bar", [ & ]( ) {
                                     ImGui::Checkbox( "Custom color", &evo::_settings->customhealthbar );
-                                    ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                    ImGui::SameLine( GetWindowWidth( ) - 36 );
                                     ImGui::ColorEdit4( "###healthbari", evo::_settings->healthbar, ALPHA );
-
                                     if ( evo::_settings->change_by_visibility ) {
                                         ImGui::SameLine( GetWindowWidth( ) - 55 );
                                         ImGui::ColorEdit4( "###heabarb", evo::_settings->healthbari, ALPHA );
                                     }
-                                }
+                                    ImGui::Combo( "Color type", &evo::_settings->visuals_i[0], stuff21.data( ), stuff21.size( ) );
+                                    if ( evo::_settings->visuals_i[ 0 ] == 1 ) {
+                                        ImGui::Text( "Second color" );
+                                        ImGui::SameLine( GetWindowWidth( ) - 36 );
+                                        ImGui::ColorEdit4( "###healthbari22", evo::_settings->visuals_c[0], ALPHA );
+                                    }
+
+                                                       } );
+
+                                
 
                                 ImGui::Checkbox( "Ammo bar", &evo::_settings->ammobar );
-                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                ImGui::SameLine( GetWindowWidth( ) - 55 );
                                 ImGui::ColorEdit4( "###ammobar", evo::_settings->ammobar_color, ALPHA );
                                 if ( evo::_settings->change_by_visibility ) {
-                                    ImGui::SameLine( GetWindowWidth( ) - 55 );
+                                    ImGui::SameLine( GetWindowWidth( ) - 77 );
                                     ImGui::ColorEdit4( "###bajsdggqd", evo::_settings->ammobar_color_inv, ALPHA );
                                 }
+                                ImGui::SameLine( GetWindowWidth( ) - 33 );
+                                if ( custom.settings_widget( "##popup8" ) ) OpenPopup( "##popup8" );
+                                custom.prepared_popup( "##popup8", "Ammo bar", [ & ]( ) {
+                                    ImGui::Combo( "Color type", &evo::_settings->visuals_i[ 1 ], stuff21.data( ), stuff21.size( ) );
+                                    if ( evo::_settings->visuals_i[ 1 ] == 1 ) {
+                                        ImGui::Text( "Second color" );
+                                        ImGui::SameLine( GetWindowWidth( ) - 36 );
+                                        ImGui::ColorEdit4( "###healthbar123i22", evo::_settings->visuals_c[ 1 ], ALPHA );
+                                    }
+
+                                                       } );
+
+                               
 
                                 ImGui::Checkbox( "Weapon name", &evo::_settings->eap );
                                 ImGui::SameLine( GetWindowWidth( ) - 33 );

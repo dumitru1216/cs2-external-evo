@@ -100,7 +100,7 @@ void evo::esp_t::health_bar( const c_entity& local_player, const c_entity& entit
 	int r = std::fmin( ( 510 * ( 100 - player_hp ) ) / 100, 255 );
 	int g = std::fmin( ( 510 * player_hp ) / 100, 255 );
 
-	int h = rect.w - 2;
+	int h = rect.w + 2;
 	int fill = ( int )std::round( prev_player_hp[ index ] * h / 100.f );
 
 	/* health color */
@@ -114,8 +114,18 @@ void evo::esp_t::health_bar( const c_entity& local_player, const c_entity& entit
 	}
 
 	/* backround */
-	evo::_render->add_rect_filled( rect.x - 6, rect.y + 1, 4, rect.w - 2, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
-	evo::_render->add_rect_filled( rect.x - 5, rect.y + 2 + ( h - fill ), 2, fill - 2, health_color, 0 );
+	evo::_render->add_rect_filled( rect.x - 6, rect.y - 1, 4, rect.w + 2, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
+
+	switch ( _settings->visuals_i[0] ) {
+		case 0:
+		{
+			evo::_render->add_rect_filled( rect.x - 5, rect.y + ( h - fill ), 2, fill - 2, health_color, 0 );
+		} break;
+		case 1:
+		{
+			evo::_render->add_gradient_horizontal( rect.x - 5, rect.y + ( h - fill ), 2, fill - 2, health_color, _render->to_main_color( _settings->visuals_c[ 0 ] ).modify_alpha( this->esp_alpha[ index ] ) );
+		} break;
+	}
 
 	if ( player_hp < 98 ) {
 		evo::_render->add_text( rect.x - ( ( player_hp > 10 ) ? 8 : 7 ),
@@ -145,18 +155,26 @@ void evo::esp_t::ammo_bar( const c_entity& local_player, const c_entity& entity,
 
 	if ( max != -1 ) {
 		scale = ( float )bullets / max;
-		bar = ( int )std::round( ( rect.z - 2 ) * scale );
+		bar = ( int )std::round( ( rect.z + 2 ) * scale );
 
-		evo::_render->add_rect_filled( rect.x + 1, rect.y + rect.w + 2, rect.z - 2, 4, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
-		evo::_render->add_rect_filled( rect.x + 2, rect.y + rect.w + 3, bar - 3, 2, ammo_color, 0 );
+		evo::_render->add_rect_filled( rect.x - 1, rect.y + rect.w + 2, rect.z + 2, 4, evo::col_t( 0, 0, 0, this->esp_alpha[ index ] * 0.5 ), 0 );
+
+		switch ( _settings->visuals_i[ 1 ] ) {
+			case 0:
+			{
+				evo::_render->add_rect_filled( rect.x, rect.y + rect.w + 3, bar - 2, 2, ammo_color, 0 );
+			} break;
+			case 1:
+			{
+				evo::_render->add_gradient_vertical( rect.x, rect.y + rect.w + 3, bar - 2, 2, ammo_color, _render->to_main_color( _settings->visuals_c[ 1 ] ).modify_alpha( this->esp_alpha[ index ] ) );
+			} break;
+		}
 
 		if ( bullets < ( max - 2 ) ) {
 			evo::_render->add_text( rect.x - 1 + bar,
 									rect.y - 3 + rect.w + 2, evo::col_t( ).modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, std::to_string( bullets ).c_str( ), evo::font_flags_t::outline );
 		}
 	}
-
-
 }
 
 void evo::esp_t::render_weapon( const c_entity& local_player, const c_entity& entity, ImVec4 rect, int local_index, int index ) { 
@@ -229,10 +247,12 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 	if ( ( entity.player_pawn.health < 30 ) ) {
 		info.push_back( { "lethal", evo::col_t( 255, 71, 71 ) } );
 	}
-	
+
+#if 0
 	if ( evo::_settings->show_competivie_wins ) {
 		info.push_back( { "W: " + std::to_string( entity.controller.wins ), evo::col_t( ) } ); // i guess it works
 	}
+#endif
 
 	if ( evo::_settings->show_dmg_dealt ) {
 		info.push_back( { "TD: " + std::to_string( entity.controller.total_dmg ), evo::col_t( ) } ); // i guess it works
@@ -247,7 +267,7 @@ void evo::esp_t::render_side_info( const c_entity& local_player, const c_entity&
 		std::transform( info[i].inf.begin( ), info[ i ].inf.end( ), info[ i ].inf.begin( ), ::toupper );
 
 		evo::_render->add_text( rect.x + rect.z + 6, rect.y + 1 + 
-								( ( evo::_render->text_size( info[ i ].inf.c_str( ), evo::fonts_t::_default_2 ).y + 3 ) ) * i, info[ i ].col.modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, info[ i ].inf.c_str( ), evo::font_flags_t::outline );
+								( ( evo::_render->text_size( info[ i ].inf.c_str( ), evo::fonts_t::_default_2 ).y + 1 ) ) * i, info[ i ].col.modify_alpha( this->esp_alpha[ index ] ), evo::fonts_t::_default_2, info[ i ].inf.c_str( ), evo::font_flags_t::outline );
 	}
 }
 
