@@ -143,6 +143,7 @@
     <ClInclude Include="evo\framework\framework.hpp" />
     <ClInclude Include="evo\hacks\ctx\hacks_ctx.hpp" />
     <ClInclude Include="evo\hacks\features\esp\esp.hpp" />
+    <ClInclude Include="evo\hacks\features\flash_builder\flash_builder.hpp" />
     <ClInclude Include="evo\hacks\features\legitbot\legitbot.hpp" />
     <ClInclude Include="evo\hacks\features\ragebot\ragebot.hpp" />
     <ClInclude Include="evo\hacks\features\sound_system\sound.hpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="evo\framework\framework.cpp" />
     <ClCompile Include="evo\hacks\ctx\hacks_ctx.cpp" />
     <ClCompile Include="evo\hacks\features\esp\esp.cpp" />
+    <ClCompile Include="evo\hacks\features\flash_builder\flash_builder.cpp" />
     <ClCompile Include="evo\hacks\features\legitbot\legitbot.cpp" />
     <ClCompile Include="evo\hacks\features\ragebot\ragebot.cpp" />
     <ClCompile Include="evo\hacks\features\sound_system\sound.cpp" />
