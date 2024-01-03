@@ -342,6 +342,7 @@ void evo::esp_t::render_incendiary( ) {
 	
 }
 
+#include "../shots/shots_hitsound.hpp"
 void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 	if ( !_settings->killedby_hs )
 		return;
@@ -351,6 +352,16 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 
 	static bool has_been_killed_by_hs[ 64 ]{ false };
 	bool was_hs;
+
+	static bool play_sound[ 64 ]{ false };
+
+	if ( !play_sound[ i ] ) {
+		if ( _settings->hitsounduh ) {
+			PlaySoundA( reinterpret_cast< char* > ( robloxsnd ), NULL, SND_ASYNC | SND_MEMORY );
+		}
+
+		play_sound[ i ] = true;
+	}
 
 	/* read memory */
 	_proc_manager.read_memory<bool>( entity.player_pawn.address + 0x1668, was_hs );
@@ -365,6 +376,7 @@ void evo::esp_t::killed_by_hs( const c_entity& entity, int i ) {
 
 	if ( animation.value >= 0.90 ) {
 		has_been_killed_by_hs[ i ] = false;
+		play_sound[ i ] = false;
 	}
 
 	std::string hs = "HEADSHOT";
