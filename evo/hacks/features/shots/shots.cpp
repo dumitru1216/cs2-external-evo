@@ -134,6 +134,7 @@ void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
 			this->hitmarkers.erase( this->hitmarkers.begin( ) + i );
 		}
 	}
-
+#if 0
 	print_with_data_scoped( std::to_string( this->hitmarkers.size( ) ) )
+#endif
 }

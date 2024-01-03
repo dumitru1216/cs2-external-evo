@@ -165,6 +165,15 @@ void evo::hacks_t::run( ) {
 		
 	*/
 
+	static int prev_total_hits;
+	int total_hits;
+	uintptr_t bullet_services;
+
+	_proc_manager.read_memory( local_player.player_pawn.address + 0x710, bullet_services );
+	_proc_manager.read_memory( bullet_services + 0x110, total_hits );
+
+	print_with_data_scoped( std::to_string( total_hits )  )
+
 	bool is = true;
 	bool smth;
 	float smth3;
