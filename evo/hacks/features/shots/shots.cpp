@@ -90,9 +90,6 @@ void evo::shots_t::hitsound( const c_entity& entity ) {
 	prev_total_hits = total_hits;
 }
 
-/* xref:
-	https://github.com/aiuka/neverlose-cs2/Cheat/Visuals/Hitmarkers.cpp#L20
-*/
 void evo::shots_t::hitmarker( const c_entity& entity, const c_entity& local ) {
 	if ( !_settings->hitmarker ) {
 		if ( !this->hitmarkers.empty( ) ) { /* clear these mothercukers */
